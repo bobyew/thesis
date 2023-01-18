@@ -1,0 +1,87 @@
+%% The following is a directive for TeXShop to indicate the main file
+%%!TEX root = diss.tex
+
+\chapter{Glossary}
+
+This glossary uses the handy \latexpackage{acroynym} package to automatically
+maintain the glossary.  It uses the package's \texttt{printonlyused}
+option to include only those acronyms explicitly referenced in the
+\LaTeX\ source.  To change how the acronyms are rendered, change the
+\verb+\acsfont+ definition in \verb+diss.tex+.
+
+% use \acrodef to define an acronym, but no listing
+\acrodef{UI}{user interface}
+\acrodef{UBC}{University of British Columbia}
+
+% The acronym environment will typeset only those acronyms that were
+% *actually used* in the course of the document
+\begin{acronym}[ANOVA]
+\acro{ANOVA}[ANOVA]{Analysis of Variance\acroextra{, a set of
+  statistical techniques to identify sources of variability between groups}}
+\acro{API}{application programming interface}
+\acro{CTAN}{\acroextra{The }Common \TeX\ Archive Network}
+\acro{DOI}{Document Object Identifier\acroextra{ (see
+    \url{http://doi.org})}}
+\acro{GPS}[GPS]{Graduate and Postdoctoral Studies}
+\acro{PDF}{Portable Document Format}
+\acro{RCS}[RCS]{Revision control system\acroextra{, a software
+    tool for tracking changes to a set of files}}
+\acro{TLX}[TLX]{Task Load Index\acroextra{, an instrument for gauging
+  the subjective mental workload experienced by a human in performing
+  a task}}
+\acro{UML}{Unified Modelling Language\acroextra{, a visual language
+    for modelling the structure of software artefacts}}
+\acro{URL}{Unique Resource Locator\acroextra{, used to describe a
+    means for obtaining some resource on the world wide web}}
+\acro{W3C}[W3C]{\acroextra{the }World Wide Web Consortium\acroextra{,
+    the standards body for web technologies}}
+\acro{XML}{Extensible Markup Language}
+
+\acro{data instance}{data in many shapes and formats, each data instance contains one table and metadata describing the data instance}
+\acro{open data}{repository that contains a collection of data instances created and published by many individual authors, can be accessed by the general public without paying for the data}
+\acro{metadata}{structured information about an information resource of any media type or format}
+
+\acro{tag}{one type of metadata used in open data, it comes in the form of a list of one or more text items}
+\acro{topic}{a tag that contains semantics such as a dictionary definition}
+\acro{table}{a form of data instance, it is a two-dimensional matrix of values, where each column has a header}
+\acro{header}{name of a column in a table}
+\acro{schema}{metadata containing a list of mappings, where a header is mapped with a column}
+\acro{attribute}{header within a schema}
+\acro{constraint}{restrictions, for example, on the type of data stored in a column}
+\acro{heterogeneity}{items that resemble the same information is represented differently across different data instances}
+\acro{semantic heterogeneity}{the same data may have different meanings across different data instances (and vice versa)}
+\acro{normalization}{ensure each data instance contains all the tags describing the same information}
+\acro{metadata augmentation}{an approach to look for existing tags in the related tables, and for all tables lacking these tags, we add the tags to these tables}
+\acro{semantic labeling}{matching between a set of attributes and a set of tags}
+\acro{pay-as-you-go}{an approach where only the related tables are augmented with tags, and only tags that relates to the base table are augmented}
+\acro{base table}{a table the user is familiar with its data and metadata}
+\acro{word sense}{the meaning of a word, defined in a dictionary}
+\acro{semantic enrichment}{the step to attach definitions to words}
+\acro{word sense disambiguation}{the process of finding the correct interpretation of a word}
+\acro{schema matching}{an algorithm that compare between a pair schemata, where attributes in one schema are compared to attributes of the second schema to find a matching}
+\acro{matching criterion}{a function that determines the similarity between two attributes}
+\acro{correspondence}{a pair from the matching in the form of (a,b,c), where a, b are attributes from the two schemama, and c is a score according to some matching criteria}
+\acro{table searching}{an algorithm that searches the tables to find how tables are related, the query is compared with every other table in a pairwise manner}
+\acro{ontology}{a collection of related concepts, each concept has a number of properties, and each concept is related to other concepts}
+\acro{knowledge base}{a database storing a collection of facts that can be understood and processed by humans or machines}
+\acro{data integration}{combining data instances by creating data mappings to capture the relatedness of attributes of the schemata}
+\acro{mediated schema}{a schema with mediated attributes, where each schema has a source description (i.e. a mapping) in terms of the mediated schema}
+
+\end{acronym}
+
+
+% You can also use \newacro{}{} to only define acronyms
+% but without explictly creating a glossary
+% 
+% \newacro{ANOVA}[ANOVA]{Analysis of Variance\acroextra{, a set of
+%   statistical techniques to identify sources of variability between groups.}}
+% \newacro{API}[API]{application programming interface}
+% \newacro{GOMS}[GOMS]{Goals, Operators, Methods, and Selection\acroextra{,
+%   a framework for usability analysis.}}
+% \newacro{TLX}[TLX]{Task Load Index\acroextra{, an instrument for gauging
+%   the subjective mental workload experienced by a human in performing
+%   a task.}}
+% \newacro{UI}[UI]{user interface}
+% \newacro{UML}[UML]{Unified Modelling Language}
+% \newacro{W3C}[W3C]{World Wide Web Consortium}
+% \newacro{XML}[XML]{Extensible Markup Language}

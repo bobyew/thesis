@@ -1,0 +1,134 @@
+\chapter{Evaluation data sample}
+
+\section{Test Set}
+\label{sec:TestSet}
+
+The example below shows an input test set for evaluating the accuracy of a metadata augmentation algorithm. Each test is configured by a repository size k and a specific mix proportion (e.g. 5+0), as well as a base table. The first table in a test is the base table (e.g. “parks” for the “5+0” test). Please refer to Surrey Open Data for the data and the metadata in each table.
+
+\lstset{
+    string=[s]{"}{"},
+    stringstyle=\color{blue},
+    comment=[l]{:},
+    commentstyle=\color{black},
+}
+\begin{lstlisting}
+{
+  "5+0": [
+    "parks",
+    "park specimen trees",
+    "park screen trees",
+    "park outdoor recreation facilities",
+    "park structures"
+  ],
+  "3+2": [
+    "parks",
+    "park outdoor recreation facilities",
+    "park sports fields",
+    "water assemblies",
+    "road row requirements downtown"
+  ],
+  "1+4": [
+    "parks",
+    "water utility facilities",
+    "sanitary lift stations",
+    "drainage dyke infrastructure",
+    "water meters"
+  ],
+  "10+0": [
+    "parks",
+    "park paths and trails",
+    "park natural areas",
+    "park specimen trees",
+    "park unimproved parkland",
+    "park outdoor recreation facilities",
+    "park sports fields",
+    "park structures",
+    "trails and paths",
+    "walking routes"
+  ],
+  "5+5": [
+    "parks",
+    "park paths and trails",
+    "park natural areas",
+    "park specimen trees",
+    "park unimproved parkland",
+    "heritage sites",
+    "aquatic hubs",
+    "water fittings",
+    "road row requirements downtown",
+    "water valves"
+  ],
+  "1+9": [
+    "parks",
+    "drainage dyke infrastructure",
+    "sanitary lift stations",
+    "water utility facilities",
+    "water valves",
+    "water meters",
+    "sanitary nodes",
+    "heritage routes",
+    "water assemblies",
+    "aquatic hubs"
+  ]
+}
+\end{lstlisting}
+
+\section{Gold Standard}
+\label{sec:Gold Standard}
+
+The example below shows all the related tables in a gold standard for a test set. If a test repository contains many unrelated tables, these tables will not be in the gold standard (nor their tags).
+\lstset{
+    string=[s]{"}{"},
+    stringstyle=\color{blue},
+    comment=[l]{:},
+    commentstyle=\color{black},
+}
+\begin{lstlisting}
+{
+  "5+0": [
+    "parks",
+    "park specimen trees",
+    "park screen trees",
+    "park outdoor recreation facilities",
+    "park structures"
+  ],
+  "3+2": [
+    "parks",
+    "park outdoor recreation facilities",
+    "park sports fields"
+  ],
+  "1+4": [
+    "parks"
+  ],
+  "10+0": [
+    "parks",
+    "park paths and trails",
+    "park natural areas",
+    "park specimen trees",
+    "park unimproved parkland",
+    "park outdoor recreation facilities",
+    "park sports fields",
+    "park structures",
+    "trails and paths",
+    "walking routes"
+  ],
+  "5+5": [
+    "parks",
+    "park paths and trails",
+    "park natural areas",
+    "park specimen trees",
+    "park unimproved parkland"
+  ],
+  "1+9": [
+    "parks"
+  ]
+}
+\end{lstlisting}
+
+Each of the related tables in the gold standard contains augmented set of tags. We give the set of tags for one table below.
+
+\begin{description}
+\item[Table name:]Park specimen trees
+\item[Original tags:][trees]
+\item[Augmented tags:]Augmented tags: [status, donation, park, parkland, location, road, residential, facility, green, commercial, environmental, service, trees, parks, facilities, classification]
+\end{description}
