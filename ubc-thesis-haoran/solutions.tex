@@ -13,6 +13,13 @@ All four algorithms use the existing metadata to help augment additional tags, s
 \section{Common procedure for normalization of tags}
 \label{sec:CommonProcedureForNormalizationOfTags}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/brute-force-algorithm.png}
+    \caption{Brute Force algorithm for metadata tags augmentation}
+    \label{fig:brute-force-algorithm}
+\end{figure}
+
 When one table contains a set of tags A and another table contains a set of tags B, in order to augment each set with additional tags, some tags in A  B will be transferred to B and some tagsk
 
 in B V A will be transferred to A. For the augmented sets A* and B*, the overlap A* x B* contains A x B. Normalization produces the augmented sets A* and B* by comparing the sets A and B with each other, regardless of the algorithm used. The reason is that A and B are the only sources that the tags originate from. Suppose that there is a third set C which contains all the tags in A and B, then A and B do not need to compare to each other. The two sets can use the same criterion to compare to C to obtain A* and B*. If A and B are initially empty, then the criterion can be created ahead of time, and the tags selected to each set will be normalized with respect to each other. However, if A and B are initially nonempty, then the criterion cannot be created without knowing the existing tags in A and B, because the context of use for a tag may be different from the criterions assumption.
@@ -130,7 +137,7 @@ We first perform semantic enrichment for both attributes and tags, and create se
 The first step is to apply external knowledge such as a domain dictionary to determine the semantics.
 performed along with word sense disambiguation.
 This step performs word sense disambiguation using metadata, semantically enrich each attribute or tag by associating with a WordNet Synset.
-Since each word used in a tag can have more than one meaning, we attach a dictionary definition to each word in a tag as shown in Figure 3-2, where we used metadata to disambiguate the words.
+Since each word used in a tag can have more than one meaning, we attach a dictionary definition to each word in a tag as shown in \autoref{fig:semantically-enriched-attribute}, where we used metadata to disambiguate the words.
 Once we disambiguate a word, we are able to identify other words with similar interpretations across all metadata of all tables.
 
 We make two changes to Iterative, we name our new algorithm Improved Iterative. The first change is to perform semantic enrichment before semantic labeling during the initialization step. We apply semantic enrichment from \autoref{sec:SemanticLabeling}, where word sense disambiguation is performed on attributes and tags. The second change is to include more matching criteria for schema matching. We use hybrid matching from \autoref{ssec:VariationsOfSchemaMatching} to combine the similarity scores of the different matching criteria.

@@ -13,18 +13,39 @@ We outline a number of existing techniques, methods, and algorithms relevant to 
 In Surrey Open Data in \autoref{fig:example-parks}, the word park in the header park name, according to a domain dictionary, could be interpreted as `amusement parks', `an open green space', or even a `parking lot'. Which interpretation is the correct one? The table name does not provide any additional information, neither does the table description. However, the category and the tags contain useful information that we can use to disambiguate the word. The category contains the word environment while the tags contain words green and nature, which eliminates the `amusement parks' interpretation as well as the `parking lot' interpretation. The only
 
 interpretation left is `open green space'. The process of finding the correct interpretation of a word is called word sense disambiguation. Our goal is to automate this process as much as possible.
-The domain dictionary that we use is WordNet \cite{Fellbaum1998Computers}[19], it is a database that stores all possible senses of a word. Along with the sense of a word, WordNet also contains the synonyms of the word and example sentences showing how the word is used. For example, the word park can have many senses (i.e they are homonyms). A partial list of the definition, synonyms, and example sentences for the word park is shown Figure 3-1.
+The domain dictionary that we use is WordNet \cite{Fellbaum1998Computers}[19], it is a database that stores all possible senses of a word. Along with the sense of a word, WordNet also contains the synonyms of the word and example sentences showing how the word is used. For example, the word park can have many senses (i.e they are homonyms). A partial list of the definition, synonyms, and example sentences for the word park is shown \autoref{fig:candidate-word-park-wordnet}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/candidate-word-park-wordnet.png}
+    \caption{Candidate word senses for the word park from the WordNet database}
+    \label{fig:candidate-word-park-wordnet}
+\end{figure}
 
 \subsection{Word sense disambiguation}
 
-Using the information provided in WordNet, it is possible to perform word sense disambiguation. For a word in the schema and the metadata tags, we create a context using surrounding information available in the metadata. Similarly, we create a context for a word sense using the synonyms and the example sentences. After creating the contexts, we are able to compare the word with each candidate word sense using their contexts. If the two contexts are highly similar, then the metadata word is semantically enriched by attaching the definition of the word sense.k is shown Figure 3-1.
+Using the information provided in WordNet, it is possible to perform word sense disambiguation. For a word in the schema and the metadata tags, we create a context using surrounding information available in the metadata. Similarly, we create a context for a word sense using the synonyms and the example sentences. After creating the contexts, we are able to compare the word with each candidate word sense using their contexts. If the two contexts are highly similar, then the metadata word is semantically enriched by attaching the definition of the word sense.k is shown \autoref{fig:candidate-word-park-wordnet}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/semantically-enriched-attribute.png}
+    \caption{Semantically enriched attribute}
+    \label{fig:semantically-enriched-attribute}
+\end{figure}
 
 While creating the contexts for the words and word senses, we do not add every word in the surrounding information to each context, since most of these words do not contribute to disambiguating word sense. For example, a sentence in the surrounding information can contain nouns, verbs, adjectives, prepositions, etc. We use part-of-speech tagging by the Hidden Markov Model to identify a word in a sentence as a noun, verb, etc. To simplify our work, we only add noun words to the context; we argue that nouns can contribute the most to word sense disambiguation. Each context therefore consists of a set of nouns. We then choose the word sense that has the most number context word overlaps.
 The overlapping of words between two contexts is also known as the gloss overlap. Gloss overlaps increases the chance of finding similarities between contexts, since related contexts tend to contain many common words. Finding the similarity by using gloss overlaps is known as the Lesk method. By using the Lesk method, we perform syntax-driven semantic analysis, where the context words are just items in a collection and we count how many items are overlapping.
-Once we disambiguate the word, we attach the definition to the word. We name the step to attach definitions to words in metadata as semantic enrichment. The words in the attributes of a schema and in the tags are semantically enriched. An example of a semantically enriched schema attribute, park name, is shown in Figure 3-2.
+Once we disambiguate the word, we attach the definition to the word. We name the step to attach definitions to words in metadata as semantic enrichment. The words in the attributes of a schema and in the tags are semantically enriched. An example of a semantically enriched schema attribute, park name, is shown in \autoref{fig:semantically-enriched-attribute}.
 
-We provide an example of semantic enrichment next. Using the metadata of \autoref{fig:example-parks}, we create the context of the word park using table description, category, and tags. Similarly, for each candidate word sense of park in Figure 3-1, we use the definition, the synonyms, and example sentences to create the context. After performing part-of-speech tagging for the table description, the category, and the tags, we collect all the nouns into a list, which serves as the context for the tag word park. Similarly, the nouns from the definition, the synonyms, and the example sentences are collected into a list, which serves as the context of each candidate word sense. The contexts for park as well as all candidate word senses are shown in Figure 3-3.
+We provide an example of semantic enrichment next. Using the metadata of \autoref{fig:example-parks}, we create the context of the word park using table description, category, and tags. Similarly, for each candidate word sense of park in \autoref{fig:candidate-word-park-wordnet}, we use the definition, the synonyms, and example sentences to create the context. After performing part-of-speech tagging for the table description, the category, and the tags, we collect all the nouns into a list, which serves as the context for the tag word park. Similarly, the nouns from the definition, the synonyms, and the example sentences are collected into a list, which serves as the context of each candidate word sense. The contexts for park as well as all candidate word senses are shown in \autoref{fig:contexts-park-candidate}.
 To compare between the tag word context and the word sense contexts, we find the number of overlapping items between each pair of sets. After stemming each word in each context, the number of overlapping items between park and candidate word sense 1 is 1, for candidate word sense 2 it is 2, and for candidate word sense 3 it is 0. Therefore we select word sense candidate word sense 2, to semantically enrich the tag word park in \autoref{fig:example-parks}. Each semantically enriched tag is now called a topic.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/contexts-park-candidate.png}
+    \caption{Contexts for tag park and candidate word senses}
+    \label{fig:contexts-park-candidate}
+\end{figure}
 
 Semantic enrichment of words can be viewed as a metadata generation problem, where we identify distinct concepts. When each concept consists of a group of words that have similar meanings, we are able to find all words belonging to the same concept instantaneously.
 
@@ -32,7 +53,7 @@ Semantic enrichment of words can be viewed as a metadata generation problem, whe
 \label{ssec:SolutionToSemanticHeterogeneityDdictionaries}
 
 When two elements (either tags, attributes, or other types of data) are highly similar in meaning, but are represented with different words or phrases, we rely on external resources such as a domain dictionary to determine if the two elements are similar. Using the domain dictionary, we are able to find all synonyms of a word. Even if two words are not synonyms of each other, they may still be semantically related.
-Since a word can have many senses, the WordNet dictionary is a database that stores synonyms for each word sense, the set of synonyms with the same sense is called a Synset. WordNet has a separate entry for each sense of a word (the example in Figure 3-1 has three entries), and
+Since a word can have many senses, the WordNet dictionary is a database that stores synonyms for each word sense, the set of synonyms with the same sense is called a Synset. WordNet has a separate entry for each sense of a word (the example in \autoref{fig:candidate-word-park-wordnet} has three entries), and
 
 indicates which Synset the entry belongs in. It is then possible to compute the semantic distance between a pair of Synsets.
 
@@ -95,7 +116,7 @@ In the first case, an attribute may correspond to multiple tags. We disallow thi
 The minimum form of schema matching does not usually produce correspondences accurately. Many variations of the minimum form are possible. Different variations of schema matching can improve the speed of matching as well as the quality of the correspondences. The matching
 
 criteria can be changed to more accurately reflect the similarity of attributes. One can use any linguistic-based criterion to compare the names of attributes, or use constraint-based criterion to compare the properties of the attributes. In constraint-based matching, an average can be computed for value of a numerical column. Other statistical quantities can be computed with the goal of characterizing the data distribution of the column. The matching criterion then make comparisons between two attributes based on their data distributions. The work in \autoref{ssec:SupervisedLearningForSchemaLabeling} performed matching using constraint-based criteria.
-In linguistic-based criteria, a dictionary or thesaurus can be used to find the semantic similarity. We explain our linguistic-based criteria using a dictionary. Suppose that the word sense (i.e. the definition) of each word in an attribute is known, then when attributes are compared, the definitions of the words are compared instead. If it is possible to find the semantic distance (a numeric quantity) between the word senses, then the semantic distance of the attributes can be computed. The attribute park name with its attached definitions is shown in Figure 3-2.
+In linguistic-based criteria, a dictionary or thesaurus can be used to find the semantic similarity. We explain our linguistic-based criteria using a dictionary. Suppose that the word sense (i.e. the definition) of each word in an attribute is known, then when attributes are compared, the definitions of the words are compared instead. If it is possible to find the semantic distance (a numeric quantity) between the word senses, then the semantic distance of the attributes can be computed. The attribute park name with its attached definitions is shown in \autoref{fig:semantically-enriched-attribute}.
 We use the WordNet dictionary to retrieve the definition of words, and compute the semantic similarity between a pair of values using WordNet's built-in functions. The details have been explained in \autoref{ssec:SolutionToSemanticHeterogeneityDdictionaries}.
 We can also compute the semantic similarity between two values using pre-trained word embedding vectors. Words in an attribute is encoded as word embedding vectors using FastText \cite{Mudgal2018Deep}[34] \cite{Nargesian2018Table}[35], a variant of Word2Vec. A pair of vectors can be compared, and if two words are used
 
@@ -117,7 +138,15 @@ criterion) by removing conflicting pairs. Hybrid matching uses multiple matching
 \section{Semantic labeling}
 \label{sec:SemanticLabeling}
 
-Once the cardinality constraint is enforced in the schema matching algorithm, semantic labeling can be performed. A semantic labeling is a mapping between an attribute and a tag (the header to a column), indicating that the data in the column contains data in the topic's domain. To create the semantic labeling for one schema, we perform schema matching between an attribute of the schema and every tag, similar to the approach discussed in \cite{Dong2012Proceedings}[16] \cite{Salakhutdinov2009Semantic}[42]. The attribute-tag pairs in the match are added to the result set; we call each attribute-tag pair a semantic label. An example of semantic labeling is shown in Figure 3-4.
+Once the cardinality constraint is enforced in the schema matching algorithm, semantic labeling can be performed. A semantic labeling is a mapping between an attribute and a tag (the header to a column), indicating that the data in the column contains data in the topic's domain. To create the semantic labeling for one schema, we perform schema matching between an attribute of the schema and every tag, similar to the approach discussed in \cite{Dong2012Proceedings}[16] \cite{Salakhutdinov2009Semantic}[42]. The attribute-tag pairs in the match are added to the result set; we call each attribute-tag pair a semantic label. An example of semantic labeling is shown in \autoref{fig:example-semantic-labeling}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/example-semantic-labeling.png}
+    \caption{Example of a semantic labeling between attributes and tags.
+    Each circle represents a tag, and each rectangle represents an attribute. There are two tables, parks and park specimen trees, each attribute of either table is mapped with a tag.}
+    \label{fig:example-semantic-labeling}
+\end{figure}
 
 \subsection{Semantic labeling algorithm}
 \label{ssec:SemanticLabelingAlgorithm}
