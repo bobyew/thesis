@@ -26,7 +26,7 @@ We review data instance recommendation using data linking next, which we find re
 
 We outline one way to recommend similar data instances given one data instance as the query \cite{conf/esws/EllefiBDT16}[5]. Each data instance is characterized by its textual descriptions and a set of schema-level features (such as topics) created by the data providers. To find the relatedness between two data instances, they find overlapping schema-level features by first constructing a bipartite graph between the topics and data instances. Each link between a data instance and a topic has a score indicating how well the topic describes the data instance. They then created a global topic-profiles graph to link all the data instances, such that each topic is mapped to a list of all data instances that contain the topic. They then used the global topic-profiles graph to recommend related data instances by collaborative filtering. For collaborative filtering to work, they made the assumption that the score is already known when each topic is linked to its data instance. The authors validated their approach with linked open data.
 
-We now give an example to show how data instance recommendation works. In Figure 1-1, assume the topics are environment, green, nature, parks, and the scores are 0.7, 0.6, 0.6, 0.9 respectively. In Figure 1-2, assume the topic trees is related to the table by a score of 0.8, in
+We now give an example to show how data instance recommendation works. In \autoref{fig:example-parks}, assume the topics are environment, green, nature, parks, and the scores are 0.7, 0.6, 0.6, 0.9 respectively. In Figure 1-2, assume the topic trees is related to the table by a score of 0.8, in
 
 addition, there are topics parks and environment with scores of 0.7 and 0.6 respectively. A topic-to-table graph is constructed for each table, and then the topic-profiles graph is constructed. For example, the topic parks is mapped to table parks by 0.9, and to table park specimen trees by 0.7. Suppose that we are given a new table called park screen trees with a topic parks in its metadata with a score of 0.7. Collaborative filtering is performed, and since the tables parks, park specimen trees and park screen trees have high scores for the topic parks, both parks and park specimen trees are recommended to the new table park screen trees.
 
@@ -51,7 +51,7 @@ The complexity of data and metadata can be reduced by summary generation methods
 A project on integration of data, the OpenII project \cite{Smith2011Unity}[43], proposed to perform clustering on the schema attributes of multiple schemata in the repository to find a common vocabulary for the repository. As explained in \cite{Smith2011Unity}[43], a vocabulary is created by a community of authors in advance, and each cluster of attributes is assigned a topic from the vocabulary. It is then possible to map every attribute in each cluster with the assigned topic. The input to clustering is a set of correspondences for the schemata in the repository, where each correspondence is a pair of attributes between two schemata and a similarity score, and clustering is performed with the constraint that disallows attributes from the same schema to be in one cluster. The final set of topics for the schemata becomes the summary of the entire repository. For their approach to
 
 work, they assumed that correspondences on attributes are already available as input, and a vocabulary can be readily used for labeling each cluster, which requires contribution from a community of data experts.
-We give an example for their work using slightly modified schemata in Figure 1-1, Figure 1-2, and Figure 1-4. Let the input schemata be:
+We give an example for their work using slightly modified schemata in \autoref{fig:example-parks}, Figure 1-2, and Figure 1-4. Let the input schemata be:
 
 \begin{lstlisting}
 Parks(park_name, location, service_classification),
@@ -88,16 +88,16 @@ Each group is then examined to determine a common topic describing the cluster. 
 \label{ssec:SupervisedLearningForSchemaLabeling}
 
 We discuss a supervised learning method for predicting column header names for data instances. The column header names is a vocabulary known prior to prediction. In \cite{10.1145/3184558.3191601}[9], the column data of a table without a header is the input for a document classification problem to predict the header. They trained the classifier using column data as bag-of-words features and the column headers as the labels. The bag-of-words features for string datatype always have poor predictions, and improvements were made to create distinct types of features for string datatypes, which improved the predictions on headers.
-To give an example, let the table and the header row in Figure 1-1 be the training data. The trained classifier assigns the first column the header park name, and the other columns are also assigned the correct headers. We let Figure 1-2 be the test data, each column is given to the classifier as input, and the classifier predicts a column name from {park name, location, service classification}. When the classifier is given the second column containing values such as Don Christian Park, 33M - Detention Pond, the classifier predicts the column name to be park is
+To give an example, let the table and the header row in \autoref{fig:example-parks} be the training data. The trained classifier assigns the first column the header park name, and the other columns are also assigned the correct headers. We let Figure 1-2 be the test data, each column is given to the classifier as input, and the classifier predicts a column name from {park name, location, service classification}. When the classifier is given the second column containing values such as Don Christian Park, 33M - Detention Pond, the classifier predicts the column name to be park is
 name. Since the true column name is park, the prediction may or may not be correct based on how correctness is defined.
-The assignable header names are only the header names available in Figure 1-1, and the classifier is unable to predict any other names for a given column. If many of the header names do not appear in the training data, then columns with those headers in the test set will never be predicted correctly. When the classifier tries to predict the third column of Figure 1-2, it is unable to predict the correct column name, because there is no similar column in the training data.
+The assignable header names are only the header names available in \autoref{fig:example-parks}, and the classifier is unable to predict any other names for a given column. If many of the header names do not appear in the training data, then columns with those headers in the test set will never be predicted correctly. When the classifier tries to predict the third column of Figure 1-2, it is unable to predict the correct column name, because there is no similar column in the training data.
 
 \subsection{Schema summarization}
 \label{ssec:SchemaSummarization}
 
 Schema summarization in \cite{Yu2006Schema}[48] help users understand complex schemata for relational and hierarchical databases by reducing the number of schema and the number of attributes per schema. The complex schemata is represented as a graph, where attributes (and values) are represented as nodes with foreign keys as links. The schemata is summarized by merging the elements and links, based on two summary quality properties: summary importance and summary coverage. The importance of an element is measured by how many other elements it influences (via foreign key dependencies, represented as links) and the element's own cardinality (i.e. the number of values in an instance). The coverage of an element is measured by the number of links it takes to traverse from itself to another element (i.e. whether the links in the summary can cover most of the graph). In each candidate summary, each element is the result of one or more merged elements in the original graph, and the aggregated importance and coverage scores of all elements in the summary is used to select the best summary. The selected summary should have the importance and coverage maximized.om the tables,
 
-Using Figure 1-1, Figure 1-2, Figure 1-3, and Figure 1-4, as the example. Let the schemata be
+Using \autoref{fig:example-parks}, Figure 1-2, Figure 1-3, and Figure 1-4, as the example. Let the schemata be
 \begin{lstlisting}
 Parks(park_name, location, service_classification),
 ParkSpecimenTrees(location, park, tree_species),
@@ -126,7 +126,7 @@ Data mappings can be created in three different ways: local-as-view (LAV), globa
 
 many-to-one between mediated schema attributes and local schema attributes. GAV mapping has a cardinality of one-to-many. GLAV mapping has a cardinality of many-to-many.
 
-We will talk about one work of data integration \cite{Levy1996Querying}[26], where LAV mappings created for each schema act as the descriptions of the individual data instances via the mediated schema. The heterogeneity between schemata is addressed by the mediated schema and mappings with individual schemata. Using Figure 1-1 and Figure 1-2 as an example, we let the schemata be:
+We will talk about one work of data integration \cite{Levy1996Querying}[26], where LAV mappings created for each schema act as the descriptions of the individual data instances via the mediated schema. The heterogeneity between schemata is addressed by the mediated schema and mappings with individual schemata. Using \autoref{fig:example-parks} and Figure 1-2 as an example, we let the schemata be:
 
 \begin{lstlisting}
 Park(park_name, location, service_classification) and
@@ -154,7 +154,7 @@ ontology concepts and schema attributes. Given one new schema to be integrated i
 
 Using the existing mapping of attributes to ontology, where each existing schema maps to one fragment of the ontology, they merged all the mapping fragments into a single network. They used this network to train a random forest mapping function that outputs a score for every concept-attribute pair. Using the function, they computed a score for every concept-attribute pair between the new schema and the concepts in the network. They then constructed a connected graph of all the concept-attribute pairs, and found a minimum cost Steiner tree with the constraint that an attribute maps to at most one concept. The mapping in the minimum cost Steiner Tree become the mapping of the new schema to the ontology. In order for their algorithm to work well, they assumed that an ontology exists, and their goal is to integrate a new schema into a repository in a pay-as-you-go approach.
 
-Suppose that the repository contains schemata of Figure 1-1 and Figure 1-2, with the following concept-attribute mappings:
+Suppose that the repository contains schemata of \autoref{fig:example-parks} and Figure 1-2, with the following concept-attribute mappings:
 \begin{lstlisting}
 (parks, Parks.park_name),
 (parks, ParkSpecimenTrees.park),
