@@ -161,6 +161,48 @@ In addition to precision and recall, we compute the F-measure, which is based on
 
 The F1 score gives us a sense of the overall ability of our algorithms to augment tags.
 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/precision-different-algorithms.png}
+    \caption{Precision of augmented tags for different algorithms}
+    \label{fig:precision-different-algorithms}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/recall-of-augmented-tags-for-different-algorithms.png}
+    \caption{Recall of augmented tags for different algorithms}
+    \label{fig:recall-of-augmented-tags-for-different-algorithms}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/f1-of-augmented-tags-for-k-tables-in-repository.png}
+    \caption{F1 of augmented tags for k tables in repository}
+    \label{fig:f1-of-augmented-tags-for-k-tables-in-repository}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/f1-of-augmented-tags-for-different-mixes-of-tables.png}
+    \caption{F1 of augmented tags for different mixes of tables}
+    \label{fig:f1-of-augmented-tags-for-different-mixes-of-tables}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/number-of-new-tags-added-given-k-tables.png}
+    \caption{Number of new tags added given k tables}
+    \label{fig:number-of-new-tags-added-given-k-tables}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/runtime-of-different-algorithms-for-different-k.png}
+    \caption{Runtime of different algorithms for different k}
+    \label{fig:runtime-of-different-algorithms-for-different-k}
+\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental results}
 \label{sec:ExperimentalResults}
@@ -171,7 +213,7 @@ We evaluate our experimental results in this section. For input repository size 
 
 We measured the four algorithms in Chapter 4: Solutions in terms of precision and recall with different parameters for each test, the results are shown in Table 5-1. The accuracy of Data Driven does not reflect the its actual performance, because it only creates tags for the base table and there is no mechanism for retrieving related tables. We added additional measurements for the accuracy of Improved Iterative after some modifications were made (shown in the last column of Table 5-1). We removed the schema matching step between the attributes in the iterative method. Once a related table is found, its topics are compared to each topic in every partition, if a pair of topics have a high similarity score, the topic and the attribute are added to the partition without schema matching.
 
-For every input size k, we took the average of the accuracy and created a plot in terms of the input size, the plot for precision is shown in Figure 5-1 and the plot for recall is shown in Figure 5-2. All four algorithms decrease in precision as the number of tables in the repository increases from 5 to 10. Data Driven decreases precision the least, from 0.19 to 0.17, while Iterative decreases the most, from 0.29 to 0.11. Improved Iterative also decreases precision, from 0.32 to 0.24, but it still has the highest precision at k=10 compared to the other three algorithms. However, when the additional logics are removed, the precision of Improved Iterative is only 0.11 at k=10, which is close to the precision of Brute Force and Iterative.
+For every input size k, we took the average of the accuracy and created a plot in terms of the input size, the plot for precision is shown in \autoref{fig:precision-different-algorithms} and the plot for recall is shown in \autoref{fig:recall-of-augmented-tags-for-different-algorithms}. All four algorithms decrease in precision as the number of tables in the repository increases from 5 to 10. Data Driven decreases precision the least, from 0.19 to 0.17, while Iterative decreases the most, from 0.29 to 0.11. Improved Iterative also decreases precision, from 0.32 to 0.24, but it still has the highest precision at k=10 compared to the other three algorithms. However, when the additional logics are removed, the precision of Improved Iterative is only 0.11 at k=10, which is close to the precision of Brute Force and Iterative.
 
 The recall either increase or decrease as k increases. The recall of Iterative and Data Driven are much lower compared to the other two algorithms, and the recall of both decrease as the number of tables increases. Since the precision of Iterative and Data Driven also decrease, we consider
 
@@ -182,7 +224,7 @@ We then performed rolled-up of the results in both k and mix proportion. Improve
 
 has the highest recall of 0.52 while Iterative has the lowest recall of 0.03. We think that Brute Force has a high recall because it blindly adds all tags it finds. The reason that Iterative has a low recall is because it only uses N-gram as the matching criterion, which fails to identify semantically similar tags.
 We ranked the four algorithms based on how well they perform for each test. Of the 12 tests, Improved Iterative ranks first 7 times and ranks second 3 times. The only test it performs much worse than another algorithm is for k=10 and the repository contains 9 unrelated tables. We think Improved Iterative cannot correctly reject unrelated tables, and therefore adding too many incorrect tags. The semantic distance is affected by the initialization step, which we may need to improve in the future.
-Using the precision and recall, we now compute the F1 score for the four algorithms. The plot for the F1 score at different k is shown in Figure 5-3. The plot for the F1 score for different mix proportions of related and unrelated tables is shown in Figure 5-4.
+Using the precision and recall, we now compute the F1 score for the four algorithms. The plot for the F1 score at different k is shown in \autoref{fig:f1-of-augmented-tags-for-k-tables-in-repository}. The plot for the F1 score for different mix proportions of related and unrelated tables is shown in \autoref{fig:f1-of-augmented-tags-for-different-mixes-of-tables}.
 
 As k increases, the F1 score for all of the algorithms decrease, but different algorithms decrease at different magnitudes. The F1 score for Brute Force decreases the most, from 0.30 to 0.17,
 
@@ -195,13 +237,13 @@ We measured the number of new tags added to the augmented metadata for the four 
 
 Since Brute Force adds every tag from a related table, we can compare other algorithms with Brute Force to estimate the selectivity of the other algorithms. Iterative is highly selective, since there are no new tags added for the test mix = 1+9, either because no related tables are found or none of the tags in the related tables are similar to the base table tags. This outcome is desirable because none of the 9 tables in the repository are related to the base table. Data Driven does not add many new tags either, since there is an upper bound on the number of new tags, which equals to the number of attributes in the base table. Improved Iterative adds more new tags than Data Driven, but less than Brute Force.
 
-The plot in Figure 5-5 shows the average number of tags added as k increases. For Brute Force, the number of tags added per table increases as expected, since there is one or more tags per table on average. For Data Driven, the number of new tags does not change, since the number of attributes in the base table remains constant. For Iterative, as repository size increases, the number of new tags added per table decreases. This is due to the uncontrollable factor that we have different tables between the testing set for k = 5 and k = 10, there are more new tags that Iterative can add for the k = 5 set and there are less that it can add for the k = 10 set. For Improved Iterative, the number of new tags doubles as k doubles, which is a desired result.
+The plot in \autoref{fig:number-of-new-tags-added-given-k-tables} shows the average number of tags added as k increases. For Brute Force, the number of tags added per table increases as expected, since there is one or more tags per table on average. For Data Driven, the number of new tags does not change, since the number of attributes in the base table remains constant. For Iterative, as repository size increases, the number of new tags added per table decreases. This is due to the uncontrollable factor that we have different tables between the testing set for k = 5 and k = 10, there are more new tags that Iterative can add for the k = 5 set and there are less that it can add for the k = 10 set. For Improved Iterative, the number of new tags doubles as k doubles, which is a desired result.
 
 \subsection{Runtime}
 
 We measured the runtime for the four different algorithms, and the results are shown in Table 5-5. Each test can be completed within a reasonable timeframe for all of the algorithms. Iterative and Improved Iterative terminated the iterative method in less than 5 iterations (either 2nd, 3rd, or the 4th iteration) for all tests. However, we have not included any tests with more than 10 tables in the repository, and we cannot conclude that any of the algorithms is efficient
 
-We created a plot to show the runtime of each algorithm as the repository size k increases, shown in Figure 5-6. Each value is an average of three tests of different mixes of related and unrelated tables. We observe that Brute Force, Data Driven, and Iterative do not increase in runtime by orders of magnitude, but Improved Iterative increases from 38 seconds to 1042 seconds as k increases from 5 to 10. Empirically, it is likely that the algorithm has exponential asymptotic complexity. We measured the time to enrich attributes and topics of each table in the repository, and the time to enrich 5 tables in around 3 seconds. We also measured the time to perform semantic labeling between attributes and tags, the time is around 15 seconds for 5 tables. Most of the computation time is in the schema matching step in the iterative method. As we removed the additional logics, the runtime drops significantly and the runtime of Improved Iterative is comparable to the Iterative.
+We created a plot to show the runtime of each algorithm as the repository size k increases, shown in \autoref{fig:Runtime of different algorithms for different k}. Each value is an average of three tests of different mixes of related and unrelated tables. We observe that Brute Force, Data Driven, and Iterative do not increase in runtime by orders of magnitude, but Improved Iterative increases from 38 seconds to 1042 seconds as k increases from 5 to 10. Empirically, it is likely that the algorithm has exponential asymptotic complexity. We measured the time to enrich attributes and topics of each table in the repository, and the time to enrich 5 tables in around 3 seconds. We also measured the time to perform semantic labeling between attributes and tags, the time is around 15 seconds for 5 tables. Most of the computation time is in the schema matching step in the iterative method. As we removed the additional logics, the runtime drops significantly and the runtime of Improved Iterative is comparable to the Iterative.
 
 We analyzed the theoretical asymptotic upper bound for the iterative method. For n tables, t tags per table, m attributes per table, and assuming the matching criterion make comparisons in O(1), the upper bound of the iterative method is approximately nt(nt*nt + t*nt*(nt+nm)), or O(n3t3+n3t2m). The maximum number of iterations is nt since we add at least one tag to the base table partitions per iteration and will not consider that tag again in future iterations. For each iteration, the table search step makes at most nt*nt tag comparisons. Once a related table is found, the partitioning step for the semantic labels is t*nt*(nt+nm), since there are t candidate tags, nt partitions, and within each partition there are nt tags and nm attributes. Based on the theoretical bound, the iterative method has polynomial complexity.
 We removed the schema matching step on the attributes that may have contributed to the increase in runtime, and the complexity of the iterative method is reduced to O(n3t3).

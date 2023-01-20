@@ -20,6 +20,13 @@ All four algorithms use the existing metadata to help augment additional tags, s
     \label{fig:brute-force-algorithm}
 \end{figure}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/an-example-instance-brute-force.png}
+    \caption{An example instance of tags augmentation by Brute Force}
+    \label{fig:an-example-instance-brute-force}
+\end{figure}
+
 When one table contains a set of tags A and another table contains a set of tags B, in order to augment each set with additional tags, some tags in A  B will be transferred to B and some tagsk
 
 in B V A will be transferred to A. For the augmented sets A* and B*, the overlap A* x B* contains A x B. Normalization produces the augmented sets A* and B* by comparing the sets A and B with each other, regardless of the algorithm used. The reason is that A and B are the only sources that the tags originate from. Suppose that there is a third set C which contains all the tags in A and B, then A and B do not need to compare to each other. The two sets can use the same criterion to compare to C to obtain A* and B*. If A and B are initially empty, then the criterion can be created ahead of time, and the tags selected to each set will be normalized with respect to each other. However, if A and B are initially nonempty, then the criterion cannot be created without knowing the existing tags in A and B, because the context of use for a tag may be different from the criterions assumption.
@@ -74,6 +81,13 @@ For example, the similarity of (park name, parks) is 0.6 with N-Gram, 0.8 with W
 We now explain an algorithm that iteratively augments metadata tags given a base table. The output is a set of tables related to the base table, where the base table and each of the related tables contains a normalized tags set. The iterative approach uses the existing small number of tags in tables in the repository, and augments a subset of tables in the repository with additional tags to make their metadata more complete. The subset of tables are related to the base table, which is consistent with the scope of augmenting metadata discussed in \autoref{sec:ScopeOfImprovingMetadata}. That is, since it is unnecessary for a user to look at all tables in the repository, only the tags set of the related tables are augmented. The algorithm emphasizes the process of normalization, such that tables containing overlapping information (i.e. in the data domain of some tag) have one or more shared tags.
 The algorithm begins with an initialization step, which creates the semantic labeling (discussed in \autoref{sec:SemanticLabeling}) between attributes and tags for all tables in the repository. The initialization step facilitates normalization of the tags. We then apply an iterative method that integrates a table search step (discussed in \autoref{sec:FindingRelatednessBetweenTables}) and a partitioning step (discussed in \autoref{sec:Partitioning}). The table search step helps discover related tables to the base table, and between the base table and a related table, the partitioning step is performed on the set of semantic labels of the related table. Schema matching is performed throughout the algorithm to verify that a pair of items (either attribute or tag) correspond to each other. The iterative method will be explained in \autoref{ssec:IterativeMethod}. Finally, the tags in the partitions are added to each tables metadata, as explained in \autoref{ssec:FromPartitionsToMetadataTags}.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/the-steps-iterative-approach.png}
+    \caption{The steps in the iterative approach to augment metadata tags for tables}
+    \label{fig:the-steps-iterative-approach}
+\end{figure}
+
 \subsection{Semantic labeling as the initialization step}
 \label{ssec:SemanticLabelingAsTheInitializationStep}
 
@@ -88,6 +102,13 @@ By performing semantic labeling in the initialization step, we improve the quali
 
 As proposed by \cite{Smith2011Unity}[43], to achieve normalization we need to find relationships between the metadata of all tables, hybrid matching.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/iterative-method.png}
+    \caption{Iterative method}
+    \label{fig:iterative-method}
+\end{figure}
+
 and generate additional metadata that captures the relationships to make data more searchable and understandable.
 Once we have performed table search and table recommendation, a group of tables are found to be related to a base table.
 organizing the metadata of the existing tables, and finding relatedness.
@@ -101,7 +122,7 @@ We will explain how we normalize the tags using the semantic labeling, briefly i
 we can iteratively augment metadata of the base table and the tables we retrieved.
 After we retrieve one candidate table, we perform schema matching again between the base table and the candidate table in order to augment metadata tags. We use the matched topic pairs from table search to obtain candidate attributes pairs, and then perform attribute-to-attribute schema matching to verify that each pair of attributes belong in the same domain. For example, given that the overlapping tag is parks, with semantic labeling of (parks, Parks.park\_name) and (parks, ParkSpecimenTrees.park), we know that the pair of attributes (Parks.park\_name, ParkSpecimenTrees.park) should be compared to verify that they are similar. Once the correspondence between the pair of attributes is confirmed, we can confirm that the tag parks is a correct tag for both tables.
 
-The iterative method in Figure 5.2 then takes sq, S, D, L, ts, pt, sc as input, where D is the set of all data instances in the repository, L is the set of text items describing the data instances, ts is a threshold used for schema matching during the table search step, pt is a threshold used for schema matching during the partitioning step, sc is a threshold used for schema matching during the verification step after items are placed in partitions.
+The iterative method in \autoref{fig:iterative-method} then takes sq, S, D, L, ts, pt, sc as input, where D is the set of all data instances in the repository, L is the set of text items describing the data instances, ts is a threshold used for schema matching during the table search step, pt is a threshold used for schema matching during the partitioning step, sc is a threshold used for schema matching during the verification step after items are placed in partitions.
 With TableSearch described in \autoref{ssec:ModifiedTableSearch}, we first select a table s  D that is most closely related to the current state S of sq. The relatedness is determined by the number of overlapping tags between the selected table s and sq. Next, for each semantic label in the selected table, use Partition to compare the tag to each partition of sq. Using Partition, if the tag is similar to the tags in a partition, then use SchemaMatching described in \autoref{ssec:UsingSchemaMatchingOnOpenData} to perform schema matching between the tag's mapped attribute with existing attributes in the partition. From ScoreThreshold, if correspondences above pt can be created from the result of schema matching, add the tag and the attribute to that partition. If the tag is not highly similar to any tags in any partitions, but the tag is somewhat similar to tags in sq by a threshold score, then use NewPartitions to create a new partition for the tag. Update the current state S to include new partitions and tags. In the selected table s, remove tags that were added from its metadata, so that these tags will not overlap with the base table again in the next iteration. Repeat all of the above in a new iteration if it is still possible to find a table s'  D related to the current state S of sq. The only matching criterion we used throughout the algorithm is N-gram.
 
 \subsection{Iterative method example}
@@ -119,6 +140,13 @@ service classification and device size are not similar, nor is the attribute dev
 
 Each partition is a collection containing a set of attributes, a set of tags, as well as the mapping between attributes and tags. The iterative method takes a set of semantic labeling as input, and outputs the partitions of the base table. We show how to create a modified set of semantic labeling for each table found in TableSearch, and how to augment tags of a table using the semantic labeling. We let A(a) and B(b) be two tables where a and b are attributes, and let A be the base table. Let tags of A be [X], and tags of B be [Y]. Let semantic labeling of A be {(a, X)} and semantic labeling of B be {(b, Y)}. Suppose that X and Y are similar, and a and b are similar. Thus there is one partition where the attributes are {a, b} and the tags are {X, Y}. We also keep track of the mappings between attributes and tags as well as which table an attribute originates from. For each table, we collect all tags in all partitions where its attributes are assigned to, and augment the tables tags with any additional tags it does not already contain. For every attribute in a partition, we create a new semantic label between every attribute-tag pair. For example, in addition to the existing semantic labels, the semantic labels (a, Y) and (b, X) are also created. Then table A would collect both X and Y as the augmented metadata, and likewise for table B.
 At the end of the third iteration in the example from \label{ssec:IterativeMethodExample}, the augmented tags for ParkSpecimenTrees are [environment, ecosystem, trees, green, parks, sustainability], the augmented tags for Park are [environment, ecosystem, parks], and the augmented tags for GreenInfrastructureNetwork are [environment, ecosystem, trees, green].
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/partitions-park-specimen-trees.png}
+    \caption{Partitions of base table ParkSpecimenTrees after the third iteration of the example in Section 4.3.2. Each partition contains a set of attributes and a set of tags, as well as the mappings between them, they are represented as a set of semantic labels above.}
+    \label{fig:partitions-park-specimen-trees}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Improved iterative approach}
@@ -151,7 +179,7 @@ As the first step before we perform the initialization step, we perform semantic
 
 \subsection{Semantic distance}
 
-Once semantics are attached to each attribute or tag, we can use WordNet to find the semantic distance between two tags, between a tag and an attribute, or between two attributes. The semantic distance can be used in TableSearch, SchemaMatching, and NewPartition in Figure 5-2, replacing N-gram character matching.
+Once semantics are attached to each attribute or tag, we can use WordNet to find the semantic distance between two tags, between a tag and an attribute, or between two attributes. The semantic distance can be used in TableSearch, SchemaMatching, and NewPartition in \autoref{fig:recall-of-augmented-tags-for-different-algorithms}, replacing N-gram character matching.
 
 We use hybrid matching \cite{Rahm2001Survey}[40], where we use each matching criterion to produce a similarity score for each pair of elements compared, and then combine the similarity scores once scores from all criteria are available. The criteria we use are WordNet semantic distance, FastText word vector distance, and N-Gram distance that we described in Error! Reference source not found.. We reuse the weights of the matching criteria trained in Data Driven, where each trained weight is specific for each tag and each matching criterion. However, the total number of trained weights is |number of tags| . |number of criteria|, which is too costly to compute. We use one score for each criterion instead, where we simply summed up all the weights of all classes for a specific criterion: ..............
 We then normalized the weights such that they sum to 1. For example, when comparing park and trees, WordNet, FastText, and N-Gram each outputs one score, regardless of what tag is being compared. However, we ended up having negative weights for FastText, which means it gave false positives and false negatives during training. On the other hand, the weight of WordNet is twice of N-Gram, which indicates that among the three criteria, WordNet performed much better than the other two. We then used the empirical weights of (N-Gram=0.4, WordNet=0.6, FastText=0) instead to increase true positives. In the WordNet matching criterion, if an attribute or tag consists of multiple words, we take the maximum of the semantic distance scores.
