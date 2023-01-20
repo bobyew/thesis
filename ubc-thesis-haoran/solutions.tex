@@ -139,12 +139,12 @@ service classification and device size are not similar, nor is the attribute dev
 \label{ssec:FromPartitionsToMetadataTags}
 
 Each partition is a collection containing a set of attributes, a set of tags, as well as the mapping between attributes and tags. The iterative method takes a set of semantic labeling as input, and outputs the partitions of the base table. We show how to create a modified set of semantic labeling for each table found in TableSearch, and how to augment tags of a table using the semantic labeling. We let A(a) and B(b) be two tables where a and b are attributes, and let A be the base table. Let tags of A be [X], and tags of B be [Y]. Let semantic labeling of A be {(a, X)} and semantic labeling of B be {(b, Y)}. Suppose that X and Y are similar, and a and b are similar. Thus there is one partition where the attributes are {a, b} and the tags are {X, Y}. We also keep track of the mappings between attributes and tags as well as which table an attribute originates from. For each table, we collect all tags in all partitions where its attributes are assigned to, and augment the tables tags with any additional tags it does not already contain. For every attribute in a partition, we create a new semantic label between every attribute-tag pair. For example, in addition to the existing semantic labels, the semantic labels (a, Y) and (b, X) are also created. Then table A would collect both X and Y as the augmented metadata, and likewise for table B.
-At the end of the third iteration in the example from \label{ssec:IterativeMethodExample}, the augmented tags for ParkSpecimenTrees are [environment, ecosystem, trees, green, parks, sustainability], the augmented tags for Park are [environment, ecosystem, parks], and the augmented tags for GreenInfrastructureNetwork are [environment, ecosystem, trees, green].
+At the end of the third iteration in the example from \autoref{ssec:IterativeMethodExample}, the augmented tags for ParkSpecimenTrees are [environment, ecosystem, trees, green, parks, sustainability], the augmented tags for Park are [environment, ecosystem, parks], and the augmented tags for GreenInfrastructureNetwork are [environment, ecosystem, trees, green].
 
 \begin{figure}
     \centering
     \includegraphics[width=5in]{figures/partitions-park-specimen-trees.png}
-    \caption{Partitions of base table ParkSpecimenTrees after the third iteration of the example in Section 4.3.2. Each partition contains a set of attributes and a set of tags, as well as the mappings between them, they are represented as a set of semantic labels above.}
+    \caption{Partitions of base table ParkSpecimenTrees after the third iteration of the example in \autoref{ssec:IterativeMethodExample}. Each partition contains a set of attributes and a set of tags, as well as the mappings between them, they are represented as a set of semantic labels above.}
     \label{fig:partitions-park-specimen-trees}
 \end{figure}
 
@@ -185,7 +185,7 @@ We use hybrid matching \cite{Rahm2001Survey}[40], where we use each matching cri
 We then normalized the weights such that they sum to 1. For example, when comparing park and trees, WordNet, FastText, and N-Gram each outputs one score, regardless of what tag is being compared. However, we ended up having negative weights for FastText, which means it gave false positives and false negatives during training. On the other hand, the weight of WordNet is twice of N-Gram, which indicates that among the three criteria, WordNet performed much better than the other two. We then used the empirical weights of (N-Gram=0.4, WordNet=0.6, FastText=0) instead to increase true positives. In the WordNet matching criterion, if an attribute or tag consists of multiple words, we take the maximum of the semantic distance scores.
 
 \subsection{Iterative method example}
-\label{ssec:IterativeMethodExample}
+\label{ssec:IterativeMethodExample2}
 
 Let the base table schema be Parks(park name, location). Let its existing tags be [environment, green, parks]. After performing semantic enrichment, we have (park, 'a piece of open land for
 

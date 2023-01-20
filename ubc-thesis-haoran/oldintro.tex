@@ -4,6 +4,45 @@
 \chapter{Old Introduction}
 \label{ch:OldIntroduction}
 
+\[
+  S = \left(\begin{array}{c}
+    \{B_{M,i}\} \\
+    \vdots \\
+    \{B_{1,i}\} \ \{B_{2,i}\} \ \cdots \ \{B_{M,i}\}
+  \end{array}\right)
+\]
+
+\begin{table}[h!]
+    \begin{center}
+      \caption{Multirow table.}
+      \label{tab:table2}
+      \begin{tabular}{l|S|r}
+        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+        $\alpha$ & $\beta$ & $\gamma$ \\        
+        \hline
+        \multirow{2}{*}{12} & 1110.1 & a\\ % <-- Combining 2 rows with arbitrary with (*) and content 12
+        & 10.1 & b\\ % <-- Content of first column omitted.
+        \hline
+        3 & 23.113231 & c\\
+        4 & 25.113231 & d\\
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[h!]
+  \begin{center}
+    \caption{Your first table.}
+    \label{tab:table1}
+    \begin{tabular}{l|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+      \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+      $\alpha$ & $\beta$ & $\gamma$ \\
+      \hline
+      1 & 1110.1 & a\\
+      2 & 10.1 & b\\
+      3 & 23.113231 & c\\
+    \end{tabular}
+  \end{center}
+\end{table}
 
 \begin{figure*}[!htp]
     \centering

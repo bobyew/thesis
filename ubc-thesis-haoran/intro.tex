@@ -43,7 +43,10 @@ A user may not find tags to be very useful when browsing or searching the tags d
 spend more time manually perform searching, filtering, and browsing to find related tables. Once related tables are found, it is also difficult to understand how one table is related to another.
 Due to incompleteness, inaccuracy, and heterogeneity in the metadata, a user may not be able to understand the data by only browsing its metadata, and a machine cannot use metadata to perform searching and filtering.
 
-\subsection{Scope of study and resources}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Scope of study and resources}
+\label{sec:ScopeOfStudyAndResources}
+
 We study how to improve metadata with the anomalies discussed in \autoref{sec:TheProblemsWithAnomaliesInMetadata}, we will discuss a number of methods and their effectiveness. We first limit the scope of our study. To make the problem simpler and easier to explain, we only study open data in the form of tables, and only seek to improve the quantity of metadata in the form of tags. Data instances in other forms such as XML, spatial data, and images are not studied. Metadata in the form of sentences, schema, and constraints also exist in open data, but we do not aim to improve them. A number of terminologies are defined as follows.
 
 \subsection{Terminologies and definitions}
@@ -169,7 +172,7 @@ To overcome semantic heterogeneity, we perform semantic enrichment (attaching a 
 \section{Problem Definition}
 \label{sec:ProblemDefinition}
 
-We will now define our problem that we have introduced in Sections 1.4 and 1.7. The input to our problem is a set of data instances, each containing a table, a metadata schema for the table, and a list of metadata text items describing the data instance. Each table contains a header row, and there is a column header for each table column. The text items may or may not be able to describe the table.
+We will now define our problem that we have introduced in \autoref{sec:ScopeOfStudyAndResources} and \autoref{sec:ScopeOfImprovingMetadata}. The input to our problem is a set of data instances, each containing a table, a metadata schema for the table, and a list of metadata text items describing the data instance. Each table contains a header row, and there is a column header for each table column. The text items may or may not be able to describe the table.
 
 \subsection{Inputs and outputs}
 More formally, let a data instance, s, consist of:
