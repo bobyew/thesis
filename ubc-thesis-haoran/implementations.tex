@@ -260,7 +260,47 @@ For every input size k, we took the average of the accuracy and created a plot i
 The recall either increase or decrease as k increases. The recall of Iterative and Data Driven are much lower compared to the other two algorithms, and the recall of both decrease as the number of tables increases. Since the precision of Iterative and Data Driven also decrease, we consider
 
 these algorithms poorly designed. Brute Force and Improved Iterative both increase in recall as the number of tables increases, and there is a tradeoff of precision over recall as the number of tables increases. While Brute Force has the highest recall for both k=5 and k=10, the recall of Improved Iterative is comparable. We note that Brute Force has a much lower precision.
-We performed rolled-up of the results in the dimension of k, and computed the average for every mix proportion. The precision is shown in Table 5-2 and the recall is shown in Table 5-3. A well-designed algorithm should not decrease in precision or recall when the proportion of related and unrelated tables change. However, we observe that decreased its precision drastically as the mix shifts from 100% to 0%, this suggests that Improved Iterative requires more improvements for future work.
+We performed rolled-up of the results in the dimension of k, and computed the average for every mix proportion. The precision is shown in Table 5-2 and the recall is shown in Table 5-3. A well-designed algorithm should not decrease in precision or recall when the proportion of related and unrelated tables change. However, we observe that decreased its precision drastically as the mix shifts from 100\% to 0\%, this suggests that Improved Iterative requires more improvements for future work.
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \begin{center}
+      \caption{Precision of different algorithms given a mix of related and unrelated tables in repository}
+      \label{tab:Precision-of-different-algorithms-given-a-mix-of-related-and-unrelated-tables-in-repository}
+      \begin{tabular}{|r|r|r|r|r|}
+        \hline
+        \textbf{mix} & \textbf{Brute Force} & \textbf{Data Driven} & \textbf{Iterative} & \textbf{Improved Iterative} \\
+        \hline
+        0\% & 0.05915 & 0.1882 & 0.14285 & 0.1266 \\
+        \hline
+        50\% & 0.22605 & 0.18335 & 0.23375 & 0.2282 \\
+        \hline
+        100\% & 0.2064 & 0.17155 & 0.21975 & 0.48445 \\
+        \hline
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \begin{center}
+      \caption{Recall of different algorithms given a mix of related and unrelated tables in repository}
+      \label{tab:Recall-of-different-algorithms-given-a-mix-of-related-and-unrelated-tables-in-repository}
+      \begin{tabular}{|r|r|r|r|r|}
+        \hline
+        \textbf{mix} & \textbf{Brute Force} & \textbf{Data Driven} & \textbf{Iterative} & \textbf{Improved Iterative} \\
+        \hline
+        0\% & 0.54345 & 0.1304 & 0.04345 & 0.413 \\
+        \hline
+        50\% & 0.50515 & 0.0367 & 0.02445 & 0.40615 \\
+        \hline
+        100\% & 0.51215 & 0.02215 & 0.0147 & 0.3332 \\
+        \hline        
+      \end{tabular}
+    \end{center}
+\end{table}
 
 We then performed rolled-up of the results in both k and mix proportion. Improved Iterative has the highest precision of 0.28 while Brute Force has the lowest precision of 0.16, but Brute Force
 
@@ -270,12 +310,38 @@ Using the precision and recall, we now compute the F1 score for the four algorit
 
 As k increases, the F1 score for all of the algorithms decrease, but different algorithms decrease at different magnitudes. The F1 score for Brute Force decreases the most, from 0.30 to 0.17,
 
-while Improved Iterative decreases the least, from 0.32 to 0.31. Improved Iterative performs the best for all k. As the mix proportion changes, F1 for each of the four algorithms changes in different ways. Data Driven and Iterative decrease in F1 as the mix proportion increases, while Improved Iterative increases in F1 as the mix proportion increases. Brute Forces F1 increases at 50% but decreases at 100%. Improved Iterative performs the best among all four algorithms.
+while Improved Iterative decreases the least, from 0.32 to 0.31. Improved Iterative performs the best for all k. As the mix proportion changes, F1 for each of the four algorithms changes in different ways. Data Driven and Iterative decrease in F1 as the mix proportion increases, while Improved Iterative increases in F1 as the mix proportion increases. Brute Forces F1 increases at 50\% but decreases at 100\%. Improved Iterative performs the best among all four algorithms.
 However, we think a good algorithm should have a constant F1 score regardless of what mix proportion it is given. This suggests again that more improvements needs to be done as future work.
 
 \subsection{New tags added}
 
 We measured the number of new tags added to the augmented metadata for the four algorithms in Table 5-4. Brute Force adds the most number of new tags on average, 42.71 per table, Data Driven adds 7.63 tags per table, while Iterative only adds 2.33 per table. Improved Iterative adds 14.35 tags per table. When additional logics are removed for Improved Iterative, 25.96 new tags are added, this demonstrates that the schema matching step is able to filter out many tags.
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \begin{center}
+      \caption{Number of new tags added by different algorithms}
+      \label{tab:Number-of-new-tags-added-by-different-algorithms}
+      \begin{tabular}{|p{0.05\textwidth}|p{0.14\textwidth}|p{0.08\textwidth}|p{0.07\textwidth}|p{0.07\textwidth}|p{0.11\textwidth}|p{0.14\textwidth}|}  
+        \hline
+         & & \textbf{Brute Force} & \textbf{Data Driven} & \textbf{Iterative} & \textbf{Improved Iterative} & \textbf{Improved Iterative (additional logics removed)}\\
+        \hline
+        \multirow{3}{*}{k = 5} & mix = 1+4 & 17 & 15 & 7 & 6 & \\
+        \cline{2-7}
+        & mix = 3+2 & 14.67 & 5 & 2.33 & 13 & \\
+        \cline{2-7}
+        & mix = 5+0 & 26.4 & 3.4 & 1.4 & 8 & \\
+        \hline        
+        \multirow{3}{*}{k = 10} & mix = 1+9 & 63 & 17 & 0 & 29 & 41 \\
+        \cline{2-7}
+        & mix = 5+5 & 70.2 & 3.6 & 2 & 16.2 & 20.4 \\
+        \cline{2-7}
+        & mix = 10+0 & 65 & 1.8 & 1.3 & 13.9 & 16.5 \\
+        \hline
+      \end{tabular}
+    \end{center}
+\end{table}
 
 Since Brute Force adds every tag from a related table, we can compare other algorithms with Brute Force to estimate the selectivity of the other algorithms. Iterative is highly selective, since there are no new tags added for the test mix = 1+9, either because no related tables are found or none of the tags in the related tables are similar to the base table tags. This outcome is desirable because none of the 9 tables in the repository are related to the base table. Data Driven does not add many new tags either, since there is an upper bound on the number of new tags, which equals to the number of attributes in the base table. Improved Iterative adds more new tags than Data Driven, but less than Brute Force.
 
@@ -283,7 +349,33 @@ The plot in \autoref{fig:number-of-new-tags-added-given-k-tables} shows the aver
 
 \subsection{Runtime}
 
-We measured the runtime for the four different algorithms, and the results are shown in Table 5-5. Each test can be completed within a reasonable timeframe for all of the algorithms. Iterative and Improved Iterative terminated the iterative method in less than 5 iterations (either 2nd, 3rd, or the 4th iteration) for all tests. However, we have not included any tests with more than 10 tables in the repository, and we cannot conclude that any of the algorithms is efficient
+We measured the runtime for the four different algorithms, and the results are shown in Table 5-5. Each test can be completed within a reasonable timeframe for all of the algorithms. Iterative and Improved Iterative terminated the iterative method in less than 5 iterations (either 2nd, 3rd, or the 4th iteration) for all tests. However, we have not included any tests with more than 10 tables in the repository, and we cannot conclude that any of the algorithms is efficient.
+
+\begin{table}[h!]
+    \centering
+    \scriptsize
+    \begin{center}
+      \caption{Runtime (in seconds) of different approaches given k tables as input}
+      \label{tab:Runtime-of-different-approaches-given-k-tables-as-input}
+      \begin{tabular}{|p{0.05\textwidth}|p{0.14\textwidth}|p{0.08\textwidth}|p{0.07\textwidth}|p{0.07\textwidth}|p{0.11\textwidth}|p{0.14\textwidth}|}  
+        \hline
+         & & \textbf{Brute Force} & \textbf{Data Driven} & \textbf{Iterative} & \textbf{Improved Iterative} & \textbf{Improved Iterative (additional logics removed)}\\
+        \hline
+        \multirow{3}{*}{k = 5} & mix = 1+4 & 1.2 & 0.76 & 12.41 & 6.12 & \\
+        \cline{2-7}
+        & mix = 3+2 & 2.24 & 0.77 & 7.06 & 25.16 & \\
+        \cline{2-7}
+        & mix = 5+0 & 4.21 & 0.8 & 10.05 & 6.7 & \\
+        \hline        
+        \multirow{3}{*}{k = 10} & mix = 1+9 & 8.02 & 1.31 & 10 & 268 & 13 \\
+        \cline{2-7}
+        & mix = 5+5 & 5.63 & 1.19 & 9 & 135 & 4 \\
+        \cline{2-7}
+        & mix = 10+0 & 8.23 & 1.07 & 12 & 639 & 5 \\
+        \hline
+      \end{tabular}
+    \end{center}
+\end{table}
 
 We created a plot to show the runtime of each algorithm as the repository size k increases, shown in \autoref{fig:Runtime of different algorithms for different k}. Each value is an average of three tests of different mixes of related and unrelated tables. We observe that Brute Force, Data Driven, and Iterative do not increase in runtime by orders of magnitude, but Improved Iterative increases from 38 seconds to 1042 seconds as k increases from 5 to 10. Empirically, it is likely that the algorithm has exponential asymptotic complexity. We measured the time to enrich attributes and topics of each table in the repository, and the time to enrich 5 tables in around 3 seconds. We also measured the time to perform semantic labeling between attributes and tags, the time is around 15 seconds for 5 tables. Most of the computation time is in the schema matching step in the iterative method. As we removed the additional logics, the runtime drops significantly and the runtime of Improved Iterative is comparable to the Iterative.
 
