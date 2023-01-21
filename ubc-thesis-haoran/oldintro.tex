@@ -4,6 +4,156 @@
 \chapter{Old Introduction}
 \label{ch:OldIntroduction}
 
+\begin{table}[htb]
+    \resizebox{\textwidth}{!}{% use resizebox with textwidth
+    \begin{tabular}{ l | l }
+      {\bf Symptom} & {\bf Metric} \\
+    \hline
+    Class that has many accessor methods and accesses a lot of external data & ATFD is more than a few\\
+    Class that is large and complex & WMC is high\\
+    Class that has a lot of methods that only operate on a proper subset of the instance variable set & TCC is low\\
+    \end{tabular}% close resizebox
+    }
+\end{table}
+
+\begin{tabularx}{\textwidth}{X|l}
+    \textbf{Symptom} & \textbf{Metric} \\
+  \hline
+  Class that has many accessor methods and accesses a lot of external data & ATFD is more than a few\\
+  Class that is large and complex & WMC is high\\
+  Class that has a lot of methods that only operate on a proper subset of the instance variable set & TCC is low\\
+\end{tabularx}
+
+\begin{table}[h!]
+    7\scriptsize
+    \begin{center}
+\begin{tabular*}{\textwidth}{c @{\extracolsep{\fill}} cccccccc}
+    \hline
+    & & & \textbf{Brute Force} & \textbf{Data Driven} & \textbf{Data Driven (base table only)} & \textbf{Iterative} & \textbf{Improved Iterative} & \textbf{Improved Iterative (additional logics removed)}\\
+    \hline
+    \multirow{6}{*}{k = 5} & \multirow{2}{*}{mix = 1+4} & Precision & 0.09 & 0.2 & 0.2 & 0.2857 & 0.2188 & \\
+    \cline{3-9}
+    & & Recall & 0.3913 & 0.1304 & 0.1304 & 0.0869 & 0.3043 & \\
+    \cline{2-9}
+    & \multirow{2}{*}{mix = 3+2} & Precision & 0.3625 & 0.2 &  0.2 & 0.2857 & 0.25 & \\
+    \cline{3-9}
+    & & Recall & 0.3913 & 0.1304 & 0.1304 & 0.0869 & 0.3043 & \\
+    \cline{2-9}
+    & \multirow{2}{*}{mix = 3+2} & Precision & 0.3625 & 0.2 &  0.2 & 0.2857 & 0.25 & \\
+    \cline{3-9}
+    & & Recall & 0.3913 & 0.1304 & 0.1304 & 0.0869 & 0.3043 & \\
+    \hline        
+    \multirow{6}{*}{k = 5} & \multirow{2}{*}{mix = 1+4} & Precision & 0.09 & 0.2 & 0.2 & 0.2857 & 0.2188 & \\
+    \cline{3-9}
+    & & Recall & 0.3913 & 0.1304 & 0.1304 & 0.0869 & 0.3043 & \\
+    \cline{2-9}
+    & \multirow{2}{*}{mix = 3+2} & Precision & 0.3625 & 0.2 &  0.2 & 0.2857 & 0.25 & \\
+    \cline{3-9}
+    & & Recall & 0.3913 & 0.1304 & 0.1304 & 0.0869 & 0.3043 & \\
+    \cline{2-9}
+    & \multirow{2}{*}{mix = 3+2} & Precision & 0.3625 & 0.2 &  0.2 & 0.2857 & 0.25 & \\
+    \cline{3-9}
+    & & Recall & 0.3913 & 0.1304 & 0.1304 & 0.0869 & 0.3043 & \\
+    \hline    
+\end{tabular*}
+    \end{center}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    %\tiny
+    \scriptsize
+    \begin{center}
+      \caption{Precision and recall of algorithms given input of k tables}
+      \label{tab:table3}
+      %\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+      % \begin{tabular}{|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|}  
+      \begin{tabular}{|p{0.05\textwidth}|p{0.09\textwidth}|p{0.08\textwidth}|p{0.07\textwidth}|p{0.07\textwidth}|p{0.11\textwidth}|p{0.08\textwidth}|p{0.11\textwidth}|p{0.11\textwidth}|}  
+        \hline
+        & & & \textbf{Brute Force} & \textbf{Data Driven} & \textbf{Data Driven (base table only)} & \textbf{Iterative} & \textbf{Improved Iterative} & \textbf{Improved Iterative (additional logics removed)}\\
+        \hline
+        \multirow{6}{*}{k = 5} & \multirow{2}{*}{mix = 1+4} & Precision & 0.09 & 0.2 & 0.2 & 0.2857 & 0.2188 & \\
+        \cline{3-9}
+        & & Recall & 0.3913 & 0.1304 & 0.1304 & 0.0869 & 0.3043 & \\
+        \cline{2-9}
+        & \multirow{2}{*}{mix = 3+2} & Precision & 0.3625 & 0.2 &  0.2 & 0.2857 & 0.25 & \\
+        \cline{3-9}
+        & & Recall & 0.4203 & 0.0434 & 0.1304 & 0.0289 & 0.3623 & \\
+        \cline{2-9}
+        & \multirow{2}{*}{mix = 5+0} & Precision & 0.2395 & 0.1764 & 0.1764 & 0.2857 & 0.5 & \\
+        \cline{3-9}
+        & & Recall & 0.4693 & 0.0306 & 0.1304 & 0.0204 & 0.2857 & \\
+        \hline        
+        \multirow{6}{*}{k = 10} & \multirow{2}{*}{mix = 1+9} & Precision & 0.0283 & 0.1764 & 0.1764 & 0 & 0.0344 & 0.0421 \\
+        \cline{3-9}
+        & & Recall & 0.6956 & 0.1304 & 0.1304 & 0 & 0.5217 & 0.5217 \\
+        \cline{2-9}
+        & \multirow{2}{*}{mix = 5+5} & Precision & 0.0896 & 0.1667 & 0.1667 & 0.1818 & 0.2064 & 0.1042 \\
+        \cline{3-9}
+        & & Recall & 0.59 & 0.03 & 0.1304 & 0.02 & 0.45 & 0.42 \\
+        \cline{2-9}
+        & \multirow{2}{*}{mix = 10+0} & Precision & 0.1733 & 0.1667 & 0.1667 & 0.1538 & 0.4689 & 0.2059 \\
+        \cline{3-9}
+        & & Recall & 0.555 & 0.0137 & 0.1304 & 0.009 & 0.3807 & 0.3532 \\
+        \hline
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{tabular}{|c|cc|}\hline
+    \multirow{4}{*}{Foo} & 1 & 2 \\
+        & 1 & 2 \\\cline{2-3}
+        & 1 & 2 \\
+        & 1 & 2 \\\hline
+    \multirow{4}{*}{Bar} & 1 & 2 \\
+        & 1 & 2 \\\cline{2-3}
+        & 1 & 2 \\
+        & 1 & 2 \\\hline
+    \end{tabular}
+
+\begin{table}[h!]
+    \begin{center}
+      \caption{Multirow and -column table.}
+      \label{tab:table1}
+      \begin{tabular}{l|S|r}
+        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+        $\alpha$ & $\beta$ & $\gamma$ \\
+        \hline
+        \multicolumn{2}{c|}{\multirow{2}{*}{1234}} & a\\ % <-- Multicolumn spanning 2 columns, content multirow spanning two rows
+        \multicolumn{2}{c|}{} & b\\ % <-- Multicolumn spanning 2 columns with empty content as placeholder
+        \hline
+        3 & 23.113231 & c\\
+        4 & 25.113231 & d\\
+      \end{tabular}
+    \end{center}
+\end{table}
+  
+\begin{table}[h!]
+    \begin{center}
+      \caption{Multicolumn table.}
+      \label{tab:table1}
+      \begin{tabular}{l|S|r}
+        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+        $\alpha$ & $\beta$ & $\gamma$ \\
+        \hline
+        \multicolumn{2}{c|}{12} & a\\ % <-- Combining two cells with alignment c| and content 12.
+        \hline
+        2 & 10.1 & b\\
+        3 & 23.113231 & c\\
+        4 & 25.113231 & d\\
+      \end{tabular}
+    \end{center}
+\end{table}
+ 
+  
+\begin{equation}
+    S=\begin{pmatrix}
+    \{B_{M,i}\}\\
+    \vdots\\
+    \{B_{1,i}\}  \{B_{2,i}\} \dots \{B_{M,i}\}
+    \end{pmatrix}
+\end{equation}
+
 \[
   S = \left(\begin{array}{c}
     \{B_{M,i}\} \\

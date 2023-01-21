@@ -70,7 +70,41 @@ To show how to augment the tags set of a table using multiclass classification, 
 
 Let the trained weights, W, of the matching criteria be:
 
+\begin{table}[h!]
+    \begin{center}
+      \begin{tabular}{|l|l|l|l|l|l|l|l|}
+        \hline        
+        & \textbf{N-Gram} & \textbf{WordNet} & \textbf{FastText}\\
+        \hline
+        parks & 0.3 & 0.4 & 0.3 \\
+        \hline
+        environment & 0.2 & 0.35 & 0.45 \\
+        \hline
+        \dots &  &  &  \\
+        \hline
+        infrastructure & 0.7 & 0.2 & 0.1 \\
+        \hline    
+      \end{tabular}
+    \end{center}
+\end{table}
+
 Hybrid matching uses each criterion to compute the similarity score between an attribute and each of the candidate tags. For the attribute park name in Parks, let the similarity matrix be:
+
+\begin{table}[h!]
+    \begin{center}
+      \begin{tabular}{|l|l|l|l|l|l|l|l|}
+        \hline
+        & \textbf{parks} & \textbf{environment} & \textbf{nature} & \textbf{green} & \textbf{trees} & \textbf{devices} & \textbf{infrastructure}\\
+        \hline
+        N-Gram & 0.6 & 0.2 & 0.3 & 0.3 & 0.2 & 0.5 & 0.3 \\
+        \hline
+        WordNet & 0.8 & 0.6 & 0.6 & 0.6 & 0.5 & 0.2 & 0.2 \\
+        \hline
+        FastText & 0.8 & 0.8 & 0.7 & 0.7 & 0.7 & 0.2 & 0.3 \\
+        \hline    
+      \end{tabular}
+    \end{center}
+\end{table}
 
 For example, the similarity of (park name, parks) is 0.6 with N-Gram, 0.8 with WordNet, and 0.8 with FastText. Then the combined score is 0.6*0.3 + 0.8*0.4 + 0.8*0.3 = 0.82. In the same way, the combined score for other candidate tags are (park name, environment, 0.7), (park, green, 0.6), and so on. If (park name, parks) has the highest score of 0.87, then the attribute park name is assigned to parks. At the end of Data Driven, the Parks table is augmented with parks in its tags set.
 

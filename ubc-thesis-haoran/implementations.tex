@@ -16,6 +16,7 @@ The discussion of the results of our evaluation follows, where we show that the 
 \begin{tabular}{lp{3.25in}}\toprule
 Variant & Result \\
 \midrule
+
 % We cheat here to simulate the cite/citep/citet for APA-like styles
 \verb+\cite+ & Parenthetical citation (\eg ``\cite{kiczales-1997-aop}''
     or ``(\citeauthor{kiczales-1997-aop} \citeyear{kiczales-1997-aop})'') \\
@@ -211,7 +212,48 @@ We evaluate our experimental results in this section. For input repository size 
 
 \subsection{Precision and recall}
 
-We measured the four algorithms in Chapter 4: Solutions in terms of precision and recall with different parameters for each test, the results are shown in Table 5-1. The accuracy of Data Driven does not reflect the its actual performance, because it only creates tags for the base table and there is no mechanism for retrieving related tables. We added additional measurements for the accuracy of Improved Iterative after some modifications were made (shown in the last column of Table 5-1). We removed the schema matching step between the attributes in the iterative method. Once a related table is found, its topics are compared to each topic in every partition, if a pair of topics have a high similarity score, the topic and the attribute are added to the partition without schema matching.
+We measured the four algorithms in \autoref{ch:Solutions}: Solutions in terms of precision and recall with different parameters for each test, the results are shown in Table 5-1. The accuracy of Data Driven does not reflect the its actual performance, because it only creates tags for the base table and there is no mechanism for retrieving related tables. We added additional measurements for the accuracy of Improved Iterative after some modifications were made (shown in the last column of Table 5-1). We removed the schema matching step between the attributes in the iterative method. Once a related table is found, its topics are compared to each topic in every partition, if a pair of topics have a high similarity score, the topic and the attribute are added to the partition without schema matching.
+
+\begin{table}[h!]
+    \centering
+    %\tiny
+    \scriptsize
+    \begin{center}
+      \caption{Precision and recall of algorithms given input of k tables}
+      \label{tab:Precision-and-recall-of-algorithms-given-input-of-k-tables}
+      %\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+      % \begin{tabular}{|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|p{3.6em}|}  
+      \begin{tabular}{|p{0.05\textwidth}|p{0.09\textwidth}|p{0.08\textwidth}|p{0.07\textwidth}|p{0.07\textwidth}|p{0.11\textwidth}|p{0.08\textwidth}|p{0.11\textwidth}|p{0.11\textwidth}|}  
+        \hline
+        & & & \textbf{Brute Force} & \textbf{Data Driven} & \textbf{Data Driven (base table only)} & \textbf{Iterative} & \textbf{Improved Iterative} & \textbf{Improved Iterative (additional logics removed)}\\
+        \hline
+        \multirow{6}{*}{k = 5} & \multirow{2}{*}{mix = 1+4} & Precision & 0.09 & 0.2 & 0.2 & 0.2857 & 0.2188 & \\
+        \cline{3-9}
+        & & Recall & 0.3913 & 0.1304 & 0.1304 & 0.0869 & 0.3043 & \\
+        \cline{2-9}
+        & \multirow{2}{*}{mix = 3+2} & Precision & 0.3625 & 0.2 &  0.2 & 0.2857 & 0.25 & \\
+        \cline{3-9}
+        & & Recall & 0.4203 & 0.0434 & 0.1304 & 0.0289 & 0.3623 & \\
+        \cline{2-9}
+        & \multirow{2}{*}{mix = 5+0} & Precision & 0.2395 & 0.1764 & 0.1764 & 0.2857 & 0.5 & \\
+        \cline{3-9}
+        & & Recall & 0.4693 & 0.0306 & 0.1304 & 0.0204 & 0.2857 & \\
+        \hline        
+        \multirow{6}{*}{k = 10} & \multirow{2}{*}{mix = 1+9} & Precision & 0.0283 & 0.1764 & 0.1764 & 0 & 0.0344 & 0.0421 \\
+        \cline{3-9}
+        & & Recall & 0.6956 & 0.1304 & 0.1304 & 0 & 0.5217 & 0.5217 \\
+        \cline{2-9}
+        & \multirow{2}{*}{mix = 5+5} & Precision & 0.0896 & 0.1667 & 0.1667 & 0.1818 & 0.2064 & 0.1042 \\
+        \cline{3-9}
+        & & Recall & 0.59 & 0.03 & 0.1304 & 0.02 & 0.45 & 0.42 \\
+        \cline{2-9}
+        & \multirow{2}{*}{mix = 10+0} & Precision & 0.1733 & 0.1667 & 0.1667 & 0.1538 & 0.4689 & 0.2059 \\
+        \cline{3-9}
+        & & Recall & 0.555 & 0.0137 & 0.1304 & 0.009 & 0.3807 & 0.3532 \\
+        \hline
+      \end{tabular}
+    \end{center}
+\end{table}
 
 For every input size k, we took the average of the accuracy and created a plot in terms of the input size, the plot for precision is shown in \autoref{fig:precision-different-algorithms} and the plot for recall is shown in \autoref{fig:recall-of-augmented-tags-for-different-algorithms}. All four algorithms decrease in precision as the number of tables in the repository increases from 5 to 10. Data Driven decreases precision the least, from 0.19 to 0.17, while Iterative decreases the most, from 0.29 to 0.11. Improved Iterative also decreases precision, from 0.32 to 0.24, but it still has the highest precision at k=10 compared to the other three algorithms. However, when the additional logics are removed, the precision of Improved Iterative is only 0.11 at k=10, which is close to the precision of Brute Force and Iterative.
 
