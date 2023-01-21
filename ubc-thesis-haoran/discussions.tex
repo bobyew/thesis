@@ -6,10 +6,13 @@
 
 In this thesis, we aim to achieve the goal of finding a common representation of metadata that is easily interpretable, and augmenting tables with additional metadata tags to make the tables more searchable and understandable.
 In this section, a list of questions we would like to be answered are:
-1. How to make augmentation of topics computationally feasible? How to reduce computation for summarization, schema matching, semantic labelling? In other words, how to scale up in terms of number of tables and table size?
-2. How to make the augmented topics adhere more closely to real world scenarios? How to only augment topics that the user is interested in?
-3. How concise should the tags and topics be, in order to generate useful metadata?
-4. How to develop an approach that generalizes to data instances with different characteristics? Every data instance has its own characteristics, some are easier to work with to generate metadata, while others are not.
+\begin{enumerate}
+\item How to make augmentation of topics computationally feasible? How to reduce computation for summarization, schema matching, semantic labelling? In other words, how to scale up in terms of number of tables and table size?
+\item How to make the augmented topics adhere more closely to real world scenarios? How to only augment topics that the user is interested in?
+\item How concise should the tags and topics be, in order to generate useful metadata?
+\item How to develop an approach that generalizes to data instances with different characteristics? Every data instance has its own characteristics, some are easier to work with to generate metadata, while others are not.	
+\end{enumerate}
+
 To address the question of how to make augmentation of tags computationally feasible, we would like to revisit the idea of placing the communication step at an early step of the algorithm. By our assumption that each table already contains some useful metadata, and there is a base table to guide how to choose related tables, we developed an iterative approach to discover new information between a large number of tables. Our description of the iterative approach raised the need to find related tables so that we can compare their tags with the base table tags. Weproposed to use overlapping of existing tags to approximate relatedness between tables, which reduces the cost of schema matching on the full set of tables each with many attributes in the repository. Computing the tag overlaps between two data instances is simple, but the cost is not negligible when the repository contains too many tables. We intend to replace or improve this costly step as future work.
 We also discussed partitioning as an alternative to clustering to find groups of similar attributes or tags. Our implementation of the partitioning step in Improved Iterative is not efficient, and the total runtime of the algorithm is much higher than Brute Force. One reason is that we used additional matching criteria which were omitted in Brute Force. But since Brute Force has an exponential upper bound and Improved Iterative has a polynomial upper bound, we think the benefit of Improved Iterative is only apparent when we have more test sets available.
 We also observed that by saving all intermediate computation steps, including the similarity matrix of schema matching and the semantic labels, we saved around one minute of time by reusing them in subsequent test runs.

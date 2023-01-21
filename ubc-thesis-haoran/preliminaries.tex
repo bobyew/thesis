@@ -78,9 +78,12 @@ We give a description of pairwise schema matching next. We first compare each at
 pair of attributes. We then apply any matching constraints required to create correspondences between pairs of attributes. A user can choose to place different constraints, and these constraints are enforced during schema matching. One example of a constraint is that each correspondence must have a score above a threshold set by the user.
 Another constraint frequently used in many existing schema matching algorithms is the one-to-one cardinality constraint on the correspondences, which enforces that once an attribute participates in a correspondence, it cannot participate in another correspondence. When such a constraint is enforced, the correspondence is a matching. A schema matching algorithm can use an existing algorithm for matching to enforce the one-to-one cardinality constraint. For example, it can resolve two or more pairs that conflict with each other by choosing the pair that is the most probable. Alternatively, all possible matchings can be enumerated, and the best matching is selected.
 There are many possible ways to implement a schema matching algorithm. Typically, under the following assumptions, an algorithm can be implemented correctly:
- The cardinality constraint on correspondences between a pair of schemata is one-to-one. However, this constraint can be relaxed if needed
- A schema is present for each table, which allows schema matching to be performed instead of matching the header rows
- When a pair of attributes have a high score, they have a high similarity according to some matching criteria.tribut
+
+\begin{itemize}
+\item The cardinality constraint on correspondences between a pair of schemata is one-to-one. However, this constraint can be relaxed if needed
+\item A schema is present for each table, which allows schema matching to be performed instead of matching the header rows
+\item When a pair of attributes have a high score, they have a high similarity according to some matching criteria.	
+\end{itemize}
 
 When the scores computed is in the range of 0 and 1, we can model the score as the probability that the pair of attributes fulfill the specified criteria. Based on the probabilities, we can then rank all correspondences by their scores or compute other statistical measures.
 We give an example using \autoref{fig:example-parks} and \autoref{fig:example-park-specimen-trees}. We let a pair of schemata be

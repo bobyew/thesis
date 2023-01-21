@@ -50,12 +50,15 @@ Due to incompleteness, inaccuracy, and heterogeneity in the metadata, a user may
 We study how to improve metadata with the anomalies discussed in \autoref{sec:TheProblemsWithAnomaliesInMetadata}, we will discuss a number of methods and their effectiveness. We first limit the scope of our study. To make the problem simpler and easier to explain, we only study open data in the form of tables, and only seek to improve the quantity of metadata in the form of tags. Data instances in other forms such as XML, spatial data, and images are not studied. Metadata in the form of sentences, schema, and constraints also exist in open data, but we do not aim to improve them. A number of terminologies are defined as follows.
 
 \subsection{Terminologies and definitions}
-• Let a table be a two-dimensional matrix of values, where each column has a header. Let the header be the name of a column.
-• Let metadata tags be a list of text items, where each text item may be a word or a phrase, but the text item may not be a sentence, XML, or data mapping.
-• We also make a distinction between tags and topics, where a tag is a text item without any semantics, but a topic contains semantics such as a dictionary definition. A category is a tag, but there is fewer (likely only one) such tags per table.
-• Let a schema be a form of metadata, containing a list of mappings, where a header is mapped with a column. We call the header an attribute of the schema. In the notation A.b, A is the name of the schema, and b is the name of the attribute within A.
-• Let constraints be restrictions, for example, on the type of data stored in a column (enforcing all values in a column must be integer). Foreign keys is another type of constraint, that restricts which two columns can be joined.
-• Finally, let each data instance in open data contain only one table, and the metadata describing the table. We may use data instance and table interchangeably, depending on the context of use.
+
+\begin{itemize}
+\item Let a table be a two-dimensional matrix of values, where each column has a header. Let the header be the name of a column.
+\item Let metadata tags be a list of text items, where each text item may be a word or a phrase, but the text item may not be a sentence, XML, or data mapping.
+\item We also make a distinction between tags and topics, where a tag is a text item without any semantics, but a topic contains semantics such as a dictionary definition. A category is a tag, but there is fewer (likely only one) such tags per table.
+\item Let a schema be a form of metadata, containing a list of mappings, where a header is mapped with a column. We call the header an attribute of the schema. In the notation A.b, A is the name of the schema, and b is the name of the attribute within A.
+\item Let constraints be restrictions, for example, on the type of data stored in a column (enforcing all values in a column must be integer). Foreign keys is another type of constraint, that restricts which two columns can be joined.
+\item Finally, let each data instance in open data contain only one table, and the metadata describing the table. We may use data instance and table interchangeably, depending on the context of use.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Open data case study}
@@ -175,37 +178,49 @@ To overcome semantic heterogeneity, we perform semantic enrichment (attaching a 
 We will now define our problem that we have introduced in \autoref{sec:ScopeOfStudyAndResources} and \autoref{sec:ScopeOfImprovingMetadata}. The input to our problem is a set of data instances, each containing a table, a metadata schema for the table, and a list of metadata text items describing the data instance. Each table contains a header row, and there is a column header for each table column. The text items may or may not be able to describe the table.
 
 \subsection{Inputs and outputs}
+\begin{itemize}
+    \item 
+\end{itemize}
+
 More formally, let a data instance, s, consist of:
-. A Table Ts , where Ts contains a header row that consists of column headers, but no type information
-. Let As be the attributes within the schema of Ts , where each attribute provides constraints for a header. We denote the attribute for the ith header in the header row of table Ts as Asi
-. Ls , a list of text items describing the contents of s , where Lsj is the jth text item in Ls
+\begin{itemize}
+\item A Table Ts , where Ts contains a header row that consists of column headers, but no type information
+\item Let As be the attributes within the schema of Ts , where each attribute provides constraints for a header. We denote the attribute for the ith header in the header row of table Ts as Asi
+\item Ls , a list of text items describing the contents of s , where Lsj is the jth text item in Ls
+\end{itemize}
 We take as input to our problem:
-. A base data instance sq to be compared with other data instances
-. a set of k data instances, D, from unknown domains, which could be related to the sq . The correspondences between attributes of these data instances are unavailable. The semantic labeling is also unavailable.
-. A domain dictionary W , that can provide the semantics for values in Ts , As , and Ls
+\begin{itemize}
+\item A base data instance sq to be compared with other data instances
+\item a set of k data instances, D, from unknown domains, which could be related to the sq . The correspondences between attributes of these data instances are unavailable. The semantic labeling is also unavailable.
+\item A domain dictionary W , that can provide the semantics for values in Ts , As , and Ls
+\end{itemize}
 The outputs are:
-. A set of data instances l  D related to sq, where l . k
-. A augmented list of L'sq such that L'sq more accurately describes the contents of sq
-. l augmented lists of L's such that L's more accurately describes the contents of s  D than Ls
+\begin{itemize}
+\item A set of data instances l  D related to sq, where l . k
+\item A augmented list of L'sq such that L'sq more accurately describes the contents of sq
+\item l augmented lists of L's such that L's more accurately describes the contents of s  D than Ls
+\end{itemize}
 
 \subsection{Assumptions}
 Under the following assumptions, our solutions can be correctly implemented:
 
-1. Each table contains a list of likely incomplete text items (metadata tags) describing the contents of the data instance. The list can be empty
-2. The authors made an attempt at creating the metadata, it was not generated without inspection, therefore we trust the provided metadata
-3. The goal of augmenting metadata tags for a table is for the user to get approximate answers quickly, but not precise answers. That is, metadata tags are augmented in a pay-as-you-go fashion
-4. The user already knows what kinds of metadata is useful and interesting to look at, therefore we just have to augment tags that the user needs
-5. All attributes in one schema are independent of one another. This assumption may not be true, but it is plausible and allows us to simplify our problem
-6. The set of all topics in the repository are the only topics used for augmenting tables, that is, we do not create new topics that did not already exist in the repository. This assumption reduces a lot of uncertainty in our evaluations
+\begin{enumerate}
+\item Each table contains a list of likely incomplete text items (metadata tags) describing the contents of the data instance. The list can be empty
+\item The authors made an attempt at creating the metadata, it was not generated without inspection, therefore we trust the provided metadata
+\item The goal of augmenting metadata tags for a table is for the user to get approximate answers quickly, but not precise answers. That is, metadata tags are augmented in a pay-as-you-go fashion
+\item The user already knows what kinds of metadata is useful and interesting to look at, therefore we just have to augment tags that the user needs
+\item All attributes in one schema are independent of one another. This assumption may not be true, but it is plausible and allows us to simplify our problem
+\item The set of all topics in the repository are the only topics used for augmenting tables, that is, we do not create new topics that did not already exist in the repository. This assumption reduces a lot of uncertainty in our evaluations	
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Contributions}
 \label{sec:Contributions}
 The contributions we make in this thesis are the following:
-1. We give a different perspective to the problem of augmenting tags in tables with incomplete metadata. We proposed an iterative approach, where given a base table with incomplete metadata, find other tables in the repository similar to the base table, and then iteratively find as much overlap between all related tables as possible.
-2. We give a detailed explanation of why high-quality metadata can reveal new information to the user and how it can help organize existing data in a repository. We outlined that it
-
-is easy for users to navigate a repository, perform filter and search, and understand data and metadata of tables without looking at the values in the tables. Metadata tags also allows more automation in that they increase precision and recall for machine operations.
-3. We discuss a number of techniques used to solve other problem, and we explain how these techniques can be applied to our problem.
+\begin{enumerate}
+\item We give a different perspective to the problem of augmenting tags in tables with incomplete metadata. We proposed an iterative approach, where given a base table with incomplete metadata, find other tables in the repository similar to the base table, and then iteratively find as much overlap between all related tables as possible.
+\item We give a detailed explanation of why high-quality metadata can reveal new information to the user and how it can help organize existing data in a repository. We outlined that it is easy for users to navigate a repository, perform filter and search, and understand data and metadata of tables without looking at the values in the tables. Metadata tags also allows more automation in that they increase precision and recall for machine operations.
+\item We discuss a number of techniques used to solve other problem, and we explain how these techniques can be applied to our problem.	
+\end{enumerate}
 
 The rest of this thesis is presented as follows. In \autoref{ch:RelatedWork}, we discuss a number of related fields of study and point out the strengths and weaknesses in solving our problem. In \autoref{ch:Preliminaries}, we provide detailed explanations of techniques that we used in our approach to augment metadata. In \autoref{ch:Solutions}, we discuss our proposed approaches as well as baseline approaches in solving the metadata augmentation problem. In \autoref{ch:Implementations}, we discuss how we implemented our approaches as well as the evaluations of our approaches. In \autoref{ch:Discussions}, we provide discussions of metadata augmentation and how it plays a role in data management research. We conclude in \autoref{ch:Conclusion}.
