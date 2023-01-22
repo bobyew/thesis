@@ -72,9 +72,9 @@ In this section, we give a detailed explanation of schema matching and its exten
 
 More formally, let a correspondence be a triple:
 
-% \[(A_{si}, A_{\mathaccent{s}j}, c), for A_{si} \in A_{s}, and s != \mathaccent{s}\]
+    $(A_{si},A_{s'j},c)$,for $A_{si} \in A_{s}$ and $A_{s'j} \in A_{s'}$, and $s!=s'$
 
-where c is the score in the range [0, 1], and c = 1 indicates a perfect correspondence between Asi and As' j . The comparison criterion between a pair of attributes could be equality, subsumption, overlap, etc.
+where $c$ is the score in the range {[}0, 1{]}, and $c$ = 1 indicates a perfect correspondence between $A_{si}$ and $A_{s'j}$ . The comparison criterion between a pair of attributes could be equality, subsumption, overlap, etc.
 
 We give a description of pairwise schema matching next. We first compare each attribute of the first schema to every attribute in the other schema. Based on a criterion (such as overlap of alphanumeric characters in the attribute names), we computed the similarity score between each pair of attributes. We then apply any matching constraints required to create correspondences between pairs of attributes. A user can choose to place different constraints, and these constraints are enforced during schema matching. One example of a constraint is that each correspondence must have a score above a threshold set by the user.
 

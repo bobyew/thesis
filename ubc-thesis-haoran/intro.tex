@@ -10,13 +10,11 @@ Storing and accessing information is one of the most important goals in computer
 \section{Definition of Metadata}
 \label{sec:DefinitionOfMetadata}
 
-Metadata is defined as “structured information about an information resource of any media type or format” \cite{Feltner2023Metadata}[20]. There are three types of metadata as explained in \cite{Baca2008}[3]: descriptive, administrative, and structural. Descriptive metadata tells what the data is about, administrative metadata stores information such as the intellectual property rights and use of information, and
-structural metadata helps relate different data together. Tags is one type of metadata used in open data and its role is both descriptive and structural. It comes in the form of a list of one or more text items (each item is a word or phrase).
+Metadata is defined as “structured information about an information resource of any media type or format” \cite{Feltner2023Metadata}[20]. There are three types of metadata as explained in \cite{Baca2008}[3]: descriptive, administrative, and structural. Descriptive metadata tells what the data is about, administrative metadata stores information such as the intellectual property rights and use of information, and structural metadata helps relate different data together. Tags is one type of metadata used in open data and its role is both descriptive and structural. It comes in the form of a list of one or more text items (each item is a word or phrase).
 
 \subsection{Tags as metadata}
 
 Tags can provide context for the data which allows someone to understand what the data is about without looking into the data itself. This is a good property as discussed by \cite{Wilkinson2016FAIR}[46]. With tags, the user can identify the intent of the data, determine its usefulness with respect to a given task, and take appropriate action. Tags can also help link different data instances together. If two data instances contain the same set of tags or overlap in many tags, then it is highly likely that the two data instances are similar and can be combined into a larger set of data.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Motivating example of tags}
@@ -38,9 +36,11 @@ Even if a data instance has rich metadata, the metadata may be inaccurate. For e
 
 \subsection{Heterogeneity in metadata}
 There exists many types of heterogeneity in the metadata. In general, metadata items that resemble the same information might be represented differently across different data instances, and someone who do not know the different representations might not realize that the two metadata items are the same. Heterogeneities include mismatches in datatypes and differences in data granularities. With diverse data domains, each table is created for specific purposes, therefore the same data may have different meanings across different tables (and vice versa). This is known as semantic heterogeneity. A word can be represented using its synonyms, hypernyms, and acronyms, and resolving values that have the same meaning requires domain and technical expertise \cite{Halevy2005Why}[22].
+
 In the case of metadata tags, many data instances share very similar data, but different data instances use different tags that are synonyms of each other. For example, the author of one journal article chooses a word as tag for the metadata, while an author of another journal article chooses a different word as tag for the metadata, without realizing that the two words are synonyms of each other. In the case of structured data instances (such as relational data), two attributes between two schemata represent the same information, but they use different attribute names.
-A user may not find tags to be very useful when browsing or searching the tags due to the presence of heterogeneity. Someone who wants to read the two articles may only find one article relevant after looking at the metadata, because the tag words in the other article are unfamiliar to him or her. Without any technical expertise to resolve semantic heterogeneity, users need to
-spend more time manually perform searching, filtering, and browsing to find related tables. Once related tables are found, it is also difficult to understand how one table is related to another.
+
+A user may not find tags to be very useful when browsing or searching the tags due to the presence of heterogeneity. Someone who wants to read the two articles may only find one article relevant after looking at the metadata, because the tag words in the other article are unfamiliar to him or her. Without any technical expertise to resolve semantic heterogeneity, users need to spend more time manually perform searching, filtering, and browsing to find related tables. Once related tables are found, it is also difficult to understand how one table is related to another.
+
 Due to incompleteness, inaccuracy, and heterogeneity in the metadata, a user may not be able to understand the data by only browsing its metadata, and a machine cannot use metadata to perform searching and filtering.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -71,11 +71,16 @@ We study how to improve metadata with the anomalies discussed in \autoref{sec:Th
     \label{fig:example-parks}
 \end{figure}
 
-We give examples of tables and metadata within an open data repository. We use City of Surrey Open Data1 as a case study. The metadata in this repository has many forms, such as the table name, the tags, the category the table belongs in, the header row of the tabular data, a paragraph in sentence form describing what information the table stores, the datatype constraint of each column, and the unique values in each column. Each metadata element either describes the entire table or a specific column of the table. \autoref{fig:example-parks} is an example of a table with its metadata. The table is the data instance containing data. The table name is parks. The table description informs that the table stores data for City of Surrey only. The category is environment; there may be other tables in the repository belonging in the same category. The tags list contains activities, environment, green, etc. The header row contains a list of column headers, such as the header park name for the first column of the table. For datatype constraint, the park name column is restricted to strings only, the other two columns are also restricted to strings. Values that are not the strings type do not appear in the column. The unique values contain example values of each column, such as ‘Hartnell Park’ for park name.
+We give examples of tables and metadata within an open data repository. We use City of Surrey Open Data1 as a case study. The metadata in this repository has many forms, such as the table name, the tags, the category the table belongs in, the header row of the tabular data, a paragraph in sentence form describing what information the table stores, the datatype constraint of each column, and the unique values in each column. Each metadata element either describes the entire table or a specific column of the table. \autoref{fig:example-parks} is an example of a table with its metadata. The table is the data instance containing data. The table name is parks. The table description informs that the table stores data for City of Surrey only. The category is environment; there may be other tables in the repository belonging in the same category. The tags list contains activities, environment, green, etc. The header row contains a list of column headers, such as the header park name for the first column of the table. For datatype constraint, the park name column is restricted to strings only, the other two columns are also restricted to strings. Values that are not the strings type do not appear in the column. The unique values contain example values of each column, such as `Hartnell Park' for park name.
+
 Each metadata form is simplified to be a list of text items. For example, a table name is a list containing one text item (one or more words), while the header row is a list of headers, and each header is a text item. The table description is also a list containing one text item.
+
 The data instance such as the one in \autoref{fig:example-parks} can be represented more concisely for different purposes. The representation of a schema is:
+
 Parks(park name, location, service classification)
+
 where Parks is the name of the table (and the name of the schema), and park name, location, service classification are the attributes of the schema.
+
 Similarly, the tags of the data instance is represented as:
 Parks: {activities, environment, green, health, nature, parks, walk, youth}
 where activities, environment, green, health, nature, parks, walk, youth, are the tags in the metadata of Parks.
@@ -111,16 +116,21 @@ where activities, environment, green, health, nature, parks, walk, youth, are th
 \end{figure}
 
 \subsection{Usefulness of header row in metadata}
+
 We discuss what questions can be answered using the existing metadata in Surrey Open Data. When the table is available without any header row or any other metadata, it might not be clear what each of the values mean in the table. In \autoref{fig:example-parks}, the letters ‘C’ and ‘A’ in the third column could be interpreted in many ways. The letter might be the first letter of a word, or it might be a letter used for enumerating different classes. When the header row is present, each column is given more information to clarify what the column is about, but there is not enough information to interpret the values in the column. In \autoref{fig:example-parks}, the third column has the header service classification, which clarifies that the letters ‘C’ and ‘A’ are two service classes. But the header still does not inform what services ‘C’ and ‘A’ are.
+
 If the user wants to join the two data instances in \autoref{fig:example-parks} and \autoref{fig:example-park-specimen-trees}, it is possible to join by location since both tables have a column with the header location. The user would find it much easier if they have access to the header rows when they first obtained the data instances. The header row allows the user to quickly find potential overlapping columns, and save time by not examining every column in the data instances. Although the header row itself is not informative enough to determine if two columns are joinable, it is still a good approximation. When the user sees two columns with a common header, the user is more likely to spend more time on the tables to investigate.
 
 \subsection{Usefulness of unique values in metadata}
 
 The unique values contains all possible values in a column. If the values in the column are abbreviations or symbols, unique values contains the full words for the abbreviations or symbols.
+
 When the metadata is provided to each column, we can further decode the meaning of each value in a column. In \autoref{fig:example-parks}, values in the third column ‘C’ and ‘A’ are two classes of services, and the unique values decodes ‘C’ to ‘Standard Areas’ and ‘A’ to ‘Flagship Areas’.
 
 \subsection{Usefulness of tags in metadata}
+
 Given some tables in a repository, the user would like to find out which tables are relevant to some tasks, and by using the metadata tags the user can quickly filter out irrelevant tables. In \autoref{fig:example-park-specimen-trees}, the table name is park specimen trees and the only tag is trees. In \autoref{fig:example-park-screen-trees}, the table name is park screen trees and its tags are park and trees. Without looking into the values of the table instances, the user can quickly identify that both table instances contain some metadata about trees, and if the user is interested in studying trees, then both tables should be selected for further analysis. On the other hand, if the table name is drainage catch basins and the tags are devices and infrastructure, then the user should filter out the table immediately since the metadata does not seem to store any information about trees.
+
 The idea of tag overlaps also applies to searching by machines. Using \autoref{fig:example-parks} and \autoref{fig:example-park-screen-trees} as an example, if the word park is a search keyword, then both tables will be returned as results of the search, since both contain the word park in the metadata tags. But if the search is on park AND trees to search for information about trees in parks, then the metadata of the tables need to overlap in both park and trees in order to show up in the search result. Only the second table is returned in the search result because it overlaps in both tags. Note that it is evident from the table description that the word park is interpreted as open green spaces.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -178,9 +188,6 @@ To overcome semantic heterogeneity, we perform semantic enrichment (attaching a 
 We will now define our problem that we have introduced in \autoref{sec:ScopeOfStudyAndResources} and \autoref{sec:ScopeOfImprovingMetadata}. The input to our problem is a set of data instances, each containing a table, a metadata schema for the table, and a list of metadata text items describing the data instance. Each table contains a header row, and there is a column header for each table column. The text items may or may not be able to describe the table.
 
 \subsection{Inputs and outputs}
-\begin{itemize}
-    \item 
-\end{itemize}
 
 More formally, let a data instance, s, consist of:
 \begin{itemize}
