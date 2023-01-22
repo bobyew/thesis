@@ -183,10 +183,9 @@ The table search algorithm relies on the schema matching algorithm. The query ta
 
 Three metrics are used to measure how similar two columns are: value overlap, class overlap, and natural language similarity. The three metrics are three statistical tests to determine if a pair of columns are in the same data domain. The value overlap measure is based on the number of unique pairs of values that are the same between two columns. The class overlap additionally incorporates the semantic closeness of two values, it uses an ontology to find the distance between two values. When comparing between two sets, a hypothesis testing tests how likely the two sets, A and B are from the same domain D. The number of overlapping values, t, is calculated, and a cumulative distribution function is calculated over a hypergeometric distribution as follows:
 
-
-$F(t|A,B)$ $=$ $\sum\frac{C(n_{a},s)C(n_{D}-n_{a},n_{b}-s)}{C(n_{D},n_{b})}$
-
-$0\le s\le t$
+\[
+F(t|A,B) = \sum\limits _{0\le s\le t}\frac{C(n_{a},s)C(n_{D}-n_{a},n_{b}-s)}{C(n_{D},n_{b})}
+\]
 
 
 where C(a, b) is a combination a choose b. The natural language similarity first encodes each value into a fixed-dimension word embedding vector, which allows the comparison between two columns by the mean and variance of the vectors for the columns.
