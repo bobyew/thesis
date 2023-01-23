@@ -29,12 +29,15 @@ We provide a motivating example from library studies, which emphasizes the usefu
 Open data was originally designed such that each data instance has complete and accurate data and metadata, which allows data in a repository to be more understandable and discoverable. However, in reality, many anomalies are present in the data and metadata. We focus on anomalies in the metadata. The metadata becomes less useful and misleading when it is incomplete, inaccurate, and heterogeneous.
 
 \subsection{Incompleteness in metadata}
+
 When the metadata does not contain complete information to summarize the contents of the data instance, it is insufficient to only look at the metadata to understand the underlying data. In the case of tags, the metadata for a data instance may contain some tags but it does not contain all of the tags needed to fully describe the data instance. The reason is that when an author creates tags for the data instance, he or she might only choose a few tags as metadata, and many other tags that could be useful are not included. When someone looks at the metadata of two related data instances, it might not be obvious that the two data instances contain related information because both of them only contain a few tags, and there are no overlaps between the two sets of tags.
 
 \subsection{Inaccuracy in metadata}
+
 Even if a data instance has rich metadata, the metadata may be inaccurate. For example, there may be spelling errors, typos, and formatting issues that prevents someone to interpret the metadata correctly. Even without errors, the tags may not be correctly chosen to describe the data instance.
 
 \subsection{Heterogeneity in metadata}
+
 There exists many types of heterogeneity in the metadata. In general, metadata items that resemble the same information might be represented differently across different data instances, and someone who do not know the different representations might not realize that the two metadata items are the same. Heterogeneities include mismatches in datatypes and differences in data granularities. With diverse data domains, each table is created for specific purposes, therefore the same data may have different meanings across different tables (and vice versa). This is known as semantic heterogeneity. A word can be represented using its synonyms, hypernyms, and acronyms, and resolving values that have the same meaning requires domain and technical expertise \cite{Halevy2005Why}[22].
 
 In the case of metadata tags, many data instances share very similar data, but different data instances use different tags that are synonyms of each other. For example, the author of one journal article chooses a word as tag for the metadata, while an author of another journal article chooses a different word as tag for the metadata, without realizing that the two words are synonyms of each other. In the case of structured data instances (such as relational data), two attributes between two schemata represent the same information, but they use different attribute names.
@@ -82,7 +85,9 @@ Parks(park name, location, service classification)
 where Parks is the name of the table (and the name of the schema), and park name, location, service classification are the attributes of the schema.
 
 Similarly, the tags of the data instance is represented as:
+
 Parks: {activities, environment, green, health, nature, parks, walk, youth}
+
 where activities, environment, green, health, nature, parks, walk, youth, are the tags in the metadata of Parks.
 
 \autoref{fig:example-park-specimen-trees}, \autoref{fig:example-drainage-catch-basins}, \autoref{fig:example-park-screen-trees}, and \autoref{fig:example-park-structures} are other examples of a table with its metadata.
@@ -138,18 +143,25 @@ The idea of tag overlaps also applies to searching by machines. Using \autoref{f
 \label{sec:CausesOfAnomaliesInOpenData}
 
 As discussed by \cite{10.1145/2845915}[1], present-day data management faces challenges in the aspects of volume, velocity, and variety. We will explain these challenges in the context of our study of open data and how they caused the anomalies in the data and metadata we discussed in \autoref{sec:TheProblemsWithAnomaliesInMetadata}.
+
 Since the volume of some data collection is too large to be stored at one single location, and needs to be distributed to multiple locations, these data cannot be managed by one user. In open data repositories, there may be many attributes between schemata with complex relationships between them. However, it is difficult to discover these complex relationships when data are distributed.
+
 Data grows at a very high velocity and is constantly changing, thus the users are required to constantly receive updates on the newest data. Managing the changing data also becomes difficult, and each of the tables becomes poor in quality because data values and metadata for tables are getting incomplete and inaccurate.
+
 Due to the large volume of data and the rate that they are changing, it is inevitable that the data standards become out of sync where each individual user invents his or her own standards for maintaining the data that they have direct access to. Each user is able to maintain high quality for the data and metadata of their tables, but over time, the degree of heterogeneity between the data instances increases, which prevents one user to understand another user’s data instance due to differences in constraints, data granularities, naming convention, and representation. If the different data instances did not belong in the same data domain initially, the difficulty to communicate information between the data instances can only be greater.
 
 \subsection{Open data common anomalies}
+
 In Surrey Open Data, tables show many data anomalies, and we will give examples to each anomaly. Looking at \autoref{fig:example-park-specimen-trees}, we see that there is a missing value in the second row in the column with header park. When a table contains missing values, it is less likely for someone to correctly interpret the values in the table. When reading the table row by row, some rows may not make much sense due to missing some important values.
+
 There are spelling errors or formatting inconsistencies in the table values. In \autoref{fig:example-park-specimen-trees}, values in the location column contain tree ref numbers, but some numbers are immediately preceded by a \verb+‘#’+ symbol while others have a \verb+‘#’+ followed by a space. Although the inconsistency is trivial to fix by hand for small table instances, it is more challenging if there are too many varieties of inconsistencies in many different tables and fixes can only be done programmatically. Many kinds of inconsistencies and spelling errors are difficult to detect, and if the fixes are done incorrectly, the values in the tables become even less interpretable.
+
 Within each value, a user may find two or more kinds of information. In \autoref{fig:example-park-specimen-trees}, a value in the location column contains both the address as well as a reference number for the tree. To fix this issue, it is possible to move the reference number to a new column, and create a new header tree reference number for the new column.
 
 Many abbreviations are used throughout the table instance in \autoref{fig:example-park-specimen-trees}. The word ‘ref’ is the abbreviation for ‘reference’, and ‘N’ is the abbreviation for ‘North’. While humans are able to interpret these abbreviations by observing the context that they are used, a program may not be able to interpret them if it cannot access the context.
 
 Semantic heterogeneity is prevalent in the tables. The column with header park name in \autoref{fig:example-parks} and the column with header park in \autoref{fig:example-park-specimen-trees} seem to store the same kind of information, the names of parks. However, without inspecting the values in the tables, it is less likely for the user to conclude that these two columns store the same kind of information. At the same time, in the location columns of \autoref{fig:example-parks} and \autoref{fig:example-park-specimen-trees}, abbreviations such as Blvd, St, and Ave all refer to names of roads for vehicles, but if the user does not already have the domain knowledge, these abbreviations do not share any similarities.
+
 The anomalies discussed above also occur in the metadata, but since metadata aims to provide more useful information to make the table more understandable, there are less abbreviations, less spelling errors, and more concise representation of information \cite{Rahm2016Case}[39]. However, metadata are more incomplete and heterogeneous due to the lack of effort creating them and maintaining them. In the case of \autoref{fig:example-park-specimen-trees}, the only tag in the metadata is trees, but tags such as park, species and urban should also be included to describe the table. The tag park has synonyms such as green and parkland, which should also be included in the metadata.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,19 +169,20 @@ The anomalies discussed above also occur in the metadata, but since metadata aim
 \label{sec:ScopeOfImprovingMetadata}
 
 There are many ways to improve the metadata and to fix the anomalies, but we are unable to discuss all of them. Our improvement is limited to the following scenario: a user is given a table he or she is familiar with, called a base table, and is given a number of tables in an open data repository. The user should be able to only look at the metadata to find all the related tables, and to get a sense of what data are stored in these tables. The user does not need to look at the contents in the tables to determine whether or not the two tables are similar.
+
 It is often sufficient to show metadata that are related to the users goal. The user can understand the metadata more quickly because the unrelated metadata that could distract the user are not shown. If two tables overlap in a data domain of interest, then all metadata describing the data domain need to also overlap. If the two tables overlap in a data domain that is not related to a users goal, then overlaps in that data domain are not needed. Our work will be limited to improving metadata tags, we think tags are good summaries of the data contained in each table. Tags are machine-readable and can be processed by programs to perform keyword search or to compare between the tables.
-To give an example, a user is interested in finding information about benches in parks, and finds one candidate table storing information about park structures of all types. In this table, there is a small portion of data storing benches in parks while the majority of data are about other information such as park gates and park tables. When we improve the metadata, we should only focus on improving metadata about benches, and ignore any additional metadata unrelated to
 
+To give an example, a user is interested in finding information about benches in parks, and finds one candidate table storing information about park structures of all types. In this table, there is a small portion of data storing benches in parks while the majority of data are about other information such as park gates and park tables. When we improve the metadata, we should only focus on improving metadata about benches, and ignore any additional metadata unrelated to benches. Tables containing information about benches must contain the tag bench as well as tags related to benches, while the improved tags does not need to contain tags unrelated to benches.
 
-benches. Tables containing information about benches must contain the tag bench as well as tags related to benches, while the improved tags does not need to contain tags unrelated to benches.
 When the metadata does not contain tags, the user would have to manually summarize the contents of a table, which would require additional time. We therefore only seek to provide a basic summary with the metadata, so that the user can save some time. Similarly, in the presence of metadata anomalies, the user would need to compare tables to find out all possible tags related to the base table, and needs to study tables separately one by one to obtain a complete view of all the metadata.
 
 \subsection{Idea: normalizing metadata}
+
 We outline our general approach to improve the metadata tags of tables in an open data repository. If there are two tags describing the same information, the user would want to add both tags to the metadata of all the tables containing this information. We seek all such tags, and ensure each table contains all the tags describing the same information. We call this procedure normalization of metadata tags. In other words, a tag is added to all the relevant tables.
+
 The user can then use any of these tags to perform search on the repository and obtain all the tables related to the base table. To achieve normalization, we need to describe how the metadata between the different tables are related, we use a mapping (between an attribute and a tag) called semantic labeling to capture the relatedness.
 
 The relatedness then allows the tables reach a consensus on the representation of tags for all the tags that they share in common, so that overlap is maximized. Our approach is called augmentation of metadata. We look for existing tags in the related tables, and for all tables lacking these tags, we add the tags to these tables. We also examine the existing tags of a table to find other tags that can be shared between a group of related tables, and for the tables that do not already contain some of these tags, we add the tags to the tables. Augmentation of metadata is done in an iterative manner, where tags are gradually added to the metadata of each table in many iterations. This metadata augmentation procedure is done in a pay-as-you-go fashion, where only the related tables are augmented with tags, and only tags that relates to the base table are augmented.
-After the common representation of tags is found using normalization, tables with insufficient metadata is augmented with additional tags from a list of known tags. We show an example of the result of our automated metadata augmentation in \autoref{fig:augmented-park-specimen-trees}, using \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, \autoref{fig:example-drainage-catch-basins}, \autoref{fig:example-park-screen-trees}, and \autoref{fig:example-park-structures} as our repository. In this example, additional tags for the
 
 \begin{figure}
     \centering
@@ -178,7 +191,8 @@ After the common representation of tags is found using normalization, tables wit
     \label{fig:augmented-park-specimen-trees}
 \end{figure}
 
-park specimen trees table are added to the metadata, regardless of whether park specimen trees is the base table. The additional tags originate from other tables in the repository.
+After the common representation of tags is found using normalization, tables with insufficient metadata is augmented with additional tags from a list of known tags. We show an example of the result of our automated metadata augmentation in \autoref{fig:augmented-park-specimen-trees}, using \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, \autoref{fig:example-drainage-catch-basins}, \autoref{fig:example-park-screen-trees}, and \autoref{fig:example-park-structures} as our repository. In this example, additional tags for the park specimen trees table are added to the metadata, regardless of whether park specimen trees is the base table. The additional tags originate from other tables in the repository.
+
 To overcome semantic heterogeneity, we perform semantic enrichment (attaching a dictionary definition to each word) of the metadata. We use a domain dictionary to assist us with listing all possible interpretations of a word. We use a technique called word sense disambiguation (probabilistically assign definition to each word) to find a correct interpretation of a word. We then use an algorithm called schema matching to create the semantic labeling of tables (by probabilistically matching between attributes and tags). The output of schema matching, called the correspondences, serves as the key intermediate for semantic labeling. To find the relatedness between tables, we adopt a table searching algorithm that relies on the semantic labeling to find the maximum tag overlaps between tables.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -209,6 +223,7 @@ The outputs are:
 \end{itemize}
 
 \subsection{Assumptions}
+
 Under the following assumptions, our solutions can be correctly implemented:
 
 \begin{enumerate}
@@ -223,6 +238,7 @@ Under the following assumptions, our solutions can be correctly implemented:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Contributions}
 \label{sec:Contributions}
+
 The contributions we make in this thesis are the following:
 \begin{enumerate}
 \item We give a different perspective to the problem of augmenting tags in tables with incomplete metadata. We proposed an iterative approach, where given a base table with incomplete metadata, find other tables in the repository similar to the base table, and then iteratively find as much overlap between all related tables as possible.
