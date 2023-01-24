@@ -4,11 +4,11 @@
 \chapter{Related Work}
 \label{ch:RelatedWork}
 
-Augmenting metadata is considered an ill-defined field of study because of the lack of existing literatures that directly address the problem. But there are many other fields of study that target problems similar in nature. For example, we can relate our task to data discovery, topic extraction, summary generation, and data integration. Data discovery determines whether there are interesting information in some data, which allows relating seemingly unrelated data together. In topic extraction and summary generation, the end result is a concise and compact representation of information in a data instance, which is highly similar to the augmented tags. Data integration plays important roles in creating common representation of data for different heterogeneous data instances, and combine the data from different data instances together.
+Augmenting metadata is considered an ill-defined field of study because of the lack of existing literatures that directly address the problem. But there are many other fields of study that target problems similar in nature. For example, we can relate our task to \textit{data discovery, topic extraction, summary generation,} and \textit{data integration}. Data discovery determines whether there are interesting information in some data, which allows relating seemingly unrelated data together. In topic extraction and summary generation, the end result is a concise and compact representation of information in a data instance, which is highly similar to the augmented tags. Data integration plays important roles in creating common representation of data for different heterogeneous data instances, and combine the data from different data instances together.
 
 Of all these problems, there are differences in the type of input data, output data, as well as intermediate steps that produces useful information. We therefore need to create abstractions of the different problems, break down large problems into smaller steps, and then identify the steps that we can reuse.
 
-Of the four fields of study mentioned above, we first discuss data discovery in \autoref{sec:DataDiscovery}, where we specifically talk about information retrieval and table linking. We then discuss knowledge extraction and summary generation in \autoref{sec:KnowledgeExtractionAndSummaryGeneration}, where we specifically talk about topic modelling, ontology extraction, and text summarization. Finally, we talk about the various applications of data integration in \autoref{sec:DataIntegration}, and we briefly mention its relevance to data completion.
+Of the four fields of study mentioned above, we first discuss data discovery in \autoref{sec:DataDiscovery}, where we specifically talk about \textit{information retrieval} and \textit{table linking}. We then discuss knowledge extraction and summary generation in \autoref{sec:KnowledgeExtractionAndSummaryGeneration}, where we specifically talk about \textit{topic modelling, ontology extraction,} and \textit{text summarization}. Finally, we talk about the various applications of data integration in \autoref{sec:DataIntegration}, and we briefly mention its relevance to \textit{data completion}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Data discovery}
@@ -18,13 +18,13 @@ Information retrieval studies how to use a query to search for data or metadata 
 
 Table linking is the study of finding relationships between tables, and it is possible to search by topic words to find related tables and related data in tables. In one work on data recommendation \cite{conf/esws/EllefiBDT16}[5], the data instances are linked by the combination of topics they contain, and by collaborative filtering on the topics, data instances are recommended. We will discuss this work later in this section. In a more general case, however, keyword queries are used to find answers in relevant data instances. In \cite{DBLP:journals/pvldb/ChanialDGLNM18}[6], each data instance is transformed to a graph structure, then subgraphs are matched to the keyword query, and all the matched subgraphs are merged as a single answer. In order to adopt this keyword search method, it is assumed that the query contains all the correct keywords needed to retrieve the answer. If the user does not know all the keywords, then not all the related data instances can be found, and the answer is therefore incomplete.
 
-We review data instance recommendation using data linking next, which we find relevant to the problem of retrieving data instances from large repositories and finding data instances with incomplete query.
+We review \textit{data instance recommendation using data linking} next, which we find relevant to the problem of retrieving data instances from large repositories and finding data instances with incomplete query.
 
 \subsection{Recommendation of similar data using data linking}
 
 We outline one way to recommend similar data instances given one data instance as the query \cite{conf/esws/EllefiBDT16}[5]. Each data instance is characterized by its textual descriptions and a set of schema-level features (such as topics) created by the data providers. To find the relatedness between two data instances, they find overlapping schema-level features by first constructing a bipartite graph between the topics and data instances. Each link between a data instance and a topic has a score indicating how well the topic describes the data instance. They then created a global topic-profiles graph to link all the data instances, such that each topic is mapped to a list of all data instances that contain the topic. They then used the global topic-profiles graph to recommend related data instances by collaborative filtering. For collaborative filtering to work, they made the assumption that the score is already known when each topic is linked to its data instance. The authors validated their approach with linked open data.
 
-We now give an example to show how data instance recommendation works. In \autoref{fig:example-parks}, assume the topics are environment, green, nature, parks, and the scores are 0.7, 0.6, 0.6, 0.9 respectively. In \autoref{fig:example-park-specimen-trees}, assume the topic trees is related to the table by a score of 0.8, in addition, there are topics parks and environment with scores of 0.7 and 0.6 respectively. A topic-to-table graph is constructed for each table, and then the topic-profiles graph is constructed. For example, the topic parks is mapped to table parks by 0.9, and to table park specimen trees by 0.7. Suppose that we are given a new table called park screen trees with a topic parks in its metadata with a score of 0.7. Collaborative filtering is performed, and since the tables parks, park specimen trees and park screen trees have high scores for the topic parks, both parks and park specimen trees are recommended to the new table park screen trees.
+We now give an example to show how data instance recommendation works. In \autoref{fig:example-parks}, assume the topics are \textit{environment, green, nature, parks,} and the scores are 0.7, 0.6, 0.6, 0.9 respectively. In \autoref{fig:example-park-specimen-trees}, assume the topic \textit{trees} is related to the table by a score of 0.8, in addition, there are topics \textit{parks} and \textit{environment} with scores of 0.7 and 0.6 respectively. A topic-to-table graph is constructed for each table, and then the topic-profiles graph is constructed. For example, the topic parks is mapped to table \textit{parks} by 0.9, and to table \textit{park specimen trees} by 0.7. Suppose that we are given a new table called park screen trees with a topic parks in its metadata with a score of 0.7. Collaborative filtering is performed, and since the tables \textit{parks}, \textit{park specimen trees} and \textit{park screen trees} have high scores for the topic parks, both \textit{parks} and \textit{park specimen trees} are recommended to the new table \textit{park screen trees}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Knowledge extraction and summary generation}
@@ -53,7 +53,7 @@ ParkSpecimenTrees(location, park, tree_species), and
 ParkScreenTrees(park_name, tree_species, number_of_trees)
 \end{lstlisting}
 
-where park\_name, location, etc are attributes of the Parks schema. Suppose that the schema matching output is:
+where \textit{park\_name, location,} etc are attributes of the \textit{Parks} schema. Suppose that the schema matching output is:
 
 \begin{lstlisting}
 (Parks.park_name, ParkSpecimenTrees.park, 0.9),
@@ -72,7 +72,7 @@ In each triple, the first two elements are matched attributes and the number is 
 5. {ParkScreenTrees.number_of_trees}.
 \end{lstlisting}
 
-Each group is then examined to determine a common topic describing the cluster. Let the community vocabulary be {park name, park location, tree species, park classification, tree count}. Then the topic possibly assigned to each cluster is {1. park name, 2. park location, 3. tree species, 4. park classification, and 5. tree count}. The three mappings in the first cluster are:
+Each group is then examined to determine a common topic describing the cluster. Let the community vocabulary be \textit{{park name, park location, tree species, park classification, tree count}}. Then the topic possibly assigned to each cluster is {1. \textit{park name}, 2. \textit{park location}, 3. \textit{tree species}, 4. \textit{park classification}, and 5. \textit{tree count}}. The three mappings in the first cluster are:
 \begin{lstlisting}
 (park name, Parks.park_name),
 (park name, ParkSpecimenTrees.park), and
@@ -82,9 +82,9 @@ Each group is then examined to determine a common topic describing the cluster. 
 \subsection{Supervised learning for schema labeling}
 \label{ssec:SupervisedLearningForSchemaLabeling}
 
-We discuss a supervised learning method for predicting column header names for data instances. The column header names is a vocabulary known prior to prediction. In \cite{10.1145/3184558.3191601}[9], the column data of a table without a header is the input for a document classification problem to predict the header. They trained the classifier using column data as bag-of-words features and the column headers as the labels. The bag-of-words features for string datatype always have poor predictions, and improvements were made to create distinct types of features for string datatypes, which improved the predictions on headers.
+We discuss a supervised learning method for predicting column header names for data instances. The column header names is a vocabulary known prior to prediction. In \cite{10.1145/3184558.3191601}[9], the column data of a table without a header is the input for a document classification problem to predict the header. They trained the classifier using column data as bag-of-words features and the column headers as the labels. The bag-of-words features for string datatype always have poor predictions, and improvements were made to create distinct types of features for \textit{string} datatypes, which improved the predictions on headers.
 
-To give an example, let the table and the header row in \autoref{fig:example-parks} be the training data. The trained classifier assigns the first column the header park name, and the other columns are also assigned the correct headers. We let \autoref{fig:example-park-specimen-trees} be the test data, each column is given to the classifier as input, and the classifier predicts a column name from {park name, location, service classification}. When the classifier is given the second column containing values such as Don Christian Park, 33M - Detention Pond, the classifier predicts the column name to be park name. Since the true column name is park, the prediction may or may not be correct based on how correctness is defined.
+To give an example, let the table and the header row in \autoref{fig:example-parks} be the training data. The trained classifier assigns the first column the header park name, and the other columns are also assigned the correct headers. We let \autoref{fig:example-park-specimen-trees} be the test data, each column is given to the classifier as input, and the classifier predicts a column name from \textit{{park name, location, service classification}}. When the classifier is given the second column containing values such as \textit{``Don Christian Park, 33M - Detention Pond''}, the classifier predicts the column name to be \textit{park name}. Since the true column name is \textit{park}, the prediction may or may not be correct based on how correctness is defined.
 
 The assignable header names are only the header names available in \autoref{fig:example-parks}, and the classifier is unable to predict any other names for a given column. If many of the header names do not appear in the training data, then columns with those headers in the test set will never be predicted correctly. When the classifier tries to predict the third column of \autoref{fig:example-park-specimen-trees}, it is unable to predict the correct column name, because there is no similar column in the training data.
 
@@ -110,7 +110,7 @@ ParkSpecimenTrees.tree_species and ParkScreenTrees.tree_species.
 
 According to the importance property \verb+{park_name, tree_species, location}+ are likely to be in the summary, because these elements have many links. Elements with sufficient number of links would increase the summary importance. The coverage property encourages elements that are far apart from each other to be in the summary. In this case, \verb+{DrainageCatchBasins.device_type}+ will be in the summary in addition to \verb+{park_name, tree_species, location}+, because elements from all four schemata will be in the summary. The attribute \verb+device_type+ is in the summary because the column does not have null values. For their algorithm to summarize the schemata, they assumed that the foreign keys constraints for the schemata are known, and their summaries are generated only based on the number of links between schema attributes. Our approach takes into account the semantics of the attributes to find a summary.
 
-To evaluate the summary, the authors designed a user interface to interact with the summary, where the user is able to expand a summary element to display all original elements. The evaluation metric called the query discovery cost, is the number of user interactions counted before the user correctly formulates a correct query.
+To evaluate the summary, the authors designed a user interface to interact with the summary, where the user is able to expand a summary element to display all original elements. The evaluation metric called the \textit{query discovery cost}, is the number of user interactions counted before the user correctly formulates a correct query.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Data integration}
@@ -139,7 +139,7 @@ Park(park_name: park_name, location: location, service_classification: park_serv
 ParkSpecimenTrees(location: location, park: park_name, tree_species: tree_species).
 \end{lstlisting}
 
-When a user issues a query such as MedSchema(park\_name), the LAV mappings show that the queries issued to the individual data instances should be Park(park\_name) and ParkSpecimenTrees(park).
+When a user issues a query such as MedSchema(park\_name), the LAV mappings show that the queries issued to the individual data instances should be \textit{Park(park\_name)} and \textit{ParkSpecimenTrees(park)}.
 
 \subsection{Relational-to-ontology schema mapping}
 
@@ -157,8 +157,9 @@ Suppose that the repository contains schemata of \autoref{fig:example-parks} and
 \end{lstlisting}
 
 Then the concepts are [parks, trees, UNKNOWN]. When the new schema is given:
+\begin{lstlisting}
 ParkScreenTrees(park\_name, tree\_species, number\_of\_trees),
-
+\end{lstlisting}
 each of the attributes needs to be mapped to an existing concept in the ontology. The random forest classifier then assigns a score to pairs of ParkScreenTrees attribute and candidate concept. 
 After finding a Steiner tree, the mapping is:
 \begin{lstlisting}
