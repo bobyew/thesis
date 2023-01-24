@@ -71,8 +71,9 @@ Another way to calculate the distance with WordNet is to use the information con
 In this section, we give a detailed explanation of schema matching and its extensions \cite{Sorrentino2011NORMS}[45]. Schema matching is an algorithm that compare between a pair schemata, where attributes in one schema are compared to attributes of the second schema to find a matching. The match operator is widely used in many applications \cite{Dong2012Proceedings}[16] \cite{Rahm2001Survey}[40] \cite{10.1145/3183713.3183729}[47], and it is a valuable tool for metadata management. Schema matching takes a pair of schemata as input (i.e. two sets of attributes to be matched), and identifies a set of pairs of attributes between the two schemata that are similar according to some criteria. Each pair in the matching is in the form of (a,b,c), called a correspondence, where a is an attribute from the first schema, b is an attribute from the second schema, and c is a score for the pair of matched attributes according to some matching criteria.
 
 More formally, let a correspondence be a triple:
-
-    $(A_{si},A_{s'j},c)$,for $A_{si} \in A_{s}$ and $A_{s'j} \in A_{s'}$, and $s!=s'$
+\[
+(A_{si},A_{s'j},c),\text{for }A_{si}\in A_{s}\text{ and }A_{s'j}\in A_{s'},\text{and }s\neq s'
+\]
 
 where $c$ is the score in the range {[}0, 1{]}, and $c$ = 1 indicates a perfect correspondence between $A_{si}$ and $A_{s'j}$ . The comparison criterion between a pair of attributes could be equality, subsumption, overlap, etc.
 
