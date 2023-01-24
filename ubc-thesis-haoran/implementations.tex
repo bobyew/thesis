@@ -78,6 +78,14 @@ After tables are augmented with tags using our algorithms, we measure the accura
 Each of the tables in the gold standard contains a set of augmented tags. Let the augmented tags of the Park table contain [environment, green, nature, parks, trees] in the gold standard, its original tags are [environment, green, nature, parks]. Similarly, the augmented tags of ParkSpecimenTrees is [environment, green, nature, parks, trees] and the augmented tags of ParkScreenTrees is [environment, green, nature, parks, trees]. As future work, we would like to tailor each table in the gold standard to be specific for a test, where the only tags contained are the ones shared between the tables in the test set. For a table in the gold standard, any tags shared with a table not in the test set should not be included in the gold standard. For example, Parks is augmented with a tag bike which is only present in GreenInfrastructureNetwork, but since GreenInfrastructureNetwork is not in the test set, the gold standard should not include this tag. Currently we do not enforce this restriction.
 
 The output of metadata augmentation is a set of tables and the augmented topics of each table. We compare this output with the tailored gold standard. We measure in terms of precision and recall. The precision of a test is:
+\[
+\frac{\text{number of correct tables}}{\text{number of tables found by search}^{2}}\sum\limits _{\text{table found by search}}\frac{\text{correctly augmented tags}}{\text{all augmented tags for table}}
+\]
+
+Similarly, the recall of a test is:
+\[
+\frac{\text{number of correct tables}}{\text{number of tables in gold standard}^{2}}\sum\limits _{\text{table in gold standard}}\frac{\text{correctly augmented tags}}{\text{all augmented tags for table}}
+\]
 
 In general, we identify output tags that should not belong in certain tables as incorrect in the computation for precision. We identify gold standard tags missing in certain tables as incorrect in the computation for recall.
 
