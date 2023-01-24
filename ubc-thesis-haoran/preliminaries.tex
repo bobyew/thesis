@@ -92,13 +92,17 @@ There are many possible ways to implement a schema matching algorithm. Typically
 When the scores computed is in the range of 0 and 1, we can model the score as the probability that the pair of attributes fulfill the specified criteria. Based on the probabilities, we can then rank all correspondences by their scores or compute other statistical measures.
 
 We give an example using \autoref{fig:example-parks} and \autoref{fig:example-park-specimen-trees}. We let a pair of schemata be
-Parks(park\_name, location, service\_classification), and
-ParkSpecimenTrees(location, park, tree\_species).
+\begin{quote}
+    \textit{Parks(park\_name, location, service\_classification)}, and \\
+    \textit{ParkSpecimenTrees(location, park, tree\_species)}.
+\end{quote}
 
-We perform matching between the two sets of attributes. We first compare Parks.park\_name with ParkSpecimenTrees.location, and then with ParkSpecimenTrees.park, and so on. If we use the simple matching criterion: find the proportion of overlapping characters, then the scores for the comparisons are 0.25, 0.67, and so on. If the one-to-one cardinality constraint is enforced, we must only choose one pair of attributes such that neither of the two attributes appear in other correspondences, and that the sum of the correspondence scores is maximized. In the example, the pairs of attributes chosen as the correspondences are
-(Parks.park\_name, ParkSpecimenTrees.park, 0.67),
-(Parks.location, ParkSpecimenTrees.location, 1.0), and
-(Parks.service\_classification, ParkSpecimenTrees.tree\_species, 0.32).
+We perform matching between the two sets of attributes. We first compare \textit{Parks.park\_name} with \textit{ParkSpecimenTrees.location}, and then with \textit{ParkSpecimenTrees.park}, and so on. If we use the simple matching criterion: find the proportion of overlapping characters, then the scores for the comparisons are 0.25, 0.67, and so on. If the one-to-one cardinality constraint is enforced, we must only choose one pair of attributes such that neither of the two attributes appear in other correspondences, and that the sum of the correspondence scores is maximized. In the example, the pairs of attributes chosen as the correspondences are
+\begin{quote}
+\textit{(Parks.park\_name, ParkSpecimenTrees.park, 0.67)}, \\
+\textit{(Parks.location, ParkSpecimenTrees.location, 1.0)}, and \\
+\textit{(Parks.service\_classification, ParkSpecimenTrees.tree\_species, 0.32)}.
+\end{quote}
 
 If the one-to-one cardinality constraint is relaxed, then the chosen correspondences are changed.
 
@@ -108,14 +112,18 @@ If the one-to-one cardinality constraint is relaxed, then the chosen corresponde
 Schema matching does not necessarily have to operate only on attributes in schemata. We can use the algorithm to find a matching between two sets of tags or between any pair of set-like data. The two sets can even be heterogeneous, where one set contains attributes and another set contains tags.
 
 Therefore a correspondence can also be a triple:
-$(L_{si},L_{s'j},c)$, for $L_{si}\in L_{s}$ and $L_{s'j}\in L_{s'}$, and $s!=s'$
-where c is the score in the range [0, 1], and c = 1 indicates a perfect correspondence between $L_{si}$ and $L_{s'j}$ . Schema matching between pairs of attributes and pairs of tags follow the one-to-one cardinality constraint.
+\[
+(L_{si},L_{s'j},c),\text{for }L_{si}\in L_{s}\text{ and }L_{s'j}\in L_{s'},\text{ and }s\neq s'
+\]
+where $c$ is the score in the range [0, 1], and $c$ = 1 indicates a perfect correspondence between $L_{si}$ and $L_{s'j}$ . Schema matching between pairs of attributes and pairs of tags follow the one-to-one cardinality constraint.
 
 We can use schema matching to compare other types of data such as long sentence descriptions and schema structure \cite{Sorrentino2011NORMS}[45]. In \cite{10.1145/1066157.1066283}[2] \cite{Duchateau2009YAM}[17], metadata such as schema version and namespaces were used in schema matching. It is also possible to perform schema matching using the data values in data instances \cite{Rahm2001Survey}[40]. In our work, we use schema matching to find matching between a set of attributes and a set of tags, which we call the semantic labeling. Each pair of attribute and topic is called a semantic label.
 
 Let a semantic label be a triple: 
-$(A_{si},L_{s'j},c)$, for $A_{si}\in A_{s}$ and $L_{s'j}\in L_{s}$ 
-where $c$ is the score in the range {[}0, 1{]} and $c$ = 1 indicates a perfect labeling between $A_{si}$ and $L_{s'j}$
+\[
+(A_{si},L_{s'j},c),\text{for }A_{si}\in A_{s}\text{ and }L_{s'j}\in L_{s}
+\]
+where $c$ is the score in the range {[}0, 1{]} and $c$ = 1 indicates a perfect labeling between $A_{si}$ and $L_{s'j}$.
 
 The cardinality constraint on semantic labeling of attributes and topics is many-to-one (i.e. a topic can have many attributes). We did not enforce the one-to-one cardinality constraint, because the output matching is too restrictive. To implement schema matching between attributes and tags, we specifically consider three cases of the many-to-one cardinality constraint.
 
