@@ -21,6 +21,7 @@ Table linking is the study of finding relationships between tables, and it is po
 We review \textit{data instance recommendation using data linking} next, which we find relevant to the problem of retrieving data instances from large repositories and finding data instances with incomplete query.
 
 \subsection{Recommendation of similar data using data linking}
+\label{ssec:RecommendationOfSimilarDataUsingDataLinking}
 
 We outline one way to recommend similar data instances given one data instance as the query \cite{conf/esws/EllefiBDT16}. Each data instance is characterized by its textual descriptions and a set of schema-level features (such as topics) created by the data providers. To find the relatedness between two data instances, they find overlapping schema-level features by first constructing a bipartite graph between the topics and data instances. Each link between a data instance and a topic has a score indicating how well the topic describes the data instance. They then created a global topic-profiles graph to link all the data instances, such that each topic is mapped to a list of all data instances that contain the topic. They then used the global topic-profiles graph to recommend related data instances by collaborative filtering. For collaborative filtering to work, they made the assumption that the score is already known when each topic is linked to its data instance. The authors validated their approach with linked open data.
 
