@@ -147,7 +147,7 @@ We evaluate our experimental results in this section. For input repository size 
 
 \subsection{Precision and recall}
 
-We measured the four algorithms in \autoref{ch:Solutions}: Solutions in terms of precision and recall with different parameters for each test, the results are shown in Table 5-1. The accuracy of Data Driven does not reflect the its actual performance, because it only creates tags for the base table and there is no mechanism for retrieving related tables. We added additional measurements for the accuracy of Improved Iterative after some modifications were made (shown in the last column of Table 5-1). We removed the schema matching step between the attributes in the iterative method. Once a related table is found, its topics are compared to each topic in every partition, if a pair of topics have a high similarity score, the topic and the attribute are added to the partition without schema matching.
+We measured the four algorithms in \autoref{ch:Solutions}: Solutions in terms of precision and recall with different parameters for each test, the results are shown in \autoref{tab:Precision-and-recall-of-algorithms-given-input-of-k-tables}. The accuracy of Data Driven does not reflect the its actual performance, because it only creates tags for the base table and there is no mechanism for retrieving related tables. We added additional measurements for the accuracy of Improved Iterative after some modifications were made (shown in the last column of \autoref{tab:Precision-and-recall-of-algorithms-given-input-of-k-tables}). We removed the schema matching step between the attributes in the iterative method. Once a related table is found, its topics are compared to each topic in every partition, if a pair of topics have a high similarity score, the topic and the attribute are added to the partition without schema matching.
 
 \begin{table}[h!]
     \centering
@@ -194,7 +194,7 @@ For every input size $k$, we took the average of the accuracy and created a plot
 
 The recall either increase or decrease as $k$ increases. The recall of Iterative and Data Driven are much lower compared to the other two algorithms, and the recall of both decrease as the number of tables increases. Since the precision of Iterative and Data Driven also decrease, we consider these algorithms poorly designed. Brute Force and Improved Iterative both increase in recall as the number of tables increases, and there is a tradeoff of precision over recall as the number of tables increases. While Brute Force has the highest recall for both $k$=5 and $k$=10, the recall of Improved Iterative is comparable. We note that Brute Force has a much lower precision.
 
-We performed rolled-up of the results in the dimension of $k$, and computed the average for every mix proportion. The precision is shown in Table 5-2 and the recall is shown in Table 5-3. A well-designed algorithm should not decrease in precision or recall when the proportion of related and unrelated tables change. However, we observe that decreased its precision drastically as the mix shifts from 100\% to 0\%, this suggests that Improved Iterative requires more improvements for future work.
+We performed rolled-up of the results in the dimension of $k$, and computed the average for every mix proportion. The precision is shown in \autoref{tab:Precision-of-different-algorithms-given-a-mix-of-related-and-unrelated-tables-in-repository} and the recall is shown in \autoref{tab:Recall-of-different-algorithms-given-a-mix-of-related-and-unrelated-tables-in-repository}. A well-designed algorithm should not decrease in precision or recall when the proportion of related and unrelated tables change. However, we observe that decreased its precision drastically as the mix shifts from 100\% to 0\%, this suggests that Improved Iterative requires more improvements for future work.
 
 \begin{table}[h!]
     \centering
@@ -248,7 +248,7 @@ However, we think a good algorithm should have a constant F1 score regardless of
 
 \subsection{New tags added}
 
-We measured the number of new tags added to the augmented metadata for the four algorithms in Table 5-4. Brute Force adds the most number of new tags on average, 42.71 per table, Data Driven adds 7.63 tags per table, while Iterative only adds 2.33 per table. Improved Iterative adds 14.35 tags per table. When additional logics are removed for Improved Iterative, 25.96 new tags are added, this demonstrates that the schema matching step is able to filter out many tags.
+We measured the number of new tags added to the augmented metadata for the four algorithms in \autoref{tab:Number-of-new-tags-added-by-different-algorithms}. Brute Force adds the most number of new tags on average, 42.71 per table, Data Driven adds 7.63 tags per table, while Iterative only adds 2.33 per table. Improved Iterative adds 14.35 tags per table. When additional logics are removed for Improved Iterative, 25.96 new tags are added, this demonstrates that the schema matching step is able to filter out many tags.
 
 \begin{table}[h!]
     \centering
@@ -282,7 +282,7 @@ The plot in \autoref{fig:number-of-new-tags-added-given-k-tables} shows the aver
 
 \subsection{Runtime}
 $n^{\text{th}}\ensuremath{1^{st}}\ensuremath{2^{nd}}\ensuremath{4^{st}}$
-We measured the runtime for the four different algorithms, and the results are shown in Table 5-5. Each test can be completed within a reasonable timeframe for all of the algorithms. Iterative and Improved Iterative terminated the iterative method in less than 5 iterations (either $2^{nd}$, $3^{rd}$, or the $4^{th}$ iteration) for all tests. However, we have not included any tests with more than 10 tables in the repository, and we cannot conclude that any of the algorithms is efficient.
+We measured the runtime for the four different algorithms, and the results are shown in \autoref{tab:Runtime-of-different-approaches-given-k-tables-as-input}. Each test can be completed within a reasonable timeframe for all of the algorithms. Iterative and Improved Iterative terminated the iterative method in less than 5 iterations (either $2^{nd}$, $3^{rd}$, or the $4^{th}$ iteration) for all tests. However, we have not included any tests with more than 10 tables in the repository, and we cannot conclude that any of the algorithms is efficient.
 
 \begin{table}[h!]
     \centering
