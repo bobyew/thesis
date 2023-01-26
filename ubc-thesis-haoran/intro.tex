@@ -38,7 +38,7 @@ Even if a data instance has rich metadata, the metadata may be inaccurate. For e
 
 \subsection{Heterogeneity in metadata}
 
-There exists many types of \textbf{\gls{heterogeneity}} in the metadata. In general, metadata items that resemble the same information might be represented differently across different data instances, and someone who do not know the different representations might not realize that the two metadata items are the same. Heterogeneities include mismatches in datatypes and differences in data granularities. With diverse data domains, each table is created for specific purposes, therefore the same data may have different meanings across different \textbf{\glspl{table}} (and vice versa). This is known as \textbf{\gls{semantic heterogeneity}}. A word can be represented using its synonyms, hypernyms, and acronyms, and resolving values that have the same meaning requires domain and technical expertise \cite{Halevy2005Why}.
+There exist many types of \textbf{\gls{heterogeneity}} in the metadata. In general, metadata items that resemble the same information might be represented differently across different data instances, and someone who do not know the different representations might not realize that the two metadata items are the same. Heterogeneities include mismatches in datatypes and differences in data granularities. With diverse data domains, each table is created for specific purposes, therefore the same data may have different meanings across different \textbf{\glspl{table}} (and vice versa). This is known as \textbf{\gls{semantic heterogeneity}}. A word can be represented using its synonyms, hypernyms, and acronyms, and resolving values that have the same meaning requires domain and technical expertise \cite{Halevy2005Why}.
 
 In the case of metadata tags, many data instances share very similar data, but different data instances use different tags that are synonyms of each other. For example, the author of one journal article chooses a word as tag for the metadata, while an author of another journal article chooses a different word as tag for the metadata, without realizing that the two words are synonyms of each other. In the case of structured data instances (such as relational data), two \textbf{\glspl{attribute}} between two schemata represent the same information, but they use different attribute names.
 
@@ -59,7 +59,7 @@ We study how to improve metadata with the anomalies discussed in \autoref{sec:Th
 \item Let metadata tags be a list of text items, where each text item may be a word or a phrase, but the text item may not be a sentence, XML, or data mapping.
 \item We also make a distinction between tags and \textbf{\glspl{topic}}, where a tag is a text item without any semantics, but a topic contains semantics such as a dictionary definition. A category is a tag, but there is fewer (likely only one) such tags per table.
 \item Let a schema be a form of metadata, containing a list of mappings, where a header is mapped with a column. We call the header an attribute of the schema. In the notation A.b, A is the name of the schema, and b is the name of the attribute within A.
-\item Let constraints be restrictions, for example, on the type of data stored in a column (enforcing all values in a column must be integer). Foreign keys is another type of constraint, that restricts which two columns can be joined.
+\item Let constraints be restrictions, for example, on the type of data stored in a column (enforcing all values in a column must be integer). Foreign key is another type of constraint, that restricts which two columns can be joined.
 \item Finally, let each data instance in open data contain only one table, and the metadata describing the table. We may use data instance and table interchangeably, depending on the context of use.
 \end{itemize}
 
@@ -84,7 +84,7 @@ Parks(park name, location, service classification)
 
 where Parks is the name of the table (and the name of the schema), and park name, location, service classification are the attributes of the schema.
 
-Similarly, the tags of the data instance is represented as:
+Similarly, the tags of the data instance are represented as:
 
 Parks: \{activities, environment, green, health, nature, parks, walk, youth\}
 
@@ -170,9 +170,9 @@ The anomalies discussed above also occur in the metadata, but since metadata aim
 
 There are many ways to improve the metadata and to fix the anomalies, but we are unable to discuss all of them. Our improvement is limited to the following scenario: a user is given a table he or she is familiar with, called a \textbf{\gls{base table}}, and is given a number of tables in an open data repository. The user should be able to only look at the metadata to find all the related tables, and to get a sense of what data are stored in these tables. The user does not need to look at the contents in the tables to determine whether or not the two tables are similar.
 
-It is often sufficient to show metadata that are related to the users goal. The user can understand the metadata more quickly because the unrelated metadata that could distract the user are not shown. If two tables overlap in a data domain of interest, then all metadata describing the data domain need to also overlap. If the two tables overlap in a data domain that is not related to a users goal, then overlaps in that data domain are not needed. Our work will be limited to improving metadata tags, we think tags are good summaries of the data contained in each table. Tags are machine-readable and can be processed by programs to perform keyword search or to compare between the tables.
+It is often sufficient to show metadata that are related to the user's goal. The user can understand the metadata more quickly because the unrelated metadata that could distract the user are not shown. If two tables overlap in a data domain of interest, then all metadata describing the data domain need to also overlap. If the two tables overlap in a data domain that is not related to a user's goal, then overlaps in that data domain are not needed. Our work will be limited to improving metadata tags, we think tags are good summaries of the data contained in each table. Tags are machine-readable and can be processed by programs to perform keyword search or to compare between the tables.
 
-To give an example, a user is interested in finding information about benches in parks, and finds one candidate table storing information about park structures of all types. In this table, there is a small portion of data storing benches in parks while the majority of data are about other information such as park gates and park tables. When we improve the metadata, we should only focus on improving metadata about benches, and ignore any additional metadata unrelated to benches. Tables containing information about benches must contain the tag bench as well as tags related to benches, while the improved tags does not need to contain tags unrelated to benches.
+To give an example, a user is interested in finding information about benches in parks, and finds one candidate table storing information about park structures of all types. In this table, there is a small portion of data storing benches in parks while the majority of data are about other information such as park gates and park tables. When we improve the metadata, we should only focus on improving metadata about benches, and ignore any additional metadata unrelated to benches. Tables containing information about benches must contain the tag bench as well as tags related to benches, while the improved tags do not need to contain tags unrelated to benches.
 
 When the metadata does not contain tags, the user would have to manually summarize the contents of a table, which would require additional time. We therefore only seek to provide a basic summary with the metadata, so that the user can save some time. Similarly, in the presence of metadata anomalies, the user would need to compare tables to find out all possible tags related to the base table, and needs to study tables separately one by one to obtain a complete view of all the metadata.
 
@@ -191,7 +191,7 @@ The relatedness then allows the tables reach a consensus on the representation o
     \label{fig:augmented-park-specimen-trees}
 \end{figure}
 
-After the common representation of tags is found using normalization, tables with insufficient metadata is augmented with additional tags from a list of known tags. We show an example of the result of our automated metadata augmentation in \autoref{fig:augmented-park-specimen-trees}, using \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, \autoref{fig:example-drainage-catch-basins}, \autoref{fig:example-park-screen-trees}, and \autoref{fig:example-park-structures} as our repository. In this example, additional tags for the park specimen trees table are added to the metadata, regardless of whether park specimen trees is the base table. The additional tags originate from other tables in the repository.
+After the common representation of tags is found using normalization, tables with insufficient metadata are augmented with additional tags from a list of known tags. We show an example of the result of our automated metadata augmentation in \autoref{fig:augmented-park-specimen-trees}, using \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, \autoref{fig:example-drainage-catch-basins}, \autoref{fig:example-park-screen-trees}, and \autoref{fig:example-park-structures} as our repository. In this example, additional tags for the park specimen trees table are added to the metadata, regardless of whether park specimen trees table is the base table. The additional tags originate from other tables in the repository.
 
 To overcome semantic heterogeneity, we perform \textbf{\gls{semantic enrichment}} (attaching a dictionary definition to each word) of the metadata. We use a domain dictionary to assist us with listing all possible interpretations of a word. We use a technique called \textbf{\gls{word sense}} disambiguation (probabilistically assign definition to each word) to find a correct interpretation of a word. We then use an algorithm called schema matching to create the semantic labeling of tables (by probabilistically matching between attributes and tags). The output of \textbf{\gls{schema matching}}, called the \textbf{\glspl{correspondence}}, serves as the key intermediate for semantic labeling. To find the relatedness between tables, we adopt a \textbf{\gls{table searching}} algorithm that relies on the semantic labeling to find the maximum tag overlaps between tables.
 
@@ -203,23 +203,23 @@ We will now define our problem that we have introduced in \autoref{sec:ScopeOfSt
 
 \subsection{Inputs and outputs}
 
-More formally, let a data instance, s, consist of:
+More formally, let a data instance, $s$, consist of:
 \begin{itemize}
-\item A Table Ts , where Ts contains a header row that consists of column headers, but no type information
-\item Let As be the attributes within the schema of Ts , where each attribute provides constraints for a header. We denote the attribute for the ith header in the header row of table Ts as Asi
-\item Ls , a list of text items describing the contents of s , where Lsj is the jth text item in Ls
+\item A Table $T_s$ , where $T_s$ contains a header row that consists of column headers, but no type information
+\item Let $A_s$ be the attributes within the schema of $T_s$ , where each attribute provides constraints for a header. We denote the attribute for the ith header in the header row of table $T_s$ as $A_{si}$
+\item $L_s$ , a list of text items describing the contents of $s$ , where $L_{sj}$ is the $j^{th}$ text item in $L_{s}$
 \end{itemize}
 We take as input to our problem:
 \begin{itemize}
 \item A base data instance sq to be compared with other data instances
-\item a set of $k$ data instances, D, from unknown domains, which could be related to the sq . The correspondences between attributes of these data instances are unavailable. The semantic labeling is also unavailable.
-\item A domain dictionary W , that can provide the semantics for values in Ts , As , and Ls
+\item a set of $k$ data instances, $D$, from unknown domains, which could be related to the $s_q$ . The correspondences between attributes of these data instances are unavailable. The semantic labeling is also unavailable.
+\item A domain dictionary $W$ , that can provide the semantics for values in $T_s$ , $A_s$ , and $L_s$
 \end{itemize}
 The outputs are:
 \begin{itemize}
-\item A set of data instances l  D related to sq, where l . k
-\item A augmented list of L'sq such that L'sq more accurately describes the contents of sq
-\item l augmented lists of L's such that L's more accurately describes the contents of s  D than Ls
+\item A set of data instances $l\in D$ related to $s_{q}$, where $l\le k$
+\item $A$ augmented list of $L'_{sq}$ such that $L'_{sq}$ more accurately describes the contents of $s_q$
+\item $l$ augmented lists of $L'_s$ such that $L'_s$ more accurately describes the contents of $s\in D$ than $L_s$
 \end{itemize}
 
 \subsection{Assumptions}
