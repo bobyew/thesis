@@ -125,6 +125,10 @@
 %%   hyperref otherwise.  See Section 5.2 in the ``LaTeX 2e for Class
 %%   and Package Writers Guide'' (clsguide.pdf) for details.
 \usepackage[printonlyused,nohyperlinks]{acronym}
+
+\usepackage[sort=none]{glossaries-extra}
+\glsenablehyper
+
 %% The ubcdiss.cls loads the `textcase' package which provides commands
 %% for upper-casing and lower-casing text.  The following causes
 %% the acronym package to typeset acronyms in small-caps
@@ -426,7 +430,10 @@
 %   10. Lists of symbols, abbreviations or other (optional)
 
 %   11. Glossary (optional)
-\input{glossary}	% always input, since other macros may rely on it
+%\input{glossary}	% always input, since other macros may rely on it
+
+\input{glossaries}
+\printunsrtglossaries
 
 \textspacing		% begin one-half or double spacing
 
@@ -487,3 +494,5 @@
 
 \end{document}
 \endinput
+
+%TODO Committee page
