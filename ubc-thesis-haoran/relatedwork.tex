@@ -92,7 +92,7 @@ The assignable header names are only the header names available in \autoref{fig:
 \subsection{Schema summarization}
 \label{ssec:SchemaSummarization}
 
-Schema summarization in \cite{Yu2006Schema} help users understand complex schemata for relational and hierarchical databases by reducing the number of schema and the number of attributes per schema. The complex schemata are represented as a graph, where attributes (and values) are represented as nodes with foreign keys as links. The schemata are summarized by merging the elements and links, based on two summary quality properties: summary importance and summary coverage. The importance of an element is measured by how many other elements it influences (via foreign key dependencies, represented as links) and the element's own cardinality (i.e. the number of values in an instance). The coverage of an element is measured by the number of links it takes to traverse from itself to another element (i.e. whether the links in the summary can cover most of the graph). In each candidate summary, each element is the result of one or more merged elements in the original graph, and the aggregated importance and coverage scores of all elements in the summary is used to select the best summary. The selected summary should have the importance and coverage maximized.om the tables,
+Schema summarization in \cite{Yu2006Schema} help users understand complex schemata for relational and hierarchical databases by reducing the number of schema and the number of attributes per schema. The complex schemata are represented as a graph, where attributes (and values) are represented as nodes with foreign keys as links. The schemata are summarized by merging the elements and links, based on two summary quality properties: summary importance and summary coverage. The importance of an element is measured by how many other elements it influences (via foreign key dependencies, represented as links) and the element's own cardinality (i.e. the number of values in an instance). The coverage of an element is measured by the number of links it takes to traverse from itself to another element (i.e. whether the links in the summary can cover most of the graph). In each candidate summary, each element is the result of one or more merged elements in the original graph, and the aggregated importance and coverage scores of all elements in the summary is used to select the best summary. The selected summary should have the importance and coverage maximized.om the tables.
 
 Using \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, \autoref{fig:example-drainage-catch-basins}, and \autoref{fig:example-park-screen-trees}, as the example. Let the schemata be
 \begin{lstlisting}
@@ -155,12 +155,12 @@ Suppose that the repository contains schemata of \autoref{fig:example-parks} and
 (parks, ParkSpecimenTrees.park),
 (UNKNOWN, Parks.location),
 (UNKNOWN, ParkSpecimenTrees.location), and
-(trees, ParkSpecimenTrees.tree_species).trib.findContro
+(trees, ParkSpecimenTrees.tree_species).
 \end{lstlisting}
 
 Then the concepts are [parks, trees, UNKNOWN]. When the new schema is given:
 \begin{lstlisting}
-ParkScreenTrees(park\_name, tree\_species, number\_of\_trees),
+ParkScreenTrees(park_name, tree_species, number_of_trees),
 \end{lstlisting}
 each of the attributes needs to be mapped to an existing concept in the ontology. The random forest classifier then assigns a score to pairs of ParkScreenTrees attribute and candidate concept. 
 After finding a Steiner tree, the mapping is:
