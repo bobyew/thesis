@@ -141,7 +141,7 @@ We can also compute the semantic similarity between two values using pre-trained
 The minimum form of schema matching used a matching criterion that counts the proportion of overlapping characters of attribute names. A more sophisticated criterion at the character level is an N-Gram distance function that computes the similarity between a pair of values \cite{loper-bird-2002-nltk}. Each value is transformed into a multiset of character n-grams. For example, we use the values \textit{`EastPark'} and \textit{`SouthPark'} to illustrate how to compute the similarity between them. The bigrams of \textit{`EastPark'} are \textit{[`Ea', `as', `st', `tP', `Pa', `ar', `rk']}, and the bigrams for \textit{`SouthPark'} are \textit{[`So', `ou', `ut', `th', `hP', `Pa', `ar', `rk']}. The similarity is the proportion of shared n-grams between the two values, given by:
 
 \[
-\frac{2\times|ngrams(value1)\bigcap ngrams(value2)|}{|ngrams(value1)|+|ngrams(value2)|}
+\frac{2\times \left|ngrams(value1)\bigcap ngrams(value2)\right|}{\left|ngrams(value1)\right|+\left|ngrams(value2)\right|}
 \]
 
 Between \textit{`EastPark'} and \textit{`SouthPark'}, there are 3 shared bigrams \textit{[`Pa', `ar', `rk']}. The similarity is therefore 6/15 = 0.4.
