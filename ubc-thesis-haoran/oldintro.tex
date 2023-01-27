@@ -4,6 +4,76 @@
 \chapter{Old Introduction}
 \label{ch:OldIntroduction}
 
+\begin{figure}[t]
+	\centering
+	\begin{tikzpicture}
+	\useasboundingbox (-1,-1) rectangle (1,2); 
+	\draw (-1,0) node[fill, draw, circle ,minimum size=1.5mm,inner sep=0pt,outer sep=0pt, label=left:$\vec{x}_0$](p0){};
+	\draw (0.5,-0.8) node[fill, draw, circle ,minimum size=1.5mm,inner sep=0pt,outer sep=0pt, label=south:$\vec{x}_2$](p2){};
+	\draw (0.7,0.3) node[fill, draw, circle ,minimum size=1.5mm,inner sep=0pt,outer sep=0pt, label=north east:$\vec{x}_1$](p1){};
+	\draw (0.2,1.3) node[fill, draw, circle ,minimum size=1.5mm,inner sep=0pt,outer sep=0pt, label=north east:$\vec{x}_3$](p3){};
+	\draw[line width=1.2pt, -] (-1,0) -- (0.5,-0.8);
+	\draw[line width=1.2pt, -, opacity=0.5] (-1,0) -- (0.7,0.3);
+	\draw[line width=1.2pt, opacity=0.5] (0.5,-0.8) -- (0.7,0.3);
+	\draw[line width=1.2pt, -] (-1,0) -- (0.2,1.3);
+	\draw[line width=1.2pt] (0.2,1.3) -- (0.5,-0.8);
+	\draw[line width=1.2pt, opacity=0.5] (0.2,1.3) -- (0.7,0.3);
+	\end{tikzpicture}	
+	\caption{A sample tetrahedral element, with 4 vertices at positions $\vec{x}_0$, $\vec{x}_1$, $\vec{x}_2$, and
+		$\vec{x}_3$.}
+	\label{fig:f2}
+\end{figure}
+
+\begin{figure}
+	\centering   	
+	\begin{overpic}[width=1.0\columnwidth]{images/energy_plot.pdf}
+		\put(30,30){\includegraphics[width=0.3\columnwidth]{images/rep.png}}  
+		\put(49.5,14){
+			\begin{tikzpicture}
+				\draw[thick,draw=red] (0,0) rectangle ++(0.3,1.2);
+			\end{tikzpicture}	
+		}
+		\put(58,14){
+			\begin{tikzpicture}
+				\draw[thick,draw=yellow] (0,0) rectangle ++(2.1,1.2);
+			\end{tikzpicture}	
+		}
+	\end{overpic} \hfill
+	\begin{overpic}[width=0.45\columnwidth]{images/energy_plot_zoom.pdf}
+		\put(0,-0.2){
+			\begin{tikzpicture}
+				\draw[thick,draw=red] (0,0) rectangle ++(5.4,2.9);
+			\end{tikzpicture}	
+		}
+	\end{overpic} \hfill
+	\begin{overpic}[width=0.45\columnwidth]{images/energy_plot_zoom2.pdf}
+		\put(0,-0.2){
+			\begin{tikzpicture}
+				\draw[thick,draw=yellow] (0,0) rectangle ++(5.4,2.9);
+			\end{tikzpicture}	
+		}
+	\end{overpic}
+	\caption{\textbf{Dynamic Stability}: Energy plot from the simulation of a soft $16^3$ cell cube subjected to gravity, with a moderately large timestep of 8ms. We compare three different algorithms for simulating incompressibility, where the blue curve is the energy plot for the one-ring pressure algorithm of \cite{Irving:2007}, the red is a na\"ive global volume rescaling algorithm, and yellow is ours. \cite{Irving:2007} (blue) shows severe instability even with an aggressive clamping of the volume recovery. Note how due to the extreme oscillations in potential energy, the energy plot for the method appears as a thick line in the top plot. The bottom plots show a magnified plot to demonstrate how the energy behaves in small timeframes. The volume rescaling algorithm (green) gains and loses energy arbitrarily due to a unrealistic simulation of the volumetric stress, which can be seen from the irregularities in the plot. Our method (yellow) displays a realistic and stable energy behavior, and converges to a stable configuration. \label{fig:stability}}
+\end{figure}
+
+\vspace{-\baselineskip}
+\begin{figure}[h]
+\centering
+\begin{tikzcd}
+  e_1
+    \arrow[r, rightarrow]
+    \arrow[d, dotted, no head, "\blacktriangledown" description]
+  & e_2
+    \arrow[d, dotted, no head, "\blacktriangledown" description]
+    \arrow[dl, dashrightarrow] \\
+  e'_1
+    \arrow[r, dashrightarrow]
+  & e'_2
+\end{tikzcd}
+\caption{Diagram illustrating the Z property.}
+\label{fig:Z}
+\end{figure}
+
 \[ \text{Result} = p + \sum_{i=0}^{n} f(x) \]
 
 \begin{itemize}
