@@ -72,7 +72,7 @@ In this section, we give a detailed explanation of schema matching and its exten
 
 More formally, let a correspondence be a triple:
 \[
-(A_{si},A_{s'j},c),\text{for }A_{si}\in A_{s}\text{ and }A_{s'j}\in A_{s'},\text{and }s\neq s'
+(A_{si},A_{s'j},c), \; \textrm{for} \; A_{si}\in A_{s} \; \textrm{and} \; A_{s'j}\in A_{s'},\text{and }s\neq s'
 \]
 where $c$ is the score in the range {[}0, 1{]}, and $c$ = 1 indicates a perfect correspondence between $A_{si}$ and $A_{s'j}$ . The comparison criterion between a pair of attributes could be equality, subsumption, overlap, etc.
 
@@ -111,7 +111,7 @@ Schema matching does not necessarily have to operate only on attributes in schem
 
 Therefore a correspondence can also be a triple:
 \[
-(L_{si},L_{s'j},c),\text{for }L_{si}\in L_{s}\text{ and }L_{s'j}\in L_{s'},\text{ and }s\neq s'
+(L_{si},L_{s'j},c), \; \textrm{for} \; L_{si}\in L_{s} \; \textrm{and} \; L_{s'j}\in L_{s'}, \; \textrm{and} \; s\neq s'
 \]
 where $c$ is the score in the range [0, 1], and $c$ = 1 indicates a perfect correspondence between $L_{si}$ and $L_{s'j}$ . Schema matching between pairs of attributes and pairs of tags follow the one-to-one cardinality constraint.
 
@@ -119,7 +119,7 @@ We can use schema matching to compare other types of data such as long sentence 
 
 Let a semantic label be a triple: 
 \[
-(A_{si},L_{s'j},c),\text{for }A_{si}\in A_{s}\text{ and }L_{s'j}\in L_{s}
+(A_{si},L_{s'j},c), \; \textrm{for} \; A_{si}\in A_{s}\ \; \textrm{and} \; L_{s'j}\in L_{s}
 \]
 where $c$ is the score in the range {[}0, 1{]} and $c$ = 1 indicates a perfect labeling between $A_{si}$ and $L_{s'j}$.
 
