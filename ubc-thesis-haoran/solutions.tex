@@ -115,7 +115,7 @@ Hybrid matching uses each criterion to compute the similarity score between an a
     \end{center}
 \end{table}
 
-For example, the similarity of \textit{(park name, parks)} is 0.6 with N-Gram, 0.8 with WordNet, and 0.8 with FastText. Then the combined score is 0.6*0.3 + 0.8*0.4 + 0.8*0.3 = 0.82. In the same way, the combined scores for other candidate tags are \textit{(park name, environment, 0.7)}, \textit{(park, green, 0.6)}, and so on. If \textit{(park name, parks)} has the highest score of 0.87, then the attribute \textit{park name} is assigned to \textit{park}. At the end of Data Driven, the \textit{Parks} table is augmented with \textit{parks} in its tags set.
+For example, the similarity of \textit{(park name, parks)} is 0.6 with N-Gram, 0.8 with WordNet, and 0.8 with FastText. Then the combined score is 0.6*0.3 + 0.8*0.4 + 0.8*0.3 = 0.74. In the same way, the combined scores for other candidate tags are \textit{(park name, environment, 0.61)}, \textit{(park, green, 0.6)}, and so on. If \textit{(park name, parks)} has the highest score of 0.74, then the attribute \textit{park name} is assigned to \textit{park}. At the end of Data Driven, the \textit{Parks} table is augmented with \textit{parks} in its tags set.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Iterative approach}
