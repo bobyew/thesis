@@ -82,7 +82,7 @@ The data instance such as the one in \autoref{fig:example-parks} can be represen
 \begin{quote}
 \textit{Parks(park name, location, service classification)}
 \end{quote}
-where Parks is the name of the table (and the name of the schema), and park name, location, service classification are the attributes of the schema.
+where \textit{Parks} is the name of the table (and the name of the schema), and park name, location, service classification are the attributes of the schema.
 
 Similarly, the tags of the data instance are represented as:
 \begin{quote}
@@ -172,7 +172,7 @@ There are many ways to improve the metadata and to fix the anomalies, but we are
 
 It is often sufficient to show metadata that are related to the user's goal. The user can understand the metadata more quickly because the unrelated metadata that could distract the user are not shown. If two tables overlap in a data domain of interest, then all metadata describing the data domain need to also overlap. If the two tables overlap in a data domain that is not related to a user's goal, then overlaps in that data domain are not needed. Our work will be limited to improving metadata tags, we think tags are good summaries of the data contained in each table. Tags are machine-readable and can be processed by programs to perform keyword search or to compare between the tables.
 
-To give an example, a user is interested in finding information about benches in parks, and finds one candidate table storing information about park structures of all types. In this table, there is a small portion of data storing benches in parks while the majority of data are about other information such as park gates and park tables. When we improve the metadata, we should only focus on improving metadata about benches, and ignore any additional metadata unrelated to benches. Tables containing information about benches must contain the tag bench as well as tags related to benches, while the improved tags do not need to contain tags unrelated to benches.
+To give an example, a user is interested in finding information about benches in parks, and finds one candidate table storing information about park structures of all types. In this table, there is a small portion of data storing benches in \textit{parks} while the majority of data are about other information such as park gates and park tables. When we improve the metadata, we should only focus on improving metadata about benches, and ignore any additional metadata unrelated to benches. Tables containing information about benches must contain the tag bench as well as tags related to benches, while the improved tags do not need to contain tags unrelated to benches.
 
 When the metadata does not contain tags, the user would have to manually summarize the contents of a table, which would require additional time. We therefore only seek to provide a basic summary with the metadata, so that the user can save some time. Similarly, in the presence of metadata anomalies, the user would need to compare tables to find out all possible tags related to the base table, and needs to study tables separately one by one to obtain a complete view of all the metadata.
 
