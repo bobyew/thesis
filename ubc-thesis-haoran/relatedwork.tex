@@ -47,21 +47,18 @@ The complexity of data and metadata can be reduced by summary generation methods
 A project on integration of data, the OpenII project \cite{Smith2011Unity}, proposed to perform clustering on the schema attributes of multiple schemata in the repository to find a common vocabulary for the repository. As explained in \cite{Smith2011Unity}, a vocabulary is created by a community of authors in advance, and each cluster of attributes is assigned a topic from the vocabulary. It is then possible to map every attribute in each cluster with the assigned topic. The input to clustering is a set of correspondences for the schemata in the repository, where each correspondence is a pair of attributes between two schemata and a similarity score, and clustering is performed with the constraint that disallows attributes from the same schema to be in one cluster. The final set of topics for the schemata becomes the summary of the entire repository. For their approach to work, they assumed that correspondences on attributes are already available as input, and a vocabulary can be readily used for labeling each cluster, which requires contribution from a community of data experts.
 
 We give an example for their work using slightly modified schemata in \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, and \autoref{fig:example-park-screen-trees}. Let the input schemata be:
-
 \begin{itemize}
-	\item[] \textit{Parks(park\_name, location, service\-classification),}
-	\item[] \textit{ParkSpecimenTrees(location, park, tree\-species),} and
-	\item[] \textit{ParkScreenTrees(park\-name, tree\-species, number\-of\-trees)}
+	\item[] \textit{Parks(park\_name, location, service\_classification),}
+	\item[] \textit{ParkSpecimenTrees(location, park, tree\_species),} and
+	\item[] \textit{ParkScreenTrees(park\_name, tree\_species, number\_of\_trees)}
 \end{itemize}
-
 where \textit{park\_name, location,} etc. are attributes of the \textit{Parks} schema. Suppose that the schema matching output is:
-
 \begin{itemize}
-	\item[] \textit{(Parks.park\-name, ParkSpecimenTrees.park, 0.9),}
-	\item[] \textit{(Parks.park\-name, ParkScreenTrees.park\-name, 0.95),}
-	\item[] \textit{(ParkSpecimenTrees.park, ParkScreenTrees.park\-name, 0.9),}
+	\item[] \textit{(Parks.park\_name, ParkSpecimenTrees.park, 0.9),}
+	\item[] \textit{(Parks.park\_name, ParkScreenTrees.park\_name, 0.95),}
+	\item[] \textit{(ParkSpecimenTrees.park, ParkScreenTrees.park\_name, 0.9),}
 	\item[] \textit{(Parks.location, ParkSpecimenTrees.location, 0.95),} and
-	\item[] \textit{(ParkSpecimenTrees.tree\-species, ParkScreenTrees.tree\-species, 0.8)}.
+	\item[] \textit{(ParkSpecimenTrees.tree\_species, ParkScreenTrees.tree\_species, 0.8)}.
 \end{itemize}
 
 In each triple, the first two elements are matched attributes, and the number is the score for the match. After performing clustering, the clusters of attributes are:
