@@ -48,37 +48,37 @@ A project on integration of data, the OpenII project \cite{Smith2011Unity}, prop
 
 We give an example for their work using slightly modified schemata in \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, and \autoref{fig:example-park-screen-trees}. Let the input schemata be:
 
-\begin{lstlisting}
-Parks(park_name, location, service_classification),
-ParkSpecimenTrees(location, park, tree_species), and
-ParkScreenTrees(park_name, tree_species, number_of_trees)
-\end{lstlisting}
+\begin{itemize}
+	\item[] \textit{Parks(park\_name, location, service\-classification),}
+	\item[] \textit{ParkSpecimenTrees(location, park, tree\-species),} and
+	\item[] \textit{ParkScreenTrees(park\-name, tree\-species, number\-of\-trees)}
+\end{itemize}
 
 where \textit{park\_name, location,} etc. are attributes of the \textit{Parks} schema. Suppose that the schema matching output is:
 
-\begin{lstlisting}
-(Parks.park_name, ParkSpecimenTrees.park, 0.9),
-(Parks.park_name, ParkScreenTrees.park_name, 0.95),
-(ParkSpecimenTrees.park, ParkScreenTrees.park_name, 0.9),
-(Parks.location, ParkSpecimenTrees.location, 0.95), and
-(ParkSpecimenTrees.tree_species, ParkScreenTrees.tree_species, 0.8).
-\end{lstlisting}
+\begin{itemize}
+	\item[] \textit{(Parks.park\-name, ParkSpecimenTrees.park, 0.9),}
+	\item[] \textit{(Parks.park\-name, ParkScreenTrees.park\-name, 0.95),}
+	\item[] \textit{(ParkSpecimenTrees.park, ParkScreenTrees.park\-name, 0.9),}
+	\item[] \textit{(Parks.location, ParkSpecimenTrees.location, 0.95),} and
+	\item[] \textit{(ParkSpecimenTrees.tree\-species, ParkScreenTrees.tree\-species, 0.8)}.
+\end{itemize}
 
 In each triple, the first two elements are matched attributes, and the number is the score for the match. After performing clustering, the clusters of attributes are:
-\begin{lstlisting}
-1. \{Parks.park\_name, ParkSpecimenTrees.park, ParkScreenTrees.park\_name\},
-2. \{Parks.location, ParkSpecimenTrees.location\},
-3. \{ParkSpecimenTrees.tree_species, ParkScreenTrees.tree_species\},
-4. \{Parks.service_classification\}, and
-5. \{ParkScreenTrees.number_of_trees\}.
-\end{lstlisting}
+\begin{enumerate}
+	\item \textit{\{Parks.park\_name, ParkSpecimenTrees.park, ParkScreenTrees.park\_name\},}
+	\item \textit{\{Parks.location, ParkSpecimenTrees.location\},}
+	\item \textit{\{ParkSpecimenTrees.tree\_species, ParkScreenTrees.tree\_species\},}
+	\item \textit{\{Parks.service\_classification\},} and
+	\item \textit{\{ParkScreenTrees.number\_of\_trees\}}.
+\end{enumerate}
 
 Each group is then examined to determine a common topic describing the cluster. Let the community vocabulary be \textit{\{park name, park location, tree species, park classification, tree count\}}. Then the topic possibly assigned to each cluster is \{1. \textit{park name}, 2. \textit{park location}, 3. \textit{tree species}, 4. \textit{park classification}, and 5. \textit{tree count}\}. The three mappings in the first cluster are:
-\begin{lstlisting}
-(park name, Parks.park_name),
-(park name, ParkSpecimenTrees.park), and
-(park name, ParkScreenTrees.park_name).
-\end{lstlisting}
+\begin{itemize}
+	\item[] \textit{(park name, Parks.park\_name),}
+	\item[] \textit{(park name, ParkSpecimenTrees.park),} and
+	\item[] \textit{(park name, ParkScreenTrees.park\_name)}.
+\end{itemize}
 
 \subsection{Supervised learning for schema labeling}
 \label{ssec:SupervisedLearningForSchemaLabeling}
