@@ -50,7 +50,7 @@ A holistic schema matching algorithm is proposed in \cite{Rahm2016Case}, where t
 
 \subsection{The issue with the number of comparisons}
 
-The Brute Force algorithm has the issue of high computational cost due to schema matching performed on all table pairs. For a large number of tables, the number of pairwise attribute comparisons grows exponentially relative to the number of tables and the number of attributes in each table. For example, for M tables and N attributes, the number of comparisons is $C(M,2)\bullet(N\bullet N)$. When there are 100 tables, each with 3 attributes, then there are 44550 comparisons
+The Brute Force algorithm has the issue of high computational cost due to schema matching performed on all table pairs. For a large number of tables, the number of pairwise attribute comparisons grows exponentially relative to the number of tables and the number of attributes in each table. For example, for M tables and N attributes, the number of comparisons is $C(M,2)\cdot(N\cdot N)$. When there are 100 tables, each with 3 attributes, then there are 44550 comparisons
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Data driven approach}
@@ -240,7 +240,7 @@ As the first step before we perform the initialization step, we perform semantic
 
 Once semantics are attached to each attribute or tag, we can use WordNet to find the semantic distance between two tags, between a tag and an attribute, or between two attributes. The semantic distance can be used in TableSearch, SchemaMatching, and NewPartition in \autoref{fig:recall-of-augmented-tags-for-different-algorithms}, replacing N-gram character matching.
 
-We use hybrid matching \cite{Rahm2001Survey}, where we use each matching criterion to produce a similarity score for each pair of elements compared, and then combine the similarity scores once scores from all criteria are available. The criteria we use are WordNet semantic distance, FastText word vector distance, and N-Gram distance that we described in \autoref{ssec:VariationsOfSchemaMatching}. We reuse the weights of the matching criteria trained in Data Driven, where each trained weight is specific for each tag and each matching criterion. However, the total number of trained weights is $\left|\text{number of tags}\right|\bullet\left|\text{number of criteria}\right|$, which is too costly to compute. We use one score for each criterion instead, where we simply summed up all the weights of all classes for a specific criterion:
+We use hybrid matching \cite{Rahm2001Survey}, where we use each matching criterion to produce a similarity score for each pair of elements compared, and then combine the similarity scores once scores from all criteria are available. The criteria we use are WordNet semantic distance, FastText word vector distance, and N-Gram distance that we described in \autoref{ssec:VariationsOfSchemaMatching}. We reuse the weights of the matching criteria trained in Data Driven, where each trained weight is specific for each tag and each matching criterion. However, the total number of trained weights is $\left|\text{number of tags}\right|\cdot\left|\text{number of criteria}\right|$, which is too costly to compute. We use one score for each criterion instead, where we simply summed up all the weights of all classes for a specific criterion:
 \[
 \sum_{C_{i}}\ensuremath{W}_{L_{t}}^{C_{i}}
 \]
