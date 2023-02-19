@@ -4,7 +4,7 @@
 \chapter{Implementations and Evaluations}
 \label{ch:Implementations}
 
-In this chapter, we evaluate the four metadata augmentation algorithms with Surrey Open Data. We first discuss the procedure of retrieving, preprocessing, and preparing data, and outline some techniques commonly used for dealing with large quantities of data. We also discuss the external knowledge bases and the trained parameters for our algorithms. We then describe how we select the testing set from Surrey Open Data, and how we manually created a gold standard set, which allows us to discuss in detail how we evaluate the algorithms using the testing set and the gold standard. Due to the lack of existing literature that evaluates metadata generation for tabular data, we invent our own metrics in our evaluation. We are limited to very simple metrics that are yet to be validated on realistic scenarios. We state a number of assumptions that we make in order to achieve acceptable performance.
+In this chapter we evaluate the four metadata augmentation algorithms with the City of Surrey's Open Data\footnote{https://www.surrey.ca/services-payments/online-services/open-data}. We first discuss the procedure of retrieving, preprocessing, and preparing data, and outline some techniques commonly used for dealing with large quantities of data. We also discuss the external knowledge bases and the trained parameters for our algorithms. We then describe how we select the testing set from Surrey Open Data, and how we manually created a gold standard set, which allows us to discuss in detail how we evaluate the algorithms using the testing set and the gold standard. Due to the lack of existing literature that evaluates metadata generation for tabular data, we invent our own metrics in our evaluation. We are limited to very simple metrics that are yet to be validated on realistic scenarios. We state a number of assumptions that we make in order to achieve acceptable performance.
 
 The discussion of the results of our evaluation follows, where we show that the tables found and the tags augmented have a high recall without sacrificing too much precision. Finally, we propose more realistic evaluation metrics that allow us to relax our assumptions but require the availability of human expertise.
 
@@ -57,18 +57,22 @@ There are three types of experiments for evaluating a system, offline evaluation
 \subsection{Test data selection}
 \label{ssec:TestDataSelection}
 
-The data instances in Surrey Open Data are grouped into different sets by the category metadata, a number of tables from each domain is selected into the test set. Tables that do not have at least 5 columns are omitted. Similarly, tables lacking the schema or sufficient metadata to create the contexts are also omitted. To evaluate our implementations, we create a test plan consisting of different tests. Each test uses a different set of data as the repository, and they differ in the set size. The repository of each test uses $k$ number of data instances, where $k$ = 5, 10, and one of the data instances is the base table.
+The data instances in Surrey Open Data are grouped into different sets by the category metadata. A number of tables from each domain is selected into the test set. Tables that do not have at least 5 columns are omitted. Similarly, tables lacking the schema or sufficient metadata to create the contexts are also omitted. To evaluate our implementations, we created a test plan consisting of different tests. Each test uses a different set of data as the repository, and they differ in the set size. The repository of each test uses $k$ number of data instances, where $k$ = 5, 10, and one of the data instances is the base table.
 
 Of the $k$ data instances in the repository, a proportion of the data instances is related to the base table, and the remaining are not related. For example, when $k$ = 5 and $Parks$ is the base table, we choose 2 tables in the \textit{Parks} data domain and 2 tables in another domain, which produces the set \{\textit{Parks}, \textit{ParkSpecimenTrees}, \textit{ParkScreenTrees}, \textit{DrainageCatchBasins}, and \textit{WaterDykeInfrastructure}\}. Alternatively, we can choose all 4 tables from the \textit{Parks} domain, or all 4 tables from another domain. In our study, $Parks$ is the only base table we chose, but as future work we intend to choose tables from other domains as the base table.
 
 \subsection{Gold standard}
 \label{ssec:GoldStandard}
 
-The gold standard set we created consists of a list of tags for each table, we use the tags to compare with the algorithms output tags. The gold standard set for Surrey Open Data contains augmented tags for 90 tables spanning 5 data domains (based on 5 $categories$ in the metadata). We manually collected around 700 tags in the Surrey Open Data repository, which makes up the vocabulary of the tags. We explain why it make sense to evaluate the output tags against the gold standard. We worked on the data for more than a year, and have good knowledge of what data are in the repository. We also have contacting information of the data authors, so that we can contact them to clarify if we cannot understand some data. However, we would like our gold standard to be validated by the data experts as future work, by providing them with the vocabulary of around 700 topics and the augmented metadata tags we created for each table. Once they provide us with their feedback, we can make changes to our gold standard set. In the case that the number of tags is much larger than 700, we need to consider crowd-sourcing the gold standard.
+The gold standard set we created consists of a list of tags for each table, we use the tags to compare with the algorithms output tags. The gold standard set for Surrey Open Data contains augmented tags for 90 tables spanning 5 data domains (based on 5 $categories$ in the metadata). We manually collected around 700 tags in the Surrey Open Data repository, which makes up the vocabulary of the tags. %We explain why it make sense to evaluate the output tags against the gold standard. 
+We worked on the data for more than a year, and have good knowledge of what data are in the repository and thus were in a reasonable position to create the gold standard ourselves. 
+%We also have contacting information of the data authors, so that we can contact them to clarify if we cannot understand some data. 
+However, we would like our gold standard to be validated by the data experts as future work, by providing them with the vocabulary of around 700 topics and the augmented metadata tags we created for each table. Once they provide us with their feedback, we can make changes to our gold standard set. In the case that the number of tags is much larger than 700, we would need to consider crowd-sourcing the gold standard.
 
 We also have guidelines for creating the list of augmented topics in the gold standard. Our goal is to try to reduce bias. Bias is present when we have augmented too many tags in one data domain, but missed many tags in another domain. This bias is common because data are collected based on to human decisions, and they tend to only collect data from sources they are familiar with or they have access to.
 
-The guidelines we give below aim to reduce bias in the gold standard we create. We manually collect tags from each table into a set, and cluster the tags (using N-gram as the distance function) to find groups of similar tags. We then examine each table one by one, while having access to the 700 tags, the clusters of tags, and all tables in the same domain. For existing tags $L_{s}$ of the table $s$, we find the cluster $\text{Cluster}(L_{sj})$ each tag $L_{sj}$ is in. For each candidate tag $L_{si}$, we retrieve all tables $S_{j}$ already containing tag $L_{sj}$, and inspect the data and the metadata of each table $s'$ in $S_{j}$ to decide whether the candidate tag $L_{sj}$ should be added. We also inspect each table $s'$ containing the tag $L_{sj}$ and discover additional similar tags $L_{s'}$ that could be added to the gold standard of $L_{s}$. We built a user-interactive tool that assists us to perform all of the above. We did not have full confidence that the gold standard is correct, but we modified the gold standard while evaluating the output tags. We added any tags that we missed or removed tags that seemed incorrect after each test run. We did not count these test runs as part of the accuracy calculation.
+The guidelines we give below aim to reduce bias in the gold standard we create. We manually collect tags from each table into a set, and cluster the tags (using N-gram as the distance function) to find groups of similar tags. We then examine each table one by one, while having access to the 700 tags, the clusters of tags, and all tables in the same domain. For existing tags $L_{s}$ of the table $s$, we find the cluster $\text{Cluster}(L_{sj})$ each tag $L_{sj}$ is in. For each candidate tag $L_{si}$, we retrieve all tables $S_{j}$ already containing tag $L_{sj}$, and inspect the data and the metadata of each table $s'$ in $S_{j}$ to decide whether the candidate tag $L_{sj}$ should be added. We also inspect each table $s'$ containing the tag $L_{sj}$ and discover additional similar tags $L_{s'}$ that could be added to the gold standard of $L_{s}$. We built a user-interactive tool that assists us to perform all of the above. %We did not have full confidence that the gold standard is correct, but we modified the gold standard while evaluating the output tags. 
+We added any tags that we missed or removed tags that seemed incorrect after each test run. We did not count these test runs as part of the accuracy calculation.
 
 \subsection{Comparing output augmented tags with gold standard}
 \label{ssec:ComparingOutputAugmentedTagsWithGoldStandard}
@@ -149,7 +153,7 @@ We evaluate our experimental results in this section. For input repository size 
 
 We measured the four algorithms in \autoref{ch:Solutions}: Solutions in terms of precision and recall with different parameters for each test, the results are shown in \autoref{tab:Precision-and-recall-of-algorithms-given-input-of-k-tables}. The accuracy of Data Driven does not reflect its actual performance, because it only creates tags for the base table and there is no mechanism for retrieving related tables. We added additional measurements for the accuracy of Improved Iterative after some modifications were made (shown in the last column of \autoref{tab:Precision-and-recall-of-algorithms-given-input-of-k-tables}). We removed the schema matching step between the attributes in the iterative method. Once a related table is found, its topics are compared to each topic in every partition, if a pair of topics have a high similarity score, the topic and the attribute are added to the partition without schema matching.
 
-\begin{table}[h!]
+\begin{table}[ht!]
     \centering
     %\tiny
     \scriptsize
@@ -196,7 +200,7 @@ The recall either increase or decrease as $k$ increases. The recall of Iterative
 
 We performed rolled-up of the results in the dimension of $k$, and computed the average for every mix proportion. The precision is shown in \autoref{tab:Precision-of-different-algorithms-given-a-mix-of-related-and-unrelated-tables-in-repository} and the recall is shown in \autoref{tab:Recall-of-different-algorithms-given-a-mix-of-related-and-unrelated-tables-in-repository}. A well-designed algorithm should not decrease in precision or recall when the proportion of related and unrelated tables change. However, we observe that decreased its precision drastically as the mix shifts from 100\% to 0\%, this suggests that Improved Iterative requires more improvements for future work.
 
-\begin{table}[h!]
+\begin{table}[ht!]
     \centering
     \scriptsize
     \begin{center}
@@ -216,7 +220,7 @@ We performed rolled-up of the results in the dimension of $k$, and computed the 
     \end{center}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[ht!]
     \centering
     \scriptsize
     \begin{center}
@@ -250,7 +254,7 @@ However, we think a good algorithm should have a constant F1 score regardless of
 
 We measured the number of new tags added to the augmented metadata for the four algorithms in \autoref{tab:Number-of-new-tags-added-by-different-algorithms}. Brute Force adds the greatest number of new tags on average, 42.71 per table, Data Driven adds 7.63 tags per table, while Iterative only adds 2.33 per table. Improved Iterative adds 14.35 tags per table. When additional logics are removed for Improved Iterative, 25.96 new tags are added, this demonstrates that the schema matching step is able to filter out many tags.
 
-\begin{table}[h!]
+\begin{table}[ht!]
     \centering
     \scriptsize
     \begin{center}
@@ -283,7 +287,7 @@ The plot in \autoref{fig:number-of-new-tags-added-given-k-tables} shows the aver
 \subsection{Runtime}
 We measured the runtime for the four different algorithms, and the results are shown in \autoref{tab:Runtime-of-different-approaches-given-k-tables-as-input}. Each test can be completed within a reasonable timeframe for all of the algorithms. Iterative and Improved Iterative terminated the iterative method in less than 5 iterations (either $2^{nd}$, $3^{rd}$, or the $4^{th}$ iteration) for all tests. However, we have not included any tests with more than 10 tables in the repository, and we cannot conclude that any of the algorithms is efficient.
 
-\begin{table}[h!]
+\begin{table}[ht!]
     \centering
     \scriptsize
     \begin{center}
