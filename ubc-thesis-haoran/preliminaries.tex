@@ -92,15 +92,15 @@ When the score computed is in the range of 0 to 1, we can model the score as the
 
 We give an example using \autoref{fig:example-parks} and \autoref{fig:example-park-specimen-trees}. We let a pair of schemata be
 \begin{quote}
-    \textit{Parks(park\_name, location, service\_classification)}, and \\
-    \textit{ParkSpecimenTrees(location, park, tree\_species)}.
+    \textit{Parks}(\textit{park\_name}, \textit{location}, \textit{service\_classification}), and \\
+    \textit{ParkSpecimenTrees}(\textit{location}, \textit{park}, \textit{tree\_species}).
 \end{quote}
 
 We perform matching between the two sets of attributes. We first compare \textit{Parks.park\_name} with \textit{ParkSpecimenTrees.location}, and then with \textit{ParkSpecimenTrees.park}, and so on. If we use the simple \textbf{\gls{matching criterion}}: find the proportion of overlapping characters, then the scores for the comparisons are 0.25, 0.67, and so on. If the one-to-one cardinality constraint is enforced, we must only choose one pair of attributes such that neither of the two attributes appears in other correspondences, and that the sum of the correspondence scores is maximized. In the example, the pairs of attributes chosen as the correspondences are
 \begin{quote}
-\textit{(Parks.park\_name, ParkSpecimenTrees.park, 0.67)}, \\
-\textit{(Parks.location, ParkSpecimenTrees.location, 1.0)}, and \\
-\textit{(Parks.service\_classification, ParkSpecimenTrees.tree\_species, 0.32)}.
+(\textit{Parks.park\_name}, \textit{ParkSpecimenTrees.park}, \textit{0.67}), \\
+(\textit{Parks.location}, \textit{ParkSpecimenTrees.location}, \textit{1.0}), and \\
+(\textit{Parks.service\_classification}, \textit{ParkSpecimenTrees.tree\_species}, \textit{0.32}).
 \end{quote}
 If the one-to-one cardinality constraint is relaxed, then the chosen correspondences are changed.
 
@@ -173,7 +173,7 @@ For each text item $L_{sj}$ in the list of text items $L_{s}$ of data instance $
 
 If there is a tag $L_{sk}$ in the existing metadata of the data instance that does not participate in any semantic labels, we create a label $(null,L_{sk})$ for it.
 
-We give an example using \autoref{fig:example-parks} and \autoref{fig:example-drainage-catch-basins}. Let the input be the set of tags \{\textit{environment}, \textit{green}, \textit{nature}, \textit{parks}, \textit{trees}, \textit{devices}, \textit{infrastructure}\}, as well as a schema \textit{Parks(park name, location, service classification)}. The initialization step may generate the following semantic labels: \textit{(park name, parks)}, \textit{(location, environment)}, \textit{(service classification, infrastructure)}. In addition, let another schema be \textit{DrainageCatchBasins(device type, device size)}, and the semantic labels be \textit{(device type, device)}, \textit{(device size, infrastructure)}.
+We give an example using \autoref{fig:example-parks} and \autoref{fig:example-drainage-catch-basins}. Let the input be the set of tags \{\textit{environment}, \textit{green}, \textit{nature}, \textit{parks}, \textit{trees}, \textit{devices}, \textit{infrastructure}\}, as well as a schema \textit{Parks(park name, location, service classification)}. The initialization step may generate the following semantic labels: (\textit{park name}, \textit{parks}), (\textit{location}, \textit{environment}), (\textit{service classification}, \textit{infrastructure}). In addition, let another schema be \textit{DrainageCatchBasins}(\textit{device type}, \textit{device size}), and the semantic labels be (\textit{device type}, \textit{device}), (\textit{device size}, \textit{infrastructure}).
 
 Notice that both schemata have mappings to \textit{infrastructure}, but only one is suitable to contain this tag. The reason is because \textit{infrastructure} is used in different contexts in the two schemata. From the context of use, the word is more relevant to describe the structure built such as catch basins, rather than a service that may involve \textit{infrastructure}. In our main algorithm in \autoref{sec:IterativeApproach}, one of the two labels is not included in the result. We use the heuristic that \textit{DrainageCatchBasins} already contains the tag \textit{infrastructure} in its metadata, so it should keep the tag. In more complicated cases where neither table contained the tag originally, it is more difficult to decide.
 

@@ -119,19 +119,19 @@ Data mappings can be created in three different ways: local-as-view (LAV), globa
 
 We will talk about one work of data integration \cite{Levy1996Querying}, where LAV mappings created for each schema act as the descriptions of the individual data instances via the mediated schema. The heterogeneity between schemata is addressed by the mediated schema and mappings with individual schemata. Using \autoref{fig:example-parks} and \autoref{fig:example-park-specimen-trees} as an example, we let the schemata be:
 \begin{itemize}
-	\item[] \textit{Park(park\_name, location, service\_classification)} and
-	\item[] \textit{ParkSpecimenTrees(location, park, tree\_species)}.
+	\item[] \textit{Park}(\textit{park\_name}, \textit{location}, \textit{service\_classification}) and
+	\item[] \textit{ParkSpecimenTrees}(\textit{location}, \textit{park}, \textit{tree\_species}).
 \end{itemize}
 Let the mediated schema (and its mediate attributes) be:
 \begin{itemize}
-	\item[] \textit{MedSchema(park\_name, location, tree\_species, park\_service),}
+	\item[] \textit{MedSchema}(\textit{park\_name}, \textit{location}, \textit{tree\_species}, \textit{park\_service}),
 \end{itemize}
 with LAV mappings (where each attribute of a schema has a mapping with a mediated attribute):
 \begin{itemize}
-	\item[] \textit{Park(park\_name: park\_name, location: location, service\_classification: park\_service),}
-	\item[] \textit{ParkSpecimenTrees(location: location, park: park\_name, tree\_species: tree\_species)}.
+	\item[] \textit{Park}(park\_name: \textit{park\_name}, location: \textit{location}, service\_classification: \textit{park\_service}),
+	\item[] \textit{ParkSpecimenTrees}(location: \textit{location}, park: \textit{park\_name}, tree\_species: \textit{tree\_species}).
 \end{itemize}
-When a user issues a query such as MedSchema(park\_name), the LAV mappings show that the queries issued to the individual data instances should be \textit{Park(park\_name)} and \textit{ParkSpecimenTrees(park)}.
+When a user issues a query such as MedSchema(\textit{park\_name}), the LAV mappings show that the queries issued to the individual data instances should be \textit{Park}(\textit{park\_name}) and \textit{ParkSpecimenTrees}(\textit{park}).
 
 \subsection{Relational-to-ontology schema mapping}
 
@@ -141,23 +141,23 @@ Using the existing mapping of attributes to ontology, where each existing schema
 
 Suppose that the repository contains schemata of \autoref{fig:example-parks} and \autoref{fig:example-park-specimen-trees}, with the following concept-attribute mappings:
 \begin{itemize}
-	\item[] \textit{(parks, Parks.park\_name),}
-	\item[] \textit{(parks, ParkSpecimenTrees.park),}
-	\item[] \textit{(UNKNOWN, Parks.location),}
-	\item[] \textit{(UNKNOWN, ParkSpecimenTrees.location),} and
-	\item[] \textit{(trees, ParkSpecimenTrees.tree\_species)}.
+	\item[] (\textit{parks}, \textit{Parks.park\_name}),
+	\item[] (\textit{parks}, \textit{ParkSpecimenTrees.park}),
+	\item[] (\textit{UNKNOWN}, \textit{Parks.location}),
+	\item[] (\textit{UNKNOWN}, \textit{ParkSpecimenTrees.location}), and
+	\item[] (\textit{trees}, \textit{ParkSpecimenTrees.tree\_species}).
 \end{itemize}
 
-Then the concepts are [parks, trees, UNKNOWN]. When the new schema is given:
+Then the concepts are [\textit{parks}, \textit{trees}, \textit{UNKNOWN}]. When the new schema is given:
 \begin{itemize}
-	\item[] \textit{ParkScreenTrees(park\_name, tree\_species, number\_of\_trees),}
+	\item[] \textit{ParkScreenTrees}(\textit{park\_name}, \textit{tree\_species}, \textit{number\_of\_trees}),
 \end{itemize}
 each of the attributes needs to be mapped to an existing concept in the ontology. The random forest classifier then assigns a score to pairs of ParkScreenTrees attribute and candidate concept. 
 After finding a Steiner tree, the mapping is:
 \begin{itemize}
-	\item[] \textit{(parks, ParkScreenTrees.park\_name),}
-	\item[] \textit{(UNKNOWN, ParkScreenTrees.number\_of\_trees),} and
-	\item[] \textit{(trees, ParkScreenTrees.tree\_species)}.
+	\item[] (\textit{parks}, \textit{ParkScreenTrees.park\_name}),
+	\item[] (\textit{UNKNOWN}, \textit{ParkScreenTrees.number\_of\_trees}), and
+	\item[] (\textit{trees}, \textit{ParkScreenTrees.tree\_species}).
 \end{itemize}
 
 \subsection{Data completion}
