@@ -93,17 +93,17 @@ Schema summarization~\cite{Yu2006Schema} helps users understand complex schemata
 
 Using \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, \autoref{fig:example-drainage-catch-basins}, and \autoref{fig:example-park-screen-trees}, as the example, let the schemata be
 \begin{itemize}
-	\item[] \textit{Parks(park\_name, location, service\_classification),}
-	\item[] \textit{ParkSpecimenTrees(location, park, tree\_species),}
-	\item[] \textit{ParkScreenTrees(park\_name, tree\_species, number\_of\_trees),} and 
-	\item[] \textit{DrainageCatchBasins(device\_type, latitude, longitude, device\_size)}.
+	\item[] \textit{Parks}(\textit{park\_name}, \textit{location}, \textit{service\_classification}),
+	\item[] \textit{ParkSpecimenTrees}(\textit{location}, \textit{park}, \textit{tree\_species}),
+	\item[] \textit{ParkScreenTrees}(\textit{park\_name}, \textit{tree\_species}, \textit{number\_of\_trees}), and 
+	\item[] \textit{DrainageCatchBasins}(\textit{device\_type}, \textit{latitude}, \textit{longitude}, \textit{device\_size}).
 \end{itemize}
 Suppose we know that there is a foreign key dependency between
 \begin{itemize}
-	\item[] \textit{Parks.park\_name} and \textit{ParkSpecimenTrees.park,}
-	\item[] \textit{Parks.park\_name} and \textit{ParkScreenTrees.park\_name,}
-	\item[] \textit{Parks.location} and \textit{ParkSpecimenTrees.location,}
-	\item[] \textit{ParkSpecimenTrees.tree\_species} and \textit{ParkScreenTrees.tree\_species.}
+	\item[] \textit{Parks.park\_name} and \textit{ParkSpecimenTrees.park},
+	\item[] \textit{Parks.park\_name} and \textit{ParkScreenTrees.park\_name},
+	\item[] \textit{Parks.location} and \textit{ParkSpecimenTrees.location},
+	\item[] \textit{ParkSpecimenTrees.tree\_species} and \textit{ParkScreenTrees.tree\_species}.
 \end{itemize}
 According to the importance property \{\textit{park\_name}, \textit{tree\_species}, \textit{location}\} are likely to be in the summary, because these elements have many links. Elements with a sufficient number of links would increase the summary importance. The coverage property encourages elements that are far apart from each other to be in the summary. In this case, \{\textit{DrainageCatchBasins.device\_type}\} will be in the summary in addition to \{\textit{park\_name}, \textit{tree\_species}, \textit{location}\}, because elements from all four schemata will be in the summary. The attribute \textit{device\_type} is in the summary because the column does not have null values. For their algorithm to summarize the schemata, they assumed that the foreign key constraints for the schemata are known, and their summaries are generated only based on the number of links between schema attributes. Our approach takes into account the semantics of the attributes to find a summary.
 
