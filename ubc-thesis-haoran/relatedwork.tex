@@ -48,33 +48,33 @@ A project on integration of data, the OpenII project \cite{Smith2011Unity}, prop
 
 We give an example for their work using slightly modified schemata in \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, and \autoref{fig:example-park-screen-trees}. Let the input schemata be:
 \begin{itemize}
-	\item[] \textit{Parks(park\_name, location, service\_classification),}
-	\item[] \textit{ParkSpecimenTrees(location, park, tree\_species),} and
-	\item[] \textit{ParkScreenTrees(park\_name, tree\_species, number\_of\_trees)}
+	\item[] \textit{Parks}(\textit{park\_name}, \textit{location}, \textit{service\_classification}),
+	\item[] \textit{ParkSpecimenTrees}(\textit{location}, \textit{park}, \textit{tree\_species}), and
+	\item[] \textit{ParkScreenTrees}(\textit{park\_name}, \textit{tree\_species}, \textit{number\_of\_trees})
 \end{itemize}
-where \textit{park\_name, location,} etc. are attributes of the \textit{Parks} schema. Suppose that the schema matching output is:
+where \textit{park\_name}, \textit{location}, etc. are attributes of the \textit{Parks} schema. Suppose that the schema matching output is:
 \begin{itemize}
-	\item[] \textit{(Parks.park\_name, ParkSpecimenTrees.park, 0.9),}
-	\item[] \textit{(Parks.park\_name, ParkScreenTrees.park\_name, 0.95),}
-	\item[] \textit{(ParkSpecimenTrees.park, ParkScreenTrees.park\_name, 0.9),}
-	\item[] \textit{(Parks.location, ParkSpecimenTrees.location, 0.95),} and
-	\item[] \textit{(ParkSpecimenTrees.tree\_species, ParkScreenTrees.tree\_species, 0.8)}.
+	\item[] (\textit{Parks.park\_name}, \textit{ParkSpecimenTrees.park}, \textit{0.9}),
+	\item[] (\textit{Parks.park\_name}, \textit{ParkScreenTrees.park\_name}, \textit{0.95}),
+	\item[] (\textit{ParkSpecimenTrees.park}, \textit{ParkScreenTrees.park\_name}, \textit{0.9}),
+	\item[] (\textit{Parks.location}, \textit{ParkSpecimenTrees.location}, \textit{0.95}), and
+	\item[] (\textit{ParkSpecimenTrees.tree\_species}, \textit{ParkScreenTrees.tree\_species}, \textit{0.8}).
 \end{itemize}
 
 In each triple, the first two elements are matched attributes, and the number is the score for the match. After performing clustering, the clusters of attributes are:
 \begin{enumerate}
-	\item \textit{\{Parks.park\_name, ParkSpecimenTrees.park, ParkScreenTrees.park\_name\},}
-	\item \textit{\{Parks.location, ParkSpecimenTrees.location\},}
-	\item \textit{\{ParkSpecimenTrees.tree\_species, ParkScreenTrees.tree\_species\},}
-	\item \textit{\{Parks.service\_classification\},} and
-	\item \textit{\{ParkScreenTrees.number\_of\_trees\}}.
+	\item \{\textit{Parks.park\_name}, \textit{ParkSpecimenTrees.park}, \textit{ParkScreenTrees.park\_name}\},
+	\item \{\textit{Parks.location}, \textit{ParkSpecimenTrees.location}\},
+	\item \{\textit{ParkSpecimenTrees.tree\_species}, \textit{ParkScreenTrees.tree\_species}\},
+	\item \{\textit{Parks.service\_classification}\}, and
+	\item \{\textit{ParkScreenTrees.number\_of\_trees}\}.
 \end{enumerate}
 
-Each group is then examined to determine a common topic describing the cluster. Let the community vocabulary be \textit{\{park name, park location, tree species, park classification, tree count\}}. Then the topic possibly assigned to each cluster is \{1. \textit{park name}, 2. \textit{park location}, 3. \textit{tree species}, 4. \textit{park classification}, and 5. \textit{tree count}\}. The three mappings in the first cluster are:
+Each group is then examined to determine a common topic describing the cluster. Let the community vocabulary be \{\textit{park name}, \textit{park location}, \textit{tree species}, \textit{park classification}, \textit{tree count}\}. Then the topic possibly assigned to each cluster is \{1. \textit{park name}, 2. \textit{park location}, 3. \textit{tree species}, 4. \textit{park classification}, and 5. \textit{tree count}\}. The three mappings in the first cluster are:
 \begin{itemize}
-	\item[] \textit{(park name, Parks.park\_name),}
-	\item[] \textit{(park name, ParkSpecimenTrees.park),} and
-	\item[] \textit{(park name, ParkScreenTrees.park\_name)}.
+	\item[] (\textit{park name}, \textit{Parks.park\_name}),
+	\item[] (\textit{park name}, \textit{ParkSpecimenTrees.park}), and
+	\item[] (\textit{park name}, \textit{ParkScreenTrees.park\_name}).
 \end{itemize}
 
 \subsection{Supervised learning for schema labeling}
@@ -82,7 +82,7 @@ Each group is then examined to determine a common topic describing the cluster. 
 
 We discuss a supervised learning method for predicting column header names for data instances. The column header names is a vocabulary known prior to prediction. In \cite{10.1145/3184558.3191601}, the column data of a table without a header is the input for a document classification problem to predict the header. They trained the classifier using column data as bag-of-words features and the column headers as the labels. The bag-of-words features for string datatypes always have poor predictions, and improvements were made to create distinct types of features for \textit{string} datatypes, which improved the predictions on headers.
 
-To give an example, let the table and the header row in \autoref{fig:example-parks} be the training data. The trained classifier assigns the first column the header \textit{park name}, and the other columns are also assigned the correct headers. We let \autoref{fig:example-park-specimen-trees} be the test data. Each column is given to the classifier as input, and the classifier predicts a column name from \textit{\{park name, location, service classification\}}. When the classifier is given the second column containing values such as \textit{``Don Christian Park, 33M - Detention Pond''}, the classifier predicts the column name to be \textit{park name}. Since the true column name is \textit{park}, the prediction may or may not be correct based on how correctness is defined.
+To give an example, let the table and the header row in \autoref{fig:example-parks} be the training data. The trained classifier assigns the first column the header \textit{park name}, and the other columns are also assigned the correct headers. We let \autoref{fig:example-park-specimen-trees} be the test data. Each column is given to the classifier as input, and the classifier predicts a column name from \{\textit{park name}, \textit{location}, \textit{service classification}\}. When the classifier is given the second column containing values such as \textit{``Don Christian Park, 33M - Detention Pond''}, the classifier predicts the column name to be \textit{park name}. Since the true column name is \textit{park}, the prediction may or may not be correct based on how correctness is defined.
 
 The assignable header names are only the header names available in \autoref{fig:example-parks}, and the classifier is unable to predict any other names for a given column. If many of the header names do not appear in the training data, then columns with those headers in the test set will never be predicted correctly. When the classifier tries to predict the third column of \autoref{fig:example-park-specimen-trees}, it is unable to predict the correct column name, because there is no similar column in the training data.
 
@@ -105,7 +105,7 @@ Suppose we know that there is a foreign key dependency between
 	\item[] \textit{Parks.location} and \textit{ParkSpecimenTrees.location,}
 	\item[] \textit{ParkSpecimenTrees.tree\_species} and \textit{ParkScreenTrees.tree\_species.}
 \end{itemize}
-According to the importance property \textit{\{park\_name, tree\_species, location\}} are likely to be in the summary, because these elements have many links. Elements with a sufficient number of links would increase the summary importance. The coverage property encourages elements that are far apart from each other to be in the summary. In this case, \textit{\{DrainageCatchBasins.device\_type\}} will be in the summary in addition to \textit{\{park\_name, tree\_species, location\}}, because elements from all four schemata will be in the summary. The attribute \textit{device\_type} is in the summary because the column does not have null values. For their algorithm to summarize the schemata, they assumed that the foreign key constraints for the schemata are known, and their summaries are generated only based on the number of links between schema attributes. Our approach takes into account the semantics of the attributes to find a summary.
+According to the importance property \{\textit{park\_name}, \textit{tree\_species}, \textit{location}\} are likely to be in the summary, because these elements have many links. Elements with a sufficient number of links would increase the summary importance. The coverage property encourages elements that are far apart from each other to be in the summary. In this case, \{\textit{DrainageCatchBasins.device\_type}\} will be in the summary in addition to \{\textit{park\_name}, \textit{tree\_species}, \textit{location}\}, because elements from all four schemata will be in the summary. The attribute \textit{device\_type} is in the summary because the column does not have null values. For their algorithm to summarize the schemata, they assumed that the foreign key constraints for the schemata are known, and their summaries are generated only based on the number of links between schema attributes. Our approach takes into account the semantics of the attributes to find a summary.
 
 To evaluate the summary, the authors designed a user interface to interact with the summary, where the user is able to expand a summary element to display all original elements. The evaluation metric called the \textit{query discovery cost}, is the number of user interactions counted before the user correctly formulates a correct query.
 
