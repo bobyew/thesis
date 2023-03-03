@@ -200,7 +200,7 @@ Let the open data repository contain the tables in \autoref{fig:example-park-spe
 
 Let the attribute unionability scores for the pairs of columns be \\ \{(\textit{ParkSpecimenTrees.park name} and \textit{ParkScreenTrees.location} : 0.2), (\textit{ParkSpecimenTrees.park name} and \textit{ParkScreenTrees.species} : 0.7), \dots\}. After a best match is determined, let the table unionability be 0.4. When table search is performed with \textit{park specimen trees} as the query and the \textit{park screen trees} as a search candidate, they are unionable if 0.4 is above the decision threshold.
 
-The authors relied on locality-sensitive hashing (LSH) to group all similar attributes from different tables into the same partition, which allows quick retrieval of all candidate tables containing an attribute similar to some given query attribute. However, building a LSH index takes a considerable amount of time, and depending on the problem, building such an index may not be desired.
+The authors relied on locality-sensitive hashing (LSH) to group all similar attributes from different tables into the same partition, which allows quick retrieval of all candidate tables containing an attribute similar to some given query attribute. However, building an LSH index takes a considerable amount of time, and depending on the problem, building such an index may not be desired.
 
 \subsection{Modified table search}
 \label{ssec:ModifiedTableSearch}
