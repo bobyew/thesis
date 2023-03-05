@@ -23,7 +23,7 @@ The domain dictionary that we use is WordNet \cite{Fellbaum1998Computers}. It is
 
 \subsection{Word sense disambiguation}
 
-Using the information provided in WordNet, it is possible to perform word sense disambiguation. For a word in the schema and the metadata tags, we create a context using surrounding information available in the metadata. Similarly, we create a context for a word sense using the synonyms and the example sentences. After creating the contexts, we are able to compare the word with each candidate word sense using their contexts. If the two contexts are highly similar, then the metadata word is semantically enriched by attaching the definition of the word sense. 
+Using the information provided in WordNet, it is possible to perform word sense disambiguation. For a word in the schema and the metadata tags, we create a context using surrounding information available in the metadata. Similarly, we create a context for a word sense using the synonyms and the example sentences. After creating the contexts, we are able to compare the word with each candidate word sense using their contexts. If the two contexts are highly similar, then the metadata word is semantically enriched by attaching the definition of the word sense.
 
 \begin{figure}
     \centering
@@ -85,7 +85,7 @@ There are many possible ways to implement a schema matching algorithm. Typically
 \begin{itemize}
 \item The cardinality constraint on correspondences between a pair of schemata is one-to-one. However, this constraint can be relaxed if needed.
 \item A schema is present for each table, which allows schema matching to be performed instead of matching the header rows.
-\item When a pair of attributes has a high score, it has a high similarity according to some matching criteria.	
+\item When a pair of attributes has a high score, it has a high similarity according to some matching criteria.
 \end{itemize}
 
 When the score computed is in the range of 0 to 1, we can model the score as the probability that the pair of attributes fulfills the specified criteria. Based on the probabilities, we can then rank all correspondences by their scores or compute other statistical measures.
@@ -117,7 +117,7 @@ where $c$ is the score in the range [0, 1], and $c$ = 1 indicates a perfect corr
 
 We can use schema matching to compare other types of data such as long sentence descriptions and schema structure \cite{Sorrentino2011NORMS}. In \cite{10.1145/1066157.1066283,Duchateau2009YAM}, metadata such as schema version and namespaces were used in schema matching. It is also possible to perform schema matching using the data values in data instances \cite{Rahm2001Survey}. In our work, we use schema matching to find matching between a set of attributes and a set of tags, which we call the semantic labeling. Each pair of attribute and topic is called a semantic label.
 
-Let a semantic label be a triple: 
+Let a semantic label be a triple:
 \[
 (A_{si},L_{s'j},c), \; \textrm{for} \; A_{si}\in A_{s}\ \; \textrm{and} \; L_{s'j}\in L_{s}
 \]
@@ -146,7 +146,7 @@ The minimum form of schema matching used a matching criterion that counts the pr
 
 Between \textit{`EastPark'} and \textit{`SouthPark'}, there are 3 shared bigrams [\textit{`Pa'}, \textit{`ar'}, \textit{`rk'}]. The similarity is therefore 6/15 = 0.4.
 
-Another variation of schema matching is to perform matching at the instance level. Matching at the instance-level compares the data values in the data instances instead of only comparing the attributes. For tabular data instances, matching is done between the table values instead of the table headers, by comparing data values in table columns, with the goal of finding which data column pairs share the most values. Matching at the instance-level is known as \textit{entity matching}. The work in \cite{Mudgal2018Deep} used instance-level matching to determine whether or not a pair of attributes is in the same data domain. Works in \cite{Rahm2016Case} used natural language processing (NLP) and deep neural network (DNN) techniques to improve the ability to resolve values for entity matching. If precise matching is required, then each of the values needs to resolve to real-world entities (such as a concept in an ontology). This process called \textit{entity resolution}. In open data there is typically no real-world entity information provided \cite{books/sp/bellahsene11}, and therefore instance-level matching cannot be performed with precision. A course-grained instance-level matching approach uses document similarity measures (such as TF/IDF) \cite{Duchateau2009YAM}, by treating each column as a document (with values of a column aggregated into a single document). This approach performs poorly since individual values such as an address of a place requires more effort to identify, and therefore similarity between documents is typically low. 
+Another variation of schema matching is to perform matching at the instance level. Matching at the instance-level compares the data values in the data instances instead of only comparing the attributes. For tabular data instances, matching is done between the table values instead of the table headers, by comparing data values in table columns, with the goal of finding which data column pairs share the most values. Matching at the instance-level is known as \textit{entity matching}. The work in \cite{Mudgal2018Deep} used instance-level matching to determine whether or not a pair of attributes is in the same data domain. Works in \cite{Rahm2016Case} used natural language processing (NLP) and deep neural network (DNN) techniques to improve the ability to resolve values for entity matching. If precise matching is required, then each of the values needs to resolve to real-world entities (such as a concept in an ontology). This process called \textit{entity resolution}. In open data there is typically no real-world entity information provided \cite{books/sp/bellahsene11}, and therefore instance-level matching cannot be performed with precision. A course-grained instance-level matching approach uses document similarity measures (such as TF/IDF) \cite{Duchateau2009YAM}, by treating each column as a document (with values of a column aggregated into a single document). This approach performs poorly since individual values such as an address of a place requires more effort to identify, and therefore similarity between documents is typically low.
 
 One can also perform matching with a combination of matching criteria within the same algorithm \cite{Sorrentino2011NORMS}. If an instance-level matching criterion is used in addition to a schema-level matching criterion, the instance-level criterion can add additional evidence for choosing the best correspondences. The reason is that each schema matching criterion specializes at evaluating certain types of data, because each criterion has a distinct similarity function. For example, a criterion that counts the proportion of word overlaps in attribute names is likely to produce different similarity values than a criterion that computes the semantic distance between words using a dictionary.
 
