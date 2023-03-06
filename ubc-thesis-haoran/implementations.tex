@@ -18,7 +18,7 @@ Filtering by specific categories or specific tags allows the user to narrow down
 
 The resources and the metadata can be located using unique URLs, which one can visit to download the resources and the metadata. The resources are stored using a portal named Comprehensive Knowledge Archive Network (CKAN), the data can be accessed via an API request with the GET command and a parameter specifying the name of the dataset. The metadata for each resource is stored separately on a directory named ArcGIS REST Services Directory. Each resource's metadata is accessed via an API request with the GET command and a parameter specifying the format (JSON or PJSON) of the metadata. We wrote a script to download the resources and metadata programmatically.
 
-Each resource stores data instances in multiple formats, which includes PDF, JSON, CSV, KML, etc. For example, the data instances in PDF are reports created by the city council, and the data instances in KML are geographic data representing points on a map. In our study, we only retrieved data instances in JSON or CSV because they are easier to process. We give a higher priority to data instances in CSV format, because JSON and CSV data instances store similar data. It is possible to change the data instances in JSON format to CSV when a resource does not contain a CSV format of the data. We parsed the JSON data and transformed the data to CSV in the following manner: the key in the JSON data becomes the header of a column and the value becomes one of the column values. If the value is a JSON object instead of a string, then these JSON data instances are dropped because we cannot transform the data to CSV. All data instances are converted to CSV format, and stored in Python's Pandas DataFrame as input to our algorithm implementations.
+Each resource stores data instances in multiple formats, which includes PDF, JSON, CSV, KML, etc. For example, the data instances in PDF are reports created by the city council, and the data instances in KML are geographic data representing points on a map. In our study, we only retrieved data instances in JSON or CSV because they are easier to process. We give a higher priority to data instances in CSV format, because CSV format is more compact and more concise than JSON format. It is possible to change the data instances in JSON format to CSV when a resource does not contain a CSV format of the data. We parsed the JSON data and transformed the data to CSV in the following manner: the key in the JSON data becomes the header of a column and the value becomes one of the column values. If the value is a JSON object instead of a string, then these JSON data instances are dropped because we cannot transform the data to CSV. All data instances are converted to CSV format, and stored in Python's Pandas DataFrame as input to our algorithm implementations.
 
 If the data instance or metadata is hierarchical (such as JSON or XML), we assume the hierarchical data is well-formed.
 
@@ -102,52 +102,11 @@ In addition to precision and recall, we compute the F-measure, which is based on
 
 The F1 score gives us a sense of the overall ability of our algorithms to augment tags.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=5in]{figures/precision-different-algorithms.png}
-    \caption{Precision of augmented tags for different algorithms}
-    \label{fig:precision-different-algorithms}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=5in]{figures/recall-of-augmented-tags-for-different-algorithms.png}
-    \caption{Recall of augmented tags for different algorithms}
-    \label{fig:recall-of-augmented-tags-for-different-algorithms}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=5in]{figures/f1-of-augmented-tags-for-k-tables-in-repository.png}
-    \caption{F1 of augmented tags for $k$ tables in repository}
-    \label{fig:f1-of-augmented-tags-for-k-tables-in-repository}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=5in]{figures/f1-of-augmented-tags-for-different-mixes-of-tables.png}
-    \caption{F1 of augmented tags for different mixes of tables}
-    \label{fig:f1-of-augmented-tags-for-different-mixes-of-tables}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=5in]{figures/number-of-new-tags-added-given-k-tables.png}
-    \caption{Number of new tags added given $k$ tables}
-    \label{fig:number-of-new-tags-added-given-k-tables}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=5in]{figures/runtime-of-different-algorithms-for-different-k.png}
-    \caption{Runtime of different algorithms for different $k$}
-    \label{fig:runtime-of-different-algorithms-for-different-k}
-\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental results}
 \label{sec:ExperimentalResults}
 
-We evaluate our experimental results in this section. For input repository size $k$ = 5 or 10 and with $Parks$ as the base table, we perform tests on the 4 algorithms we implemented. All tests are run on macOS 10.14 with the configuration of 1.8 GHz Intel Core i5 (5350U) and 8 GB RAM. For each repository of size $k$, we create multiple tests each with a different mix of related and unrelated tables. For example, for $k$ equal to 5, one possible mix is one base table, 2 related tables, and 2 unrelated tables. We measure the accuracy in terms of precision and recall. As a quick measure as opposed to precision and recall, we also measure the number of new tags generated regardless of the correctness of the tags. In addition to accuracy, we measure the runtime of each algorithm given a specific input. We note that each algorithm with its given input is only run once, but we would like to compute the average of multiple runs (with cross-validation) as future work.
+We evaluate our experimental results in this section. For input repository size $k$ = 5 and 10 and with $Parks$ as the base table, we perform tests on the 4 algorithms we implemented. All tests are run on macOS 10.14 with the configuration of 1.8 GHz Intel Core i5 (5350U) and 8 GB RAM. For each repository of size $k$, we create multiple tests each with a different mix of related and unrelated tables. For example, for $k$ equal to 5, one possible mix is one base table, 2 related tables, and 2 unrelated tables. We measure the accuracy in terms of precision and recall. As a quick measure as opposed to precision and recall, we also measure the number of new tags generated regardless of the correctness of the tags. In addition to accuracy, we measure the runtime of each algorithm given a specific input. We note that each algorithm with its given input is only run once, but we would like to compute the average of multiple runs (with cross-validation) as future work.
 
 \subsection{Precision and recall}
 
@@ -195,6 +154,20 @@ We measured the four algorithms in \autoref{ch:Solutions}: Solutions in terms of
 \end{table}
 
 For every input size $k$, we took the average of the accuracy and created a plot in terms of the input size. The plot for precision is shown in \autoref{fig:precision-different-algorithms} and the plot for recall is shown in \autoref{fig:recall-of-augmented-tags-for-different-algorithms}. All four algorithms decrease in precision as the number of tables in the repository increases from 5 to 10. Data Driven decreases precision the least, from 0.19 to 0.17, while Iterative decreases the most, from 0.29 to 0.11. Improved Iterative also decreases precision, from 0.32 to 0.24, but it still has the highest precision at $k$=10 compared to the other three algorithms. However, when the additional logics are removed, the precision of Improved Iterative is only 0.11 at $k$=10, which is close to the precision of Brute Force and Iterative.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=5in]{figures/precision-different-algorithms.png}
+  \caption{Precision of augmented tags for different algorithms}
+  \label{fig:precision-different-algorithms}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=5in]{figures/recall-of-augmented-tags-for-different-algorithms.png}
+  \caption{Recall of augmented tags for different algorithms}
+  \label{fig:recall-of-augmented-tags-for-different-algorithms}
+\end{figure}
 
 The recall either increases or decreases as $k$ increases. The recall of Iterative and Data Driven are much lower compared to the other two algorithms, and the recall of both decrease as the number of tables increases. Since the precision of Iterative and Data Driven also decrease, we consider these algorithms poorly designed. Brute Force and Improved Iterative both increase in recall as the number of tables increases, and there is a tradeoff of precision over recall as the number of tables increases. While Brute Force has the highest recall for both $k$=5 and $k$=10, the recall of Improved Iterative is comparable. We note that Brute Force has a much lower precision.
 
@@ -246,6 +219,20 @@ We ranked the four algorithms based on how well they performed for each test. Of
 
 Using the precision and recall, we now compute the F1 score for the four algorithms. The plot for the F1 score at different $k$ is shown in \autoref{fig:f1-of-augmented-tags-for-k-tables-in-repository}. The plot for the F1 score for different mix proportions of related and unrelated tables is shown in \autoref{fig:f1-of-augmented-tags-for-different-mixes-of-tables}.
 
+\begin{figure}
+  \centering
+  \includegraphics[width=5in]{figures/f1-of-augmented-tags-for-k-tables-in-repository.png}
+  \caption{F1 of augmented tags for $k$ tables in repository}
+  \label{fig:f1-of-augmented-tags-for-k-tables-in-repository}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=5in]{figures/f1-of-augmented-tags-for-different-mixes-of-tables.png}
+  \caption{F1 of augmented tags for different mixes of tables}
+  \label{fig:f1-of-augmented-tags-for-different-mixes-of-tables}
+\end{figure}
+
 As $k$ increases, the F1 score for all of the algorithms decreases, but different algorithms decrease at different magnitudes. The F1 score for Brute Force decreases the most, from 0.30 to 0.17, while Improved Iterative decreases the least, from 0.32 to 0.31. Improved Iterative performs the best for all $k$. As the mix proportion changes, F1 for each of the four algorithms changes in different ways. Data Driven and Iterative decrease in F1 as the mix proportion increases, while Improved Iterative increases in F1 as the mix proportion increases. Brute Forces F1 increases at 50\% but decreases at 100\%. Improved Iterative performs the best among all four algorithms.
 
 However, we think a good algorithm should have a constant F1 score regardless of what mix proportion it is given. This suggests again that more improvements need to be done as future work.
@@ -284,6 +271,13 @@ Since Brute Force adds every tag from a related table, we can compare other algo
 
 The plot in \autoref{fig:number-of-new-tags-added-given-k-tables} shows the average number of tags added as $k$ increases. For Brute Force, the number of tags added per table increases as expected, since there is one or more tags per table on average. For Data Driven, the number of new tags does not change, since the number of attributes in the base table remains constant. For Iterative, as repository size increases, the number of new tags added per table decreases. This is due to the uncontrollable factor that we have different tables between the testing set for $k$ = 5 and $k$ = 10. There are more new tags that Iterative can add for the $k$ = 5 set and there are less that it can add for the $k$ = 10 set. For Improved Iterative, the number of new tags doubles as $k$ doubles, which is a desired result.
 
+\begin{figure}
+  \centering
+  \includegraphics[width=5in]{figures/number-of-new-tags-added-given-k-tables.png}
+  \caption{Number of new tags added given $k$ tables}
+  \label{fig:number-of-new-tags-added-given-k-tables}
+\end{figure}
+
 \subsection{Runtime}
 We measured the runtime for the four different algorithms, and the results are shown in \autoref{tab:Runtime-of-different-approaches-given-k-tables-as-input}. Each test can be completed within a reasonable timeframe for all of the algorithms. Iterative and Improved Iterative terminated the iterative method in less than 5 iterations (either $2^{nd}$, $3^{rd}$, or the $4^{th}$ iteration) for all tests. However, we have not included any tests with more than 10 tables in the repository, and we cannot conclude that any of the algorithms is efficient.
 
@@ -314,6 +308,13 @@ We measured the runtime for the four different algorithms, and the results are s
 \end{table}
 
 We created a plot to show the runtime of each algorithm as the repository size $k$ increases, shown in \autoref{fig:runtime-of-different-algorithms-for-different-k}. Each value is an average of three tests of different mixes of related and unrelated tables. We observe that Brute Force, Data Driven, and Iterative do not increase in runtime by orders of magnitude, but Improved Iterative increases from 38 seconds to 1,042 seconds as $k$ increases from 5 to 10. Empirically, it is likely that the algorithm has exponential asymptotic complexity. We measured the time to enrich attributes and topics of each table in the repository, and the time to enrich 5 tables is around 3 seconds. We also measured the time to perform semantic labeling between attributes and tags: the time is around 15 seconds for 5 tables. Most of the computation time is in the schema matching step in the iterative method. As we removed the additional logics, the runtime drops significantly and the runtime of Improved Iterative is comparable to the Iterative.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=5in]{figures/runtime-of-different-algorithms-for-different-k.png}
+  \caption{Runtime of different algorithms for different $k$}
+  \label{fig:runtime-of-different-algorithms-for-different-k}
+\end{figure}
 
 We analyzed the theoretical asymptotic upper bound for the iterative method. For $n$ tables, $t$ tags per table, $m$ attributes per table, and assuming the matching criterion make comparisons in $O(1)$, the upper bound of the iterative method is approximately $nt(nt*nt+t*nt*(nt+nm))$, or $O(n^3t^4+n^3t^3m)$. The maximum number of iterations is $nt$ since we add at least one tag to the base table partitions per iteration and will not consider that tag again in future iterations. For each iteration, the table search step makes at most $nt*nt$ tag comparisons. Once a related table is found, the partitioning step for the semantic labels is $t*nt*(nt+nm)$, since there are $t$ candidate tags, $nt$ partitions, and within each partition there are $nt$ tags and $nm$ attributes. Based on the theoretical bound, the iterative method has polynomial complexity.
 

@@ -238,5 +238,5 @@ Now consider the table \textit{ParkSpecimenTrees} with the semantic labeling \{(
 (\textit{parks}, \{(\textit{Parks.park name}, \textit{parks}), (\textit{ParkSpecimenTrees.park}, \textit{park})\}, \{\textit{Parks.park name}, \textit{ParkSpecimenTrees.park}\}, \{\textit{parks}, \textit{park}\})
 \end{quote}
 
-The partitioning algorithm may also take a set of unlabeled attributes as input. When there is no semantic label for an attribute, we cannot make tag comparisons, we can optionally compare with attributes in each partition only and add the attribute in the most similar existing partition. We also note that a semantic label can be added to multiple partitions if the similarity is high for all of these partitions, therefore the algorithm is not strictly performing partitioning.
+The partitioning algorithm may also take a set of unlabeled attributes as input. When there is no semantic label for an attribute, we cannot make tag comparisons, but we can optionally compare with attributes in each partition only and add the attribute in the most similar existing partition. We also note that a semantic label can be added to multiple partitions if the similarity is high for all of these partitions, therefore the algorithm is not strictly performing partitioning.
 \endinput
