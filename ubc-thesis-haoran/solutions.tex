@@ -6,7 +6,7 @@
 
 Having discussed the various fields of study related to augmentation of metadata in \autoref{ch:RelatedWork}: Related Work and a number of algorithms in \autoref{ch:Preliminaries}: Preliminaries, we now explain the algorithms for augmenting metadata. Each of the algorithms takes an input base table and a set of potentially related tables, and outputs a tuple $(\textit{Base-Table}, \textit{Tags-Set})$ as well as a set of tuples:
 \[
-(\textit{Table-Name},\textit{Tags-Set})
+(\textit{Table-Name}, \textit{Tags-Set})
 \]
 where $\textit{Table-Name}$ is the name of a table related to $\textit{Base-Table}$ and $\textit{Tags-Set}$ is the set of augmented tags for the table. The tags of each table in the set are normalized with respect to each other.
 
@@ -75,7 +75,7 @@ We describe our second baseline algorithm, modified based on \cite{10.1145/31845
 
 The classifier uses a number of matching criterion to compute the similarity score between an attribute and a candidate tag. The hybrid score is computed by combining the scores of each criterion, as discussed in \autoref{ssec:VariationsOfSchemaMatching}. For the pair of attribute and tag with the highest weighted score, the tag becomes the class for the attribute. To train the classifier, we train a weight for each combination of a matching criterion and a tag. The weights are represented as a matrix W, where each row are weights for single tag and each column are weights for a single matching criterion. The supervised learning takes as input a set of pairs of attribute and tag, defined as:
 \[
-(A_{si},L_{sj})\text{ for }A_{si}\in A_{s},L_{sj}\in L_{s},s\in D'
+(A_{si}, L_{sj})\text{ for }A_{si}\in A_{s}, L_{sj}\in L_{s}, s\in D'
 \]
 where the attributes $A_s$ and tags $L_s$ originate from a table $s$ in a set ${D'}$. The set of all tags in the training data is $L$.
 
@@ -150,7 +150,7 @@ The algorithm begins with an initialization step, which creates the semantic lab
 \subsection{Semantic labeling as the initialization step}
 \label{ssec:SemanticLabelingAsTheInitializationStep}
 
-The iterative method in our algorithm relies on an initialization step, which is performed before the iterative method. The initialization step takes as input a set of attributes and tags $(A_{s},L_{s})$ for each table $s$ in the repository, and a semantic labeling between attributes and tags is found by schema matching (probabilistically as described in \autoref{ssec:UsingSchemaMatchingOnOpenData}). We then take the semantic labels as input, and for the base table, $s_q$, we create empty partitions using the tags in the semantic labels of $s_q$. We create a partition for each topic $L_{j}$ in $s_q$. For each semantic label, $(A_{si},L_{j})$, we place the attribute $A_{si}$ and the tag $L_{j}$ to the sets in the partition of $L_{j}$ as explained in \autoref{ssec:PartitioningSemanticLabels}. We let the set of partitions of table $s_q$ be $S$. $S$ is then compared with the semantic labeling of the other tables in the repository, within table search and partitioning of the iterative method.
+The iterative method in our algorithm relies on an initialization step, which is performed before the iterative method. The initialization step takes as input a set of attributes and tags $(A_{s}, L_{s})$ for each table $s$ in the repository, and a semantic labeling between attributes and tags is found by schema matching (probabilistically as described in \autoref{ssec:UsingSchemaMatchingOnOpenData}). We then take the semantic labels as input, and for the base table, $s_q$, we create empty partitions using the tags in the semantic labels of $s_q$. We create a partition for each topic $L_{j}$ in $s_q$. For each semantic label, $(A_{si}, L_{j})$, we place the attribute $A_{si}$ and the tag $L_{j}$ to the sets in the partition of $L_{j}$ as explained in \autoref{ssec:PartitioningSemanticLabels}. We let the set of partitions of table $s_q$ be $S$. $S$ is then compared with the semantic labeling of the other tables in the repository, within table search and partitioning of the iterative method.
 
 With the initialization step, we are able to modify the procedure for comparing two sets for normalization explained in \autoref{sec:CommonProcedureForNormalizationOfTags}. When comparing each pair of sets of tags, the sets have already been  partially normalized. During a preprocessing step, all known tags are collected from the metadata of each table. The set of all tags, $L$, is the vocabulary for all semantic labels and the candidate tags used for augmentation. We assume that the tags already created within a table may be incomplete, but together with tags from all tables, they are sufficient to describe the repository well. When the semantic labeling is performed, we compare a schema attribute with all possible tags instead of just the tags in its own metadata. The semantic labels created have received new tags from other tables, and therefore part of the normalization process has been performed already before the iterative method. The real world analogy is that humans tend to communicate with each other after they are certain what topics will be in the conversation, so that stochasticity in the outcome is reduced.
 
