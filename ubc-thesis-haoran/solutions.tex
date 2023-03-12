@@ -17,20 +17,6 @@ All four algorithms use the existing metadata to help augment additional tags, s
 \section{Normalization of tags}
 \label{sec:CommonProcedureForNormalizationOfTags}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=5in]{figures/brute-force-algorithm.png}
-    \caption{Brute Force algorithm for metadata tags augmentation}
-    \label{fig:brute-force-algorithm}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=5in]{figures/an-example-instance-brute-force.png}
-    \caption{An example instance of tags augmentation by Brute Force}
-    \label{fig:an-example-instance-brute-force}
-\end{figure}
-
 %\footnote{RAP: this paragraph is new; please check}
 As introduced in Section~\ref{sec:intro:normalizing}, if there are two tags describing the same information, the user 
 would likely want to add both tags to the metadata of all the tables containing this information. We seek all such tags, and ensure each table contains all the tags describing
@@ -56,6 +42,20 @@ Normalization produces the augmented sets $A^{*}$ and $B^{*}$ by comparing the s
 \label{sec:BruteForceApproach}
 
 We first explain an algorithm we call Brute Force, as shown in \autoref{fig:brute-force-algorithm}, which serves as a baseline algorithm. \autoref{fig:an-example-instance-brute-force} is an example instance of tags augmentation by Brute Force. The algorithm is adapted from \cite{Smith2011Unity}, which we briefly explained in \autoref{ssec:ClusteringToReduceComplexity}. The algorithm consists of two separate steps, schema matching and collaborative filtering. Schema matching takes as input two sets of attributes for each pair of tables, and finds a set of correspondences between them. We enforce the one-to-one cardinality constraint between every pair of schemata. Collaborative filtering is then performed to recommend additional tags for each table. We adapted collaborative filtering from \cite{conf/esws/EllefiBDT16}, which was explained in \autoref{ssec:RecommendationOfSimilarDataUsingDataLinking}. For each table $A$, based on the similarity of its attributes with another table(s) $B$, the tags from $B$ are added to $A$'s tags set. If $A$ and $B$ share many similar attributes as determined by attribute correspondences, their tags sets should also be similar. The rule is parameterized by $k$ and $i$: when $A$ and $B$ share $k$ similar attributes, then they should share the subset $i$ of tags. We made a simplification of collaborative filtering by restricting $B$ to be a single table only.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=5in]{figures/brute-force-algorithm.png}
+  \caption{Brute Force algorithm for metadata tags augmentation}
+  \label{fig:brute-force-algorithm}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=5in]{figures/an-example-instance-brute-force.png}
+  \caption{An example instance of tags augmentation by Brute Force}
+  \label{fig:an-example-instance-brute-force}
+\end{figure}
 
 We use \autoref{fig:example-parks} and \autoref{fig:example-park-specimen-trees} as an example. Let $A$ be \textit{Park} and let $B$ be \textit{ParkSpecimenTrees}. Suppose that the tags set of \textit{Park} is \{\textit{parks}\} and the tags set of \textit{ParkSpecimenTrees} is \{\textit{trees}\}. Comparing between \textit{Park.park\_name} and \textit{ParkSpecimenTrees.park} using the N-gram matching criterion yields a similarity score of 0.39. If the threshold is 0.3 and there are no other cardinality constraints, then this pair of attributes forms a correspondence (\textit{Park.park\_name}, \textit{ParkSpecimenTrees.park}, \textit{0.39}). If we suppose that $k$=1 and the subset $i$ is all tags in the tables, then the augmented set of tags for both tables is \{\textit{parks}, \textit{trees}\}.
 
@@ -138,14 +138,14 @@ For example, the similarity of (\textit{park name}, \textit{parks}) is 0.6 with 
 
 We now explain an algorithm that iteratively augments metadata tags given a base table, as shown in \autoref{fig:the-steps-iterative-approach}. The output is a set of tables related to the base table, where the base table and each of the related tables contains a normalized tags set. The iterative approach uses the existing small number of tags in tables in the repository, and augments a subset of tables in the repository with additional tags to make their metadata more complete. The subset of tables is related to the base table, which is consistent with the scope of augmenting metadata discussed in \autoref{sec:ScopeOfImprovingMetadata}. That is, since it is unnecessary for a user to look at all tables in the repository, only the tags set of the related tables are augmented. The algorithm emphasizes the process of normalization, such that tables containing overlapping information (i.e., in the data domain of some tag) have one or more shared tags.
 
-The algorithm begins with an initialization step, which creates the semantic labeling (discussed in \autoref{sec:SemanticLabeling}) between attributes and tags for all tables in the repository. The initialization step facilitates normalization of the tags. We then apply an iterative method that integrates a table search step (discussed in \autoref{sec:FindingRelatednessBetweenTables}) and a partitioning step (discussed in \autoref{sec:Partitioning}). The table search step helps discover tables related to the base table. Between the base table and a related table, the partitioning step is performed on the set of semantic labels of the related table. Schema matching is performed throughout the algorithm to verify that a pair of items (either attribute or tag) correspond to each other. The iterative method will be explained in \autoref{ssec:IterativeMethod}. Finally, the tags in the partitions are added to each table's metadata, as explained in \autoref{ssec:FromPartitionsToMetadataTags}.
-
 \begin{figure}
     \centering
     \includegraphics[width=5in]{figures/the-steps-iterative-approach.png}
     \caption{The steps in the iterative approach to augment metadata tags for tables}
     \label{fig:the-steps-iterative-approach}
 \end{figure}
+
+The algorithm begins with an initialization step, which creates the semantic labeling (discussed in \autoref{sec:SemanticLabeling}) between attributes and tags for all tables in the repository. The initialization step facilitates normalization of the tags. We then apply an iterative method that integrates a table search step (discussed in \autoref{sec:FindingRelatednessBetweenTables}) and a partitioning step (discussed in \autoref{sec:Partitioning}). The table search step helps discover tables related to the base table. Between the base table and a related table, the partitioning step is performed on the set of semantic labels of the related table. Schema matching is performed throughout the algorithm to verify that a pair of items (either attribute or tag) correspond to each other. The iterative method will be explained in \autoref{ssec:IterativeMethod}. Finally, the tags in the partitions are added to each table's metadata, as explained in \autoref{ssec:FromPartitionsToMetadataTags}.
 
 \subsection{Semantic labeling as the initialization step}
 \label{ssec:SemanticLabelingAsTheInitializationStep}
@@ -158,13 +158,6 @@ By performing semantic labeling in the initialization step, we improve the quali
 
 \subsection{Iterative method}
 \label{ssec:IterativeMethod}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=5in]{figures/iterative-method.png}
-  \caption{Iterative method}
-  \label{fig:iterative-method}
-\end{figure}
 
 As proposed by \cite{Smith2011Unity}, to achieve normalization we need to find relationships between the metadata of all tables, and generate additional metadata that captures the relationships to make data more searchable and understandable.
 
@@ -184,12 +177,26 @@ After we retrieve one candidate table, we perform schema matching again between 
 
 The \textit{iterative method} in \autoref{fig:iterative-method} takes $s_q$, $S$, $D$, $L$, $\ensuremath{\varphi}_{ts}$, $\ensuremath{\varphi}_{pt}$, $\ensuremath{\varphi}_{sc}$ as input, where $D$ is the set of all data instances in the repository, $L$ is the set of text items describing the data instances, $\ensuremath{\varphi}_{ts}$ is a threshold used for schema matching during the table search step, $\ensuremath{\varphi}_{pt}$ is a threshold used for schema matching during the partitioning step, and $\ensuremath{\varphi}_{sc}$ is a threshold used for schema matching during the verification step after items are placed in partitions.
 
+\begin{figure}
+  \centering
+  \includegraphics[width=5in]{figures/iterative-method.png}
+  \caption{Iterative method}
+  \label{fig:iterative-method}
+\end{figure}
+
 Function \textit{TableSearch} is described in words in \autoref{ssec:ModifiedTableSearch}. We first select a table $s\in D$ that is most closely related to the current state $S$ of $s_q$. The relatedness is determined by the number of overlapping tags between the selected table $s$ and $s_q$. Next, for each semantic label in the selected table, use \textit{Partition} (described in \autoref{ssec:PartitioningSemanticLabels}) to compare the tag to each partition of $s_q$. Using \textit{Partition}, if the tag is similar to the tags in a partition, then use \textit{SchemaMatching} (described in \autoref{ssec:UsingSchemaMatchingOnOpenData}) to perform schema matching between the tag's mapped attribute and existing attributes in the partition. From \textit{ScoreThreshold}, if correspondences above $\ensuremath{\varphi}_{pt}$ can be created from the result of schema matching, add the tag and the attribute to that partition. If the tag is not highly similar to any tags in any partitions, but the tag is somewhat similar to tags in $s_q$ above a threshold score, then use \textit{NewPartitions} (described in \autoref{ssec:PartitioningSemanticLabels}) to create a new partition for the tag. Update the current state $S$ to include new partitions and tags. In the selected table $s$, remove tags that were added from its metadata, so that these tags will not overlap with the base table again in the next iteration. Repeat all of the above in a new iteration if it is still possible to find a table $s\in D$ related to the current state $S$ of $s_q$. The only matching criterion we used throughout the algorithm is N-gram.
 
 \subsection{Iterative method example}
 \label{ssec:IterativeMethodExample}
 
 We use \autoref{fig:example-parks}, \autoref{fig:example-park-specimen-trees}, etc.~as an example. Let the base table be \textit{ParkSpecimenTrees} with the semantic labeling (\textit{location}, \textit{environment}) and (\textit{tree species}, \textit{trees}), (\textit{park}, \textit{parks}). Let the repository $D$ contain tables \textit{Parks}, \textit{GreenInfrastructureNetwork}, and \textit{DrainageCatchBasins}. We use the semantic labeling in \textit{ParkSpecimenTrees} to search other tables containing the maximum number of overlapping tags. The first table found is \textit{Parks}, with overlapping tags [\textit{environment}, \textit{parks}]. For every tag in \textit{Parks}, we find a partition that it belongs to. Let there be a semantic label (\textit{park\_name}, \textit{parks}) for \textit{Parks}. We compare it with the partition containing the tag \textit{parks}, which also contains \textit{ParkSpecimenTrees.park} in the set of attributes. We then compare the attribute \textit{park} in \textit{ParkSpecimenTrees} with \textit{park\_name} in \textit{Parks}, and find that the two attributes are similar. We add (\textit{park\_name}, \textit{parks}) to the partition, and remove the tag \textit{parks} from the list of tags of \textit{Parks}, so that \textit{parks} will not be an overlapping tag with the base table again in future iterations. After the first iteration, the base table contains tags [\textit{trees}, \textit{parks}, \textit{environment}, \textit{green}, \textit{nature}]. In the second iteration, let the table found be \textit{GreenInfrastructureNetwork} with tags [\textit{ecosystem}, \textit{sustainability}, \textit{green}] and semantic labels \{(\textit{ecological value}, \textit{ecosystem}), (\textit{hub or site}, \textit{green})\}. The base table overlaps with the tag green. By comparing the tags of \textit{GreenInfrastructureNetwork} with partitions in the base table, we find additionally that \textit{ecosystem} is similar to \textit{environment}, and \textit{sustainability} is similar to \textit{environment}. We perform schema matching between attributes of \textit{GreenInfrastructureNetwork} and attributes in the partition of \textit{environment}. Suppose that the correspondence score is above threshold $\ensuremath{\varphi}_{sc}$ for \textit{ecosystem}, and below threshold $\ensuremath{\varphi}_{sc}$ but above 0.5$\ensuremath{\varphi}_{sc}$ for \textit{sustainability}. We add \textit{ecosystem} to the partition containing \textit{environment}. We then create a new partition for \textit{sustainability} by \textit{NewPartitions}. Since there is no semantic label for \textit{sustainability}, the attributes set for the new partition is empty. Once the second iteration completes, the partitions of the base table contain the tags [\textit{trees}, \textit{parks}, \textit{environment}, \textit{green}, \textit{nature}, \textit{ecosystem}, \textit{sustainability}]. These tags are used to find tag overlaps with other tables in the repository, but \textit{Parks} and \textit{GreenInfrastructureNetwork} will not overlap in these tags. In the third iteration, we were unable to find any similar tables and we terminate the iterative method, as shown in \autoref{fig:partitions-park-specimen-trees}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{figures/partitions-park-specimen-trees.png}
+    \caption{Partitions of base table \textit{ParkSpecimenTrees} after the third iteration of the example in \autoref{ssec:IterativeMethodExample}. Each partition contains a set of attributes and a set of tags, as well as the mappings between them. They are represented as the set of semantic labels above.}
+    \label{fig:partitions-park-specimen-trees}
+\end{figure}
 
 We provide a second example with \textit{Parks} as the base table. We find that our base table is similar to \textit{DrainageCatchBasins}, the overlapping tag is \textit{infrastructure}, where the semantic labels are (service \textit{classification}, \textit{infrastructure}) for \textit{Parks} and (\textit{device size}, \textit{infrastructure}) for \textit{DrainageCatchBasins}. After comparing the attributes with \textit{SchemaMatching}, we find that \textit{service classification} and \textit{device size} are not similar, nor is the attribute \textit{device size} similar to any other partitions. Thus we do not add (\textit{device size}, \textit{infrastructure}) to the base table partitions.
 
@@ -199,13 +206,6 @@ We provide a second example with \textit{Parks} as the base table. We find that 
 Each partition is a collection containing a set of attributes, a set of tags, and the mapping between attributes and tags. The iterative method takes a set of semantic labeling as input, and outputs the partitions of the base table. We show how to create a modified set of semantic labeling for each table found in \textit{TableSearch}, and how to augment tags of a table using semantic labeling. We let $A(a)$ and $B(b)$ be two tables where $a$ and $b$ are attributes, and let $A$ be the base table. Let tags of $A$ be $[X]$, and tags of $B$ be $[Y]$. Let semantic labeling of $A$ be ${(a, X)}$ and semantic labeling of $B$ be ${(b, Y)}$. Suppose that $X$ and $Y$ are similar, and $a$ and $b$ are similar. Thus there is one partition where the attributes are ${a, b}$ and the tags are ${X, Y}$. We also keep track of the mappings between attributes and tags as well as which table an attribute originates from. For each table, we collect all tags in all partitions where its attributes are assigned, and augment the table tags with any additional tags it does not already contain. For every attribute in a partition, we create a new semantic label for every attribute-tag pair. For example, in addition to the existing semantic labels, the semantic labels $(a, Y)$ and $(b, X)$ are created. Then table $A$ would collect both $X$ and $Y$ as the augmented metadata, and likewise for table $B$.
 
 At the end of the third iteration in the example from \autoref{ssec:IterativeMethodExample}, the augmented tags for \textit{ParkSpecimenTrees} are [\textit{environment}, \textit{ecosystem}, \textit{trees}, \textit{green}, \textit{parks}, \textit{sustainability}], the augmented tags for \textit{Park} are [\textit{environment}, \textit{ecosystem}, \textit{parks}], and the augmented tags for \textit{GreenInfrastructureNetwork} are [\textit{environment}, \textit{ecosystem}, \textit{trees}, \textit{green}].
-
-\begin{figure}
-    \centering
-    \includegraphics[width=5in]{figures/partitions-park-specimen-trees.png}
-    \caption{Partitions of base table \textit{ParkSpecimenTrees} after the third iteration of the example in \autoref{ssec:IterativeMethodExample}. Each partition contains a set of attributes and a set of tags, as well as the mappings between them. They are represented as the set of semantic labels above.}
-    \label{fig:partitions-park-specimen-trees}
-\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Improved iterative approach}
