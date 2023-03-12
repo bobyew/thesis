@@ -433,13 +433,38 @@
 
 \input{glossaries}
 
-\newglossarystyle{mystyle}{%
- \setglossarystyle{treegroup}%
- \renewcommand*{\glossentry}[2]{%
-   \glsentryitem{##1}\textbf{\glstarget{##1}{\glossentryname{##1}}}%
-   :\space \glossentrydesc{##1}\par
- }%
-}
+% \newglossarystyle{mystyle}{%
+%  \setglossarystyle{treegroup}%
+%  \renewcommand*{\glossentry}[2]{%
+%    \glsentryitem{##1}\textbf{\glstarget{##1}{\glossentryname{##1}}}%
+%    :\space \glossentrydesc{##1}\par
+%  }%
+% }
+
+% \newglossarystyle
+%  {mystyle}% style name
+%  {% base it on the "list" style
+%    \setglossarystyle{list}%
+%    \renewcommand*{\glossentry}[2]{%
+%      \item[\glsentryitem{##1}%
+%           \glstarget{##1}{\glossentryname{##1}}]
+%        \ifglshaslong{##1}%
+%        { (\abbrtype{##1}: \glsentrylong{##1})\space}{}%
+%        \glossentrydesc{##1}\glspostdescription\space ##2}%
+%  }
+
+ \newglossarystyle
+ {mystyle}% style name
+ {% base it on the "list" style
+   \setglossarystyle{list}%
+   \renewcommand*{\glossentry}[2]{%
+     \item[\glsentryitem{##1}%
+          \glstarget{##1}{\glossentryname{##1}}:]
+       \ifglshaslong{##1}%
+       { (\abbrtype{##1}: \glsentrylong{##1})\space}{}%
+       \glossentrydesc{##1}\glspostdescription\space ##2}%
+ }
+
 
 \setglossarystyle{mystyle}
 
