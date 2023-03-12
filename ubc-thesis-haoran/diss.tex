@@ -432,6 +432,17 @@
 %\input{glossary}	% always input, since other macros may rely on it
 
 \input{glossaries}
+
+\newglossarystyle{mystyle}{%
+ \setglossarystyle{treegroup}%
+ \renewcommand*{\glossentry}[2]{%
+   \glsentryitem{##1}\textbf{\glstarget{##1}{\glossentryname{##1}}}%
+   :\space \glossentrydesc{##1}\par
+ }%
+}
+
+\setglossarystyle{mystyle}
+
 \printunsrtglossaries
 
 \textspacing		% begin one-half or double spacing
